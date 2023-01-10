@@ -1,0 +1,26 @@
+{
+  "name": "datad_electron",
+  "version": "0.0.1",
+  "description": "Test datad electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Io",
+  "license": "ISC",
+  "devDependencies": {
+    "cesium": "^1.83.0",
+    "electron": "^18.0.4",
+    "electron-packager": "^15.5.1",
+    "electron-prebuilt": "^1.4.13"
+  },
+  "dependencies": {
+    "boostrap": "^2.0.0",
+    "bootstrap-icons": "^1.8.1",
+    "css-doodle": "^0.19.1",
+    "jquery": "^3.6.0",
+    "node-mavlink": "^1.0.13",
+    "particlesjs": "^2.2.3",
+    "serialport": "^10.4.0"
+  }
+}
