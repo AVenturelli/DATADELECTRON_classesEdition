@@ -27,9 +27,21 @@ class MavlinkParams {
         const message = new common.ParamRequestList()
         message.targetSystem = 1
         message.targetComponent = 0
-        send(Connection.getSerialPort(), message, new MavLinkProtocolV1()).then(r => {
-            console.log(r)
-        })
+        if(Connection.getSerialPort() !== undefined) {
+            send(Connection.getSerialPort(), message, new MavLinkProtocolV1()).then(r => {
+                console.log(r)
+            });
+        }
+        else {
+            let a = new CustomAlert(
+                'noConnectionForParams',
+                'ATTENZIONE',
+                'Nessuna connessione disponibile alla quale richiedere parametri.')
+            a.printCode()
+            a.showAlert()
+
+        }
+
     }
 
     static populateParams(){
