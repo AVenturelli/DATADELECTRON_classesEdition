@@ -2,7 +2,9 @@ const JQueryRenderAltitudeData = require("./JQueryRenderAltitudeData").JQueryRen
 const JQueryRenderSpeedData = require("./JQueryRenderSpeedData").JQueryRenderSpeedData;
 const JQueryRenderAccelerationData = require("./JQueryRenderAccelerationData").JQueryRenderAccelerationData;
 
-class JQueryRender{
+class JQueryRender {
+    constructor() {
+    }
     static updateSingleData(){
         JQueryRenderAccelerationData.render()
         JQueryRenderAltitudeData.render()

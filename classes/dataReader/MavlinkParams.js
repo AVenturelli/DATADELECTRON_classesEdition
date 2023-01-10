@@ -62,6 +62,7 @@ class MavlinkParams {
             let childern = xmlDoc.getElementsByTagName("group")[i].childNodes
             for (let k in childern) {
                 if (childern[k].nodeType === 1) {
+                    // noinspection JSUnresolvedFunction
                     let nodeName = childern[k].getAttribute("name")
                     this.#params[nodeName] = []
                     let childern_2 = childern[k].childNodes

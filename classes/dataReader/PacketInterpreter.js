@@ -17,8 +17,8 @@ class PacketInterpreter{
                 break;
             case 'RawGps' : break;
             case 'ScaledImu2':
-                let acceletation = Math.round(Math.sqrt(data.xacc*data.xacc+data.yacc*data.yacc+data.zacc*data.zacc)/1000*100)/100
-                FlightData.acceleration = (acceletation);
+                let acceleration = Math.round(Math.sqrt(data.xacc*data.xacc+data.yacc*data.yacc+data.zacc*data.zacc)/1000*100)/100
+                FlightData.acceleration = (acceleration);
                 if(acceleration > FlightData.maxAcceleration() ) {
                     FlightData.acceleration = (acceleration)
                 }

@@ -1,3 +1,4 @@
+// noinspection JSJQueryEfficiency
 class JQueryAdsbListManager{
     static addToList(ICAO,planeText){
         if($('#'+ICAO).length === 0)

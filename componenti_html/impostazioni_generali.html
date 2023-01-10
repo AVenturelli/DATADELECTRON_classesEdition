@@ -38,7 +38,7 @@
           <h6>Impostazioni scia</h6>
         </div>  
         <div class="col-xl-6 col-lg-12" >
-          <select name="show_trail" id="select_view" style="width: 100%;">
+          <label for="select_view"></label><select name="show_trail" id="select_view" style="width: 100%;">
             <option value="no_trail">Nessuna scia</option>
             <option value="trail">Visualizza Scia</option>
           </select>
@@ -50,7 +50,7 @@
     </div>
   </div>
   <script>
-    $("#delta_increase").on('input',function()
+    $('#delta_increase').on('input',function()
     {
       if(this.value > 0 && this.value < 100)
       {
@@ -58,22 +58,23 @@
       }
     })
     
-    $("#alt_delta").click(function(){zeroTerrain();})
+    $('#alt_delta').click(function(){zeroTerrain();})
     
     $('#sium_range').on('input', function (){
+      let currentSium = $("#current_sium")
       if($(this).val() > 100)
       {
-        $("#current_sium").css("color", "red");
-        $("#current_sium").css("font-weight", "700");
+        currentSium.css("color", "red");
+        currentSium.css("font-weight", "700");
       }
       else
       {
-        $("#current_sium").css("color", "black");
-        $("#current_sium").css("font-weight", "400");
+        currentSium.css("color", "black");
+        currentSium.css("font-weight", "400");
         
       }
-      $("#current_sium").html($(this).val())
-      current_sium = $(this).val()
+      currentSium.html($(this).val())
+      //current_sium = $(this).val()
     })
 
     $('select').on('change', function() {
@@ -88,10 +89,10 @@
         $("#current_sium").attr("disabled",true)
 
       }*/
-      if(this.value == "third_person_view")
+      if(this.value === "third_person_view")
       {
         console.log("Metto la terza")
-        changeThirdPerson()
+        //changeThirdPerson()
         $("#zoom_range").attr("disabled",false)
         $("#current_zoom").attr("disabled",false)
 
@@ -99,7 +100,7 @@
         $("#current_sium").attr("disabled",true)
 
       }
-      if(this.value == "first_person_view")
+      if(this.value === "first_person_view")
       {
         console.log("Metto la first")
         changeTopFirstPerson()

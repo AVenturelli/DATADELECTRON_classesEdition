@@ -17,21 +17,22 @@
     <link href="https://cesium.com/downloads/cesiumjs/releases/1.83/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
     
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.83/Build/Cesium/Cesium.js"></script>
-    
+
+    <title>DATAD</title>
 
 
   </head>
   <body style="height: 1000px;max-height: 1000px;overflow-y:hidden">
-    <div class="container main container" style="margin: 0px;padding: 20px 30px;width: 100%;max-width: 100%;">
+    <div class="container main container" style="margin: 0;padding: 20px 30px;width: 100%;max-width: 100%;">
       <div class="row">
         <div class="col-sm-2">
           <div class="row">
 
-            <div class="col-sm-12" style="padding: 0px;">
+            <div class="col-sm-12" style="padding: 0;">
               <div id="connessione_centralina"></div>            
             </div>
 
-            <div class="col-sm-12" style="padding: 0px;">
+            <div class="col-sm-12" style="padding: 0;">
               <div id="impostazioni_generali"></div>
               <div id="param_button" style="display: none;"></div>
             </div>
@@ -46,26 +47,23 @@
             <div class="boxTitle">
               <h6>Real Time Map</h6>
             </div>
-            <style>
-              
-            </style>
+
             <div id="cesiumContainer" style="max-height: 1000px;"></div>
 
-            <div class="col-sm-12 centered-axis-x" style="padding: 0px;display: none;position: absolute;bottom:-40px;width: 40%;" id="zoommatoio"></div>
+            <div class="col-sm-12 centered-axis-x" style="padding: 0;display: none;position: absolute;bottom:-40px;width: 40%;" id="zoommatoio"></div>
 
             <!--<div class="col-sm-12 centered-axis-x" id="siummatoio" style="padding: 0px;display: none;position: absolute;bottom:-40px;width: 40%;"></div>-->
 
-            <div id="tettolone" style="padding: 0px;position: absolute;bottom:0px;width: 100%;"></div>
+            <div id="tettolone" style="padding: 0;position: absolute;bottom:0;width: 100%;"></div>
         </div>
         <div class="col-sm-2">
-          <div id="flight_data" style="padding: 0px;display: block;"></div>
+          <div id="flight_data" style="padding: 0;display: block;"></div>
           <div id="antennaGPS" style="display: block;"></div>
         </div>
 
 
       </div>
     </div>
-  </div>
     <div id="modals"></div>
   </body>
 
@@ -75,15 +73,13 @@
     const DatadCesium = require('./classes/DatadCesium').DatadCesium;
     const PortConnection = require('./classes/portConnection/PortConnection').PortConnection;
     const FlightData = require('./classes/dataReader/FlightData').FlightData;
-    const CustomDialog = require('./classes/utility/CustomDialog').CustomDialog;
     const CustomAlert = require('./classes/utility/CustomAlert').CustomAlert;
     const MavlinkParams = require('./classes/dataReader/MavlinkParams').MavlinkParams;
     const AdsbPlaneList = require("./classes/adsb/AdsbPlaneList").AdsbPlaneList;
 
     $('#cesiumContainer').height("950px")
 
-    this.top_view = false;
-    globalThis.portname = "COM7";
+    /*globalThis.portname = "COM7";
     globalThis.baud = 115200;
     globalThis.portnameWrite = "COM5";
     globalThis.baudWrite = 115200;
@@ -136,7 +132,7 @@
     //Casa giovanardi
     globalThis.antennaX = 0
     globalThis.antennaY = 0
-    globalThis.antennaZ = 0
+    globalThis.antennaZ = 0*/
 
 
     window.onload= function() {

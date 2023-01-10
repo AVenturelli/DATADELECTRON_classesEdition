@@ -54,8 +54,5 @@ class Connection {
             send(this.#serialPort, message, new MavLinkProtocolV1()).then(r => console.log("HeartBeat Mandato"))
         }
     }
-    static getSerialPort() {
-        return this.#serialPort
-    }
 }
 exports.Connection = Connection;

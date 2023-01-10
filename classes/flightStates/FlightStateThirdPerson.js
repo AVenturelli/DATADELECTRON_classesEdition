@@ -1,4 +1,6 @@
+const Cesium = require("cesium");
 const FlightStateInterface = require('./FlightStateInterface').FlightStateInterface;
+// noinspection JSUnusedGlobalSymbols
 class FlightStateThirdPerson extends FlightStateInterface{
 
     camera = null;

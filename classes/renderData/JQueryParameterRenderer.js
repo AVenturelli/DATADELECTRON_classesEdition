@@ -49,16 +49,15 @@ class JQueryParameterRenderer{
             }).hide();
         });
 
-        function populateParam(paramID)
+        /*function populateParam(paramID)
         {
             $(".modalModifyParams").css("display","block");
             try {
-                $('#paramDescription').html(globalThis.paramDesc[paramID]['long_desc'])
+                $('#paramDescription').html(paramID.getLongDesc())
             } catch (error) {
-                console.log(globalThis.paramDesc[paramID])
+                console.error(paramID)
             }
-
-        }
+        }*/
     }
 
     static showParams()

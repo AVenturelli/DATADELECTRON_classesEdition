@@ -44,7 +44,7 @@ class DatadCesium{
             JQueryRender.updateSingleData();
 
             //Controllo gli aerei ADSB
-            AdsbPlaneList.checkStatus();
+            AdsbPlaneList.createCheckLoop();
         }
 
         this.#viewer.scene.preRender.addEventListener(listener);

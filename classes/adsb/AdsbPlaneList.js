@@ -1,3 +1,5 @@
+const AdsbPlane = require("./AdsbPlane").AdsbPlane;
+
 class AdsbPlaneList {
     static #planeList = new Map();
     #viewer
@@ -40,7 +42,7 @@ class AdsbPlaneList {
 
     }
 
-    getICAOList(adsbPlanesData) {
+    static getICAOList(adsbPlanesData) {
         let icaoList = [];
 
         for(let planeData in adsbPlanesData){

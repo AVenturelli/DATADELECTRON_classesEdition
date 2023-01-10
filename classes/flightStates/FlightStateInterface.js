@@ -1,6 +1,6 @@
-class FlightStateInterface {
+const Cesium = require("cesium");
 
-    doFlight(){}
+class FlightStateInterface {
 
     returnToBaseView(camera) {
         camera.setView({

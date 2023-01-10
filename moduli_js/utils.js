@@ -25,10 +25,9 @@ $("#antennaGPS").load("componenti_html/antennaGPS.html");
 function AnimateRotateRoll(){
 
     //1 - prendo la rotazione corrente e la metto all'inizio dell'animazione
-    current_roll = getRotationDegrees($("#plane_roll"))
-    new_roll = Math.round(radians_to_degrees(globalThis.roll))
-    
-    var elem = $("#plane_roll");
+    let elem = $("#plane_roll");
+    let current_roll = getRotationDegrees(elem)
+    let new_roll = Math.round(radians_to_degrees(globalThis.roll))
 
     $({deg: current_roll}).animate({deg: new_roll}, {
         duration: 16,
@@ -61,23 +60,11 @@ function AnimateHeading(){
     }
 }
 
-function AnimateAltitude(){
-
-    let currentFeets = globalThis.alt*3.281;
-    let currentrPression = globalThis.pressure;
-
-    if(globalThis.altitudeGauge !== undefined && globalThis.alt !== undefined && globalThis.pressure !== undefined)
-    {
-        globalThis.altitudeGauge.setAltitude(currentFeets)
-        globalThis.altitudeGauge.setPressure(currentrPression)
-    }
-}
-
 function AnimateRotatePitch(){
 
-    current_pitch = getRotationDegrees($("#plane_pitch"))
-    new_pitch = Math.round(radians_to_degrees(globalThis.pitch))
-    var elem = $("#plane_pitch");        
+    let elem = $("#plane_pitch");
+    let current_pitch = getRotationDegrees(elem)
+    let new_pitch = Math.round(radians_to_degrees(globalThis.pitch))
 
     $({deg: current_pitch}).animate({deg: new_pitch}, {
         duration: 16,
@@ -96,24 +83,24 @@ function test()
 }
 
 function getRotationDegrees(obj) {
-    var matrix = obj.css("-webkit-transform") ||
+    let angle;
+    let matrix = obj.css("-webkit-transform") ||
     obj.css("-moz-transform")    ||
     obj.css("-ms-transform")     ||
     obj.css("-o-transform")      ||
     obj.css("transform");
     if(matrix !== 'none') {
-        var values = matrix.split('(')[1].split(')')[0].split(',');
-        var a = values[0];
-        var b = values[1];
-        var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
-    } else { var angle = 0; }
-    
-    return angle //(angle < 0) ? angle + 360 : angle;
+        let values = matrix.split('(')[1].split(')')[0].split(',');
+        let a = values[0];
+        let b = values[1];
+        return Math.round(Math.atan2(b, a) * (180/Math.PI));
+    }else {
+        return 0;
+    }
 }
 
-function radians_to_degrees(radians)
-{
-    var pi = Math.PI;
+function radians_to_degrees(radians) {
+    let pi = Math.PI;
     return radians * (180/pi);
 }
 
@@ -122,25 +109,23 @@ function radians_to_degrees(radians)
 ////////////////////////////////////////////
 
 $('#zoom_range').on('input', function (){
-if($(this).val() > 10000)
-{
-    $("#current_zoom").css("color", "red");
-    $("#current_zoom").css("font-weight", "700");
-}
-else
-{
-    $("#current_zoom").css("color", "black");
-    $("#current_zoom").css("font-weight", "400");
-    
-}
-$("#current_zoom").val($(this).val())
-current_zoom = $(this).val()
+    let currentZoom = $('#current_zoom')
+    if($(this).val() > 10000) {
+        currentZoom.css("color", "red");
+        currentZoom.css("font-weight", "700");
+    }
+    else {
+        currentZoom.css("color", "black");
+        $("#current_zoom").css("font-weight", "400");
+    }
+    currentZoom.val($(this).val())
+    let current_zoom = $(this).val()
 })
 
 $("#current_zoom").on('change', function(){
     if($(this).val() > 20 && $(this).val() < 20000)
     {
         $("#zoom_range").val($(this).val())
-        current_zoom = $(this).val()
+        let current_zoom = $(this).val()
     }
 })

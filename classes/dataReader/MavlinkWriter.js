@@ -14,8 +14,9 @@ class MavlinkWriter {
         if(this.interval !== undefined)
         {
             clearInterval(this.interval)
-            $("#sendingDataFeedback").css("color","yellow")
-            $("#sendingDataFeedback").html("La scrittura è stata fermata")
+            let sendingDataFeedback = $("#sendingDataFeedback")
+            sendingDataFeedback.css("color","yellow")
+            sendingDataFeedback.html("La scrittura è stata fermata")
         }
     }
 
@@ -31,9 +32,9 @@ class MavlinkWriter {
 
                     serialport.write(text,"ascii")
 
-                    $("#sendingDataFeedback").css("color","green")
-                    
-                    $("#sendingDataFeedback").html("Sto scrivendo su " + serialport.settings.path)
+                    let sendingDataFeedback = $("#sendingDataFeedback")
+                    sendingDataFeedback.css("color","green")
+                    sendingDataFeedback.html("Sto scrivendo su " + serialport.settings.path)
                 }
                 //let text = '{ "X" : '+parseInt(globalThis.lat*10000000) + ',"Y" : '+parseInt(globalThis.lon*10000000)+ ',"H" : '+parseInt((globalThis.alt-100)*1000) + ',"x" : '+globalThis.antennaX + ',"y" : '+globalThis.antennaY+ ',"h" : '+globalThis.antennaZ +'}';
 
@@ -42,8 +43,9 @@ class MavlinkWriter {
             else
             {
                 clearInterval(this.interval)
-                $("#sendingDataFeedback").css("color","red")
-                $("#sendingDataFeedback").html("Errore nella scrittura")
+                let sendingDataFeedback = $("#sendingDataFeedback")
+                sendingDataFeedback.css("color","red")
+                sendingDataFeedback.html("Errore nella scrittura")
             }
         } catch (error) {
             console.log(error)
