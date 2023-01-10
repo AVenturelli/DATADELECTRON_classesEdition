@@ -29,8 +29,8 @@ html, body {
 
 #cesiumContainer
 {
-    -webkit-box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.3); 
-    box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 0 15px 3px rgba(0,0,0,0.3);
+    box-shadow: 0 0 15px 3px rgba(0,0,0,0.3);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
@@ -38,11 +38,11 @@ html, body {
 .infobox
 {
     margin-top:10px;
-    padding: 0px;
+    padding: 0;
     background-color: white;
     border-radius: 12px;
-    -webkit-box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.3); 
-    box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 0 15px 3px rgba(0,0,0,0.3);
+    box-shadow: 0 0 15px 3px rgba(0,0,0,0.3);
 }
 .boxTitle
 {
@@ -58,7 +58,7 @@ html, body {
 }
 .boxTitle h6
 {
-    margin: 0px;
+    margin: 0;
 }
 
 .main{
@@ -71,7 +71,7 @@ html, body {
 }
 body
 {
-    margin: 0px;
+    margin:0;
 }
 
 .centered-axis-x {
@@ -112,11 +112,9 @@ body
 /* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 50% !important; /* Could be more or less, depending on screen size */
-    margin-top: 40px;
+    margin: 40px auto 15%;
     width: 80% !important;
     overflow-y: auto;
     max-height: 900px;
@@ -124,11 +122,9 @@ body
 
 #modalParamContent {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 50% !important; /* Could be more or less, depending on screen size */
-    margin-top: 40px;
+    margin: 40px auto 15%;
     width: 80% !important;
     overflow-y: auto;
     max-height: 900px;
@@ -137,11 +133,9 @@ body
 
 .modal-content-modify {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 50% !important; /* Could be more or less, depending on screen size */
-    margin-top: 25%;
+    margin: 25% auto 15%;
     width: 40% !important;
     overflow-y: auto;
     max-height: 900px;
