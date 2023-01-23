@@ -61,11 +61,11 @@
               </div>
               <div class="col-icon-map col-sm-1 mytooltip">
                 <span class="tooltiptext mytooltip-bottom">Prima Persona</span>
-                <img id="firstPerson" src="assets/img/eye-open-svgrepo-com.svg" style="cursor: not-allowed; left:45px; background-color:rgba(255, 255, 255, 0.5); width: 60px;position: absolute;z-index: 100;border: lightcoral 3px solid; border-radius: 3px;padding: 2px;margin: 5px">
+                <img id="firstPerson" src="assets/img/eye-open-svgrepo-com.svg" style="cursor: not-allowed; left:40px; background-color:rgba(255, 255, 255, 0.5); width: 60px;position: absolute;z-index: 100;border: lightcoral 3px solid; border-radius: 3px;padding: 2px;margin: 5px">
               </div>
               <div class="col-icon-map col-sm-1 mytooltip">
                 <span class="tooltiptext mytooltip-bottom">Terza Persona</span>
-                <img id="thirdPerson" src="assets/img/plane-airplane-svgrepo-com.svg" style="cursor: pointer;left:50px;background-color:rgba(255, 255, 255, 0.5); width: 60px;position: absolute;z-index: 100;border: lightgray 3px solid; border-radius: 3px;padding: 2px;margin: 5px;">
+                <img id="thirdPerson" src="assets/img/plane-airplane-svgrepo-com.svg" style="cursor: pointer;left:45px;background-color:rgba(255, 255, 255, 0.5); width: 60px;position: absolute;z-index: 100;border: lightgray 3px solid; border-radius: 3px;padding: 2px;margin: 5px;">
               </div>
 
             </div>
@@ -109,9 +109,9 @@
             <div id="cesiumContainer" style="max-height: 1000px;"></div>
 
             <div id="planeCamera" style="max-height: 1000px;width: auto;background-color: pink;min-height: 700px;display: none">
-
-              <div id="container"></div>
-              <button id="add">+</button>
+              <div id="container">
+                <canvas id="canvasVideo" width='1000' height='1000'></canvas>
+              </div>
             </div>
 
             <!--<div class="col-sm-12 centered-axis-x" style="padding: 0;display: none;position: absolute;bottom:-40px;width: 40%;" id="zoommatoio"></div>
@@ -221,7 +221,7 @@
 
   </script>
   
-  <script src="./moduli_js/utils.js"></script>
+  <script src="moduli_js/utils.js"></script>
   <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="./assets/css/style.css" rel="stylesheet">
   <script src="./assets/js/bootstrap.min.js"></script>

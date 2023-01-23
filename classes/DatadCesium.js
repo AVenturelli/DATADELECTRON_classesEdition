@@ -17,7 +17,6 @@ class DatadCesium{
 
     static changeRenderLoopState(state){
         this.#renderLoopState = state
-        console.log("Cambio: "+ this.#renderLoopState)
     }
 
     static async createEverything(){
@@ -28,7 +27,6 @@ class DatadCesium{
         let listener = () => {
 
             if(this.#renderLoopState) {
-                console.log(this.#renderLoopState)
                 if (this.#currentConnection === undefined && this.#currentConnectionUndefined !== true) {
                     this.#currentFlightState.returnToBaseView()
                     this.#viewer.entities.remove(plane_entity);
