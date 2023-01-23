@@ -2,6 +2,9 @@ const rtsp = require("rtsp-ffmpeg");
 const application = require('express')()
 class VideoConnection {
     constructor(props) {
+    }
+
+    async initialize(){
 
         let server = require('http').Server(application)
         let io = require('socket.io')(server, {
@@ -14,10 +17,9 @@ class VideoConnection {
             console.log('Listening on localhost:6147');
         });
 
-
         let cams = 'rtsp://demo:demo@ipvmdemo.dyndns.org:5541/onvif-media/media.amp?profile=profile_1_h264&sessiontimeout=60&streamtype=unicast';
 
-        let stream = new rtsp.FFMpeg({input: cams, resolution: '600x450', quality: 3});
+        let stream = new rtsp.FFMpeg({input: cams, resolution: '1200x900', quality: 10});
 
         stream.on('start', function() {
             console.log('stream started');
@@ -48,9 +50,11 @@ class VideoConnection {
             socket.emit('start', 1);
         });
 
-        application.get('/', function (req, res) {
+        /*application.get('/', function (req, res) {
             res.sendFile(__dirname + '/componenti_html/videoCanvas.html');
-        });
+        });*/
+
+
     }
 }
 

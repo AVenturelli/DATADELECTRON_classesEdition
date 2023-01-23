@@ -10,7 +10,7 @@ const VideoConnection = require('./VideoConnection').VideoConnection;
 
 app.on('ready', function() {
 
-    new VideoConnection;
+    //new VideoConnection;
 
     // Create the browser window
     let mainWindow = new BrowserWindow({

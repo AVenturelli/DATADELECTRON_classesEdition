@@ -11,6 +11,8 @@ $("#zoommatoio").load("componenti_html/zoomatoio.html");
 $("#tettolone").load("componenti_html/roll_pitch.html"); 
 $("#flight_data").load("componenti_html/flight_data.html"); 
 $("#antennaGPS").load("componenti_html/antennaGPS.html");
+
+$("#overlayCommands").load("componenti_html/overlayButtons.html");
 ////////////////////////////////////////////   
 //            GROUND LEVELING             //
 ////////////////////////////////////////////

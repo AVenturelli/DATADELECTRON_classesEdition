@@ -1,3 +1,5 @@
+const {io} = require("socket.io-client");
+const VideoConnection = require("../../VideoConnection").VideoConnection;
 const DatadCesium = require("../DatadCesium").DatadCesium;
 
 class Camera {
@@ -19,6 +21,8 @@ class Camera {
 
             $( "#cesiumContainer" ).slideUp(function() {
                 $('#planeCamera').slideDown();
+                $('#firstPerson').hide('fast');
+                $('#thirdPerson').hide('fast');
             });
 
             this.startPlaying();
@@ -36,14 +40,25 @@ class Camera {
 
             $( "#planeCamera" ).slideUp(function() {
                 $('#cesiumContainer').slideDown();
+                $('#firstPerson').show('fast');
+                $('#thirdPerson').show('fast');
             });
 
             this.stopSocket();
         })
     }
 
-    static startPlaying(){
+    static startPlaying() {
 
+        let a = new VideoConnection();
+        a.initialize().then(r => {
+            this.doRender()
+        });
+
+
+    }
+
+    static doRender(){
         this.socketA = io('http://localhost:6147');
 
         this.socketA.on('start', (cou) => {
@@ -63,6 +78,13 @@ class Camera {
                 let img = new Image;
 
                 let ctx = canvas.getContext("2d");
+
+                //Rimuovo il loader
+                $('#loadingCamera').hide('fast')
+                ///////
+
+                //Faccio vedere il canvas
+                $('#canvasVideo').show('fast')
 
                 img.onload = function () {
                     URL.revokeObjectURL(url);
