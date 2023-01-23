@@ -6,38 +6,37 @@ const FlightStateThirdPerson = require('./flightStates/FlightStateThirdPerson').
 
 class DatadCesium{
 
-    #viewer
-    #currentView = 'first';
-    #currentConnection = null;
-    #currentConnectionUndefined = true;
-    #firstPersonView
-    #thirdPersonView
-    #currentFlightState
+    static #viewer
+    static #currentView = 'first';
+    static #currentConnection = null;
+    static #currentConnectionUndefined = true;
+    static #firstPersonView
+    static #thirdPersonView
+    static #currentFlightState
+    static #renderLoopState = true;
 
-    i=0
-
-    constructor() {
-        this.#doBaseInitialization()
+    static changeRenderLoopState(state){
+        this.#renderLoopState = state
+        console.log("Cambio: "+ this.#renderLoopState)
     }
 
-    async createEverything(){
+    static async createEverything(){
         await this.#doBaseInitialization();
     }
 
-    startRenderLoop() {
+    static startRenderLoop() {
         let listener = () => {
-            if(this.#currentConnection === undefined && this.#currentConnectionUndefined !== true)
-            {
-                this.#currentFlightState.returnToBaseView()
-                this.#viewer.entities.remove(plane_entity);
-            }
-            else if(this.#currentView === 'first')
-            {
-                this.#currentFlightState = this.#firstPersonView;
-            }
-            else
-            {
-                this.#currentFlightState = this.#thirdPersonView;
+
+            if(this.#renderLoopState) {
+                console.log(this.#renderLoopState)
+                if (this.#currentConnection === undefined && this.#currentConnectionUndefined !== true) {
+                    this.#currentFlightState.returnToBaseView()
+                    this.#viewer.entities.remove(plane_entity);
+                } else if (this.#currentView === 'first') {
+                    this.#currentFlightState = this.#firstPersonView;
+                } else {
+                    this.#currentFlightState = this.#thirdPersonView;
+                }
             }
 
             //Aggiorno tutti i contatori
@@ -50,7 +49,7 @@ class DatadCesium{
         this.#viewer.scene.preRender.addEventListener(listener);
     }
 
-    #doBaseInitialization(){
+    static #doBaseInitialization(){
         // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
         Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0M2JiZWQxOC05MjU4LTQyNWEtOTVhZS1kYTdlYmQyNDM3OTgiLCJpZCI6Mzc4NDAsImlhdCI6MTYxMjExMDg4Nn0.XETK0J9tqK0IS1KV6kJz4LFBJs8Vn4FmBtz0JfE8v60';
 

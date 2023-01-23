@@ -18,9 +18,14 @@
     "boostrap": "^2.0.0",
     "bootstrap-icons": "^1.8.1",
     "css-doodle": "^0.19.1",
+    "express": "^4.18.2",
     "jquery": "^3.6.0",
     "node-mavlink": "^1.0.13",
+    "node-rtsp-stream": "^0.0.9",
     "particlesjs": "^2.2.3",
-    "serialport": "^10.4.0"
+    "rtsp-ffmpeg": "^0.0.16",
+    "serialport": "^10.4.0",
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4"
   }
 }

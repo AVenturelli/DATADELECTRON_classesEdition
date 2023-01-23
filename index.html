@@ -18,6 +18,9 @@
     
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.83/Build/Cesium/Cesium.js"></script>
 
+    <script src="http://localhost:6147/socket.io/socket.io.js"></script>
+
+
     <title>DATAD</title>
 
 
@@ -43,16 +46,77 @@
 
           </div>   
         </div>
-        <div class="col-sm-8" id="cesiumBox" style="text-align: center;">
-            <div class="boxTitle">
-              <h6>Real Time Map</h6>
+        <div class="col-sm-8" id="cesiumBox" style="text-align: center;position: relative">
+
+            <div id="overlayCommands" class="row">
+              <div class="col-icon-map col-sm-1 mytooltip">
+                <span class="tooltiptext mytooltip-bottom">Cesium</span>
+                  <img id="showCesium"  src="assets/img/map-marker-svgrepo-com.svg" style="cursor: not-allowed; left:15px; background-color:rgba(255, 255, 255, 0.5); width: 60px;position: absolute;z-index: 100;border: lightcoral 3px solid; border-radius: 3px;padding: 2px;margin: 5px">
+              </div>
+              <div class="col-icon-map col-sm-1 mytooltip">
+                <span class="tooltiptext mytooltip-bottom">Plane Camera</span>
+                  <img id="showCamera" src="assets/img/camera-svgrepo-com.svg" style="cursor: pointer;left:20px;background-color:rgba(255, 255, 255, 0.5); width: 60px;position: absolute;z-index: 100;border: lightgray 3px solid; border-radius: 3px;padding: 2px;margin: 5px;">
+              </div>
+              <div class="col-sm-9">
+              </div>
+              <div class="col-icon-map col-sm-1 mytooltip">
+                <span class="tooltiptext mytooltip-bottom">Prima Persona</span>
+                <img id="firstPerson" src="assets/img/eye-open-svgrepo-com.svg" style="cursor: not-allowed; left:45px; background-color:rgba(255, 255, 255, 0.5); width: 60px;position: absolute;z-index: 100;border: lightcoral 3px solid; border-radius: 3px;padding: 2px;margin: 5px">
+              </div>
+              <div class="col-icon-map col-sm-1 mytooltip">
+                <span class="tooltiptext mytooltip-bottom">Terza Persona</span>
+                <img id="thirdPerson" src="assets/img/plane-airplane-svgrepo-com.svg" style="cursor: pointer;left:50px;background-color:rgba(255, 255, 255, 0.5); width: 60px;position: absolute;z-index: 100;border: lightgray 3px solid; border-radius: 3px;padding: 2px;margin: 5px;">
+              </div>
+
             </div>
+
+          <style>
+            .col-icon-map{
+              max-width: 60px !important;
+            }
+          </style>
+
+          <style>
+            /* Tooltip container */
+
+
+            /* Tooltip text */
+            .tooltiptext {
+              visibility: hidden;
+              width: 120px;
+              background-color: black;
+              color: #fff;
+              text-align: center;
+              padding: 5px 0;
+              border-radius: 6px;
+
+              /* Position the tooltip text - see examples below! */
+              position: absolute;
+              z-index: 1000;
+            }
+
+            .mytooltip-bottom {
+              margin-top: 70px;
+              left: 50%;
+            }
+
+            /* Show the tooltip text when you mouse over the tooltip container */
+            .mytooltip:hover .tooltiptext {
+              visibility: visible;
+            }
+          </style>
 
             <div id="cesiumContainer" style="max-height: 1000px;"></div>
 
-            <div class="col-sm-12 centered-axis-x" style="padding: 0;display: none;position: absolute;bottom:-40px;width: 40%;" id="zoommatoio"></div>
+            <div id="planeCamera" style="max-height: 1000px;width: auto;background-color: pink;min-height: 700px;display: none">
 
-            <!--<div class="col-sm-12 centered-axis-x" id="siummatoio" style="padding: 0px;display: none;position: absolute;bottom:-40px;width: 40%;"></div>-->
+              <div id="container"></div>
+              <button id="add">+</button>
+            </div>
+
+            <!--<div class="col-sm-12 centered-axis-x" style="padding: 0;display: none;position: absolute;bottom:-40px;width: 40%;" id="zoommatoio"></div>
+
+            <div class="col-sm-12 centered-axis-x" id="siummatoio" style="padding: 0px;display: none;position: absolute;bottom:-40px;width: 40%;"></div>-->
 
             <div id="tettolone" style="padding: 0;position: absolute;bottom:0;width: 100%;"></div>
         </div>
@@ -60,8 +124,6 @@
           <div id="flight_data" style="padding: 0;display: block;"></div>
           <div id="antennaGPS" style="display: block;"></div>
         </div>
-
-
       </div>
     </div>
     <div id="modals"></div>
@@ -76,10 +138,11 @@
     const CustomAlert = require('./classes/utility/CustomAlert').CustomAlert;
     const MavlinkParams = require('./classes/dataReader/MavlinkParams').MavlinkParams;
     const AdsbPlaneList = require("./classes/adsb/AdsbPlaneList").AdsbPlaneList;
+    const PlaneCamera = require("./classes/camera/Camera").Camera;
 
     $('#cesiumContainer').height("950px")
 
-    /*globalThis.portname = "COM7";
+    globalThis.portname = "COM7";
     globalThis.baud = 115200;
     globalThis.portnameWrite = "COM5";
     globalThis.baudWrite = 115200;
@@ -132,7 +195,7 @@
     //Casa giovanardi
     globalThis.antennaX = 0
     globalThis.antennaY = 0
-    globalThis.antennaZ = 0*/
+    globalThis.antennaZ = 0
 
 
     window.onload= function() {
@@ -141,14 +204,19 @@
       MavlinkParams.populateParams();
 
       //Non mi serve istanziare FlightData in quanto classe statica
-      let customCesium = new DatadCesium();
-      customCesium.createEverything().then(r => customCesium.startRenderLoop());
+      DatadCesium.createEverything().then(r => DatadCesium.startRenderLoop());
+
       new PortConnection();
 
       //Se voglio fare partire il loop di controllo degli aerei ADSB devo fare
       AdsbPlaneList.createCheckLoop();
-      JQueryParameterRenderer.createParamsButtonListener();
+
       //Creo il listener per i vari bottoni
+      JQueryParameterRenderer.createParamsButtonListener();
+
+      //Preparo la camera
+      PlaneCamera.createListener();
+
     }
 
   </script>
