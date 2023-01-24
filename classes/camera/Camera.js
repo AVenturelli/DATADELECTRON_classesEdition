@@ -1,5 +1,5 @@
 const {io} = require("socket.io-client");
-const VideoConnection = require("../../VideoConnection").VideoConnection;
+const VideoConnection = require("./VideoConnection").VideoConnection;
 const DatadCesium = require("../DatadCesium").DatadCesium;
 
 class Camera {
@@ -48,17 +48,17 @@ class Camera {
         })
     }
 
-    static startPlaying() {
+    static async startPlaying() {
 
         let a = new VideoConnection();
         a.initialize().then(r => {
             this.doRender()
         });
 
-
     }
 
     static doRender(){
+
         this.socketA = io('http://localhost:6147');
 
         this.socketA.on('start', (cou) => {
@@ -90,7 +90,6 @@ class Camera {
                     URL.revokeObjectURL(url);
                     ctx.drawImage(img, 0, 0);
                 };
-
                 img.src = url;
             });
         });

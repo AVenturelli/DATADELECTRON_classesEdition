@@ -17,7 +17,7 @@ class VideoConnection {
             console.log('Listening on localhost:6147');
         });
 
-        let cams = 'rtsp://demo:demo@ipvmdemo.dyndns.org:5541/onvif-media/media.amp?profile=profile_1_h264&sessiontimeout=60&streamtype=unicast';
+        let cams = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4';
 
         let stream = new rtsp.FFMpeg({input: cams, resolution: '1200x900', quality: 10});
 
@@ -33,7 +33,6 @@ class VideoConnection {
 
         ns.on('connection', function(wsocket) {
 
-            console.log('connected to /cam');
             let pipeStream = function(data) {
                 wsocket.emit('data', data);
             };
@@ -51,7 +50,7 @@ class VideoConnection {
         });
 
         /*application.get('/', function (req, res) {
-            res.sendFile(__dirname + '/componenti_html/videoCanvas.html');
+            res.sendFile(__dirname + '/componenti_html/test.html');
         });*/
 
 

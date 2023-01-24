@@ -13,6 +13,7 @@ $("#flight_data").load("componenti_html/flight_data.html");
 $("#antennaGPS").load("componenti_html/antennaGPS.html");
 
 $("#overlayCommands").load("componenti_html/overlayButtons.html");
+$("#loadingCamera").load("componenti_html/loadingPlane.html");
 ////////////////////////////////////////////   
 //            GROUND LEVELING             //
 ////////////////////////////////////////////
