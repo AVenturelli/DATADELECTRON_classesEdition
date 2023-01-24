@@ -73,12 +73,12 @@ app.on('ready', function() {
             contextIsolation: false,
         },
         nodeIntegrationInWorker: true,
-        width: 1902, 
+        width: 1902,
         height: 1080
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL('file://' + __dirname + '/index.html');
+    mainWindow.loadURL('file://' + __dirname + '/index.html').then(r => console.log("Pagina caricata"));
 
     // Returned when the window is closed.
     mainWindow.on('closed', function() {

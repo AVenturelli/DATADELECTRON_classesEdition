@@ -7,17 +7,20 @@ class Camera {
     static #streamingStatus = true;
     static socketA;
     static divSocket;
+    static showCamera = $('#showCamera');
+    static showCesium = $('#showCesium');
+
 
     static createListener(){
-        $('#showCamera').on('click',() =>{
+        $('#showCamera').on('click',() => {
 
             DatadCesium.changeRenderLoopState(false);
 
-            $('#showCamera').css('border-color', 'lightcoral');
-            $('#showCamera').css('cursor', 'not-allowed');
+            this.showCamera.css('border-color', 'lightcoral');
+            this.showCamera.css('cursor', 'not-allowed');
 
-            $('#showCesium').css('border-color', 'lightgray');
-            $('#showCesium').css('cursor', 'pointer');
+            this.showCesium.css('border-color', 'lightgray');
+            this.showCesium.css('cursor', 'pointer');
 
             $( "#cesiumContainer" ).slideUp(function() {
                 $('#planeCamera').slideDown();
@@ -25,18 +28,19 @@ class Camera {
                 $('#thirdPerson').hide('fast');
             });
 
-            this.startPlaying();
+            this.startPlaying().then(r => console.log("Avvio streaming"));
 
         })
 
-        $('#showCesium').on('click',() =>{
+        $('#showCesium').on('click',() => {
+
             DatadCesium.changeRenderLoopState(true);
 
-            $('#showCesium').css('border-color', 'lightcoral');
-            $('#showCesium').css('cursor', 'not-allowed');
+            this.showCesium.css('border-color', 'lightcoral');
+            this.showCesium.css('cursor', 'not-allowed');
 
-            $('#showCamera').css('border-color', 'lightgray');
-            $('#showCamera').css('cursor', 'pointer');
+            this.showCamera.css('border-color', 'lightgray');
+            this.showCamera.css('cursor', 'pointer');
 
             $( "#planeCamera" ).slideUp(function() {
                 $('#cesiumContainer').slideDown();
