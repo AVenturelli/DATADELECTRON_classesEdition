@@ -1,6 +1,8 @@
 const Cesium = require("cesium");
 const AdsbPlaneList = require("./adsb/AdsbPlaneList").AdsbPlaneList;
 const JQueryRender = require("./renderData/JQueryRender").JQueryRender;
+const Settings = require("./utility/Settings").Settings;
+
 const FlightStateFirstPerson = require('./flightStates/FlightStateFirstPerson').FlightStateFirstPerson;
 const FlightStateThirdPerson = require('./flightStates/FlightStateThirdPerson').FlightStateThirdPerson;
 
@@ -29,13 +31,14 @@ class DatadCesium{
             if(this.#renderLoopState) {
                 if (this.#currentConnection === undefined && this.#currentConnectionUndefined !== true) {
                     this.#currentFlightState.returnToBaseView()
-                    this.#viewer.entities.remove(plane_entity);
                 } else if (this.#currentView === 'first') {
                     this.#currentFlightState = this.#firstPersonView;
                 } else {
                     this.#currentFlightState = this.#thirdPersonView;
                 }
             }
+
+            this.#currentFlightState.doFlight()
 
             //Aggiorno tutti i contatori
             JQueryRender.updateSingleData();
@@ -59,9 +62,13 @@ class DatadCesium{
 
         // Fly the camera to Modena at the given longitude, latitude, and height.
         this.#viewer.camera.flyTo({
-            destination : Cesium.Cartesian3.fromDegrees( globalThis.lon,globalThis.lat,globalThis.alt),
+            destination : Cesium.Cartesian3.fromDegrees(
+                Settings.getData("startingLongitude"),
+                Settings.getData("statingLatitude"),
+                Settings.getData("startingAltitude")
+            ),
             orientation : {
-                heading : Cesium.Math.toRadians(120),
+                heading : Cesium.Math.toRadians(Settings.getData("startingHeading")),
                 pitch : Cesium.Math.toRadians(0),
             },
         });

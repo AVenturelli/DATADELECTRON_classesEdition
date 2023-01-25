@@ -78,7 +78,7 @@ app.on('ready', function() {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL('file://' + __dirname + '/index.html').then(r => console.log("Pagina caricata"));
+    mainWindow.loadURL('file://' + __dirname + '/index.html');
 
     // Returned when the window is closed.
     mainWindow.on('closed', function() {

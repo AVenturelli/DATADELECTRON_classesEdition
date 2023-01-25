@@ -7,28 +7,37 @@ class Camera {
     static #streamingStatus = true;
     static socketA;
     static divSocket;
-    static showCamera = $('#showCamera');
-    static showCesium = $('#showCesium');
 
+    static videoConnection;
 
     static createListener(){
-        $('#showCamera').on('click',() => {
+        $('#startStreaming').on('click',() => {
 
             DatadCesium.changeRenderLoopState(false);
 
-            this.showCamera.css('border-color', 'lightcoral');
-            this.showCamera.css('cursor', 'not-allowed');
+            $('#showCamera').css('border-color', 'lightcoral');
+            $('#showCamera').css('cursor', 'not-allowed');
 
-            this.showCesium.css('border-color', 'lightgray');
-            this.showCesium.css('cursor', 'pointer');
+            $('#showCesium').css('border-color', 'lightgray');
+            $('#showCesium').css('cursor', 'pointer');
 
-            $( "#cesiumContainer" ).slideUp(function() {
-                $('#planeCamera').slideDown();
-                $('#firstPerson').hide('fast');
-                $('#thirdPerson').hide('fast');
-            });
+            $('#planeCamera').show();
+            $('#firstPerson').hide('fast');
+            $('#thirdPerson').hide('fast');
+            $( "#cesiumContainer" ).slideUp();
 
-            this.startPlaying().then(r => console.log("Avvio streaming"));
+
+            $('#planeCamera').css('z-index',9999)
+            $('#cesiumContainer').css('z-index',9998)
+
+            let linkStream = $('#streamLink').val()
+            let streamWidth = $('#streamWidth').val()
+            let streamHeight = $('#streamHeight').val()
+            let streamQuality = $('#streamQuality').val()
+
+            $('#cameraLinkModal').hide()
+
+            this.startPlaying(linkStream,streamWidth,streamHeight,streamQuality).then(r => console.log("Avvio streaming"));
 
         })
 
@@ -36,32 +45,47 @@ class Camera {
 
             DatadCesium.changeRenderLoopState(true);
 
-            this.showCesium.css('border-color', 'lightcoral');
-            this.showCesium.css('cursor', 'not-allowed');
+            $('#showCesium').css('border-color', 'lightcoral');
+            $('#showCesium').css('cursor', 'not-allowed');
 
-            this.showCamera.css('border-color', 'lightgray');
-            this.showCamera.css('cursor', 'pointer');
+            $('#showCamera').css('border-color', 'lightgray');
+            $('#showCamera').css('cursor', 'pointer');
 
-            $( "#planeCamera" ).slideUp(function() {
-                $('#cesiumContainer').slideDown();
-                $('#firstPerson').show('fast');
-                $('#thirdPerson').show('fast');
-            });
+
+            $('#cesiumContainer').show();
+            $( "#planeCamera" ).slideUp();
+            $('#firstPerson').show('fast');
+            $('#thirdPerson').show('fast');
+
+            $('#planeCamera').css('z-index',9998)
+            $('#cesiumContainer').css('z-index',9999)
+
+            //Rimuovo il loader
+            $('#loadingCamera').show('fast')
+            ///////
+
+            //Faccio vedere il canvas
+            $('#canvasVideo').hide('fast')
 
             this.stopSocket();
         })
     }
 
-    static async startPlaying() {
+    static async startPlaying(linkStream, streamWidth, streamHeight,streamQuality) {
 
-        let a = new VideoConnection();
-        a.initialize().then(r => {
-            this.doRender()
+        this.videoConnection = new VideoConnection();
+        this.videoConnection.initialize(linkStream,streamWidth,streamHeight,streamQuality).then(r => {
+            this.doRender(streamWidth,streamHeight)
         });
 
     }
 
-    static doRender(){
+    static doRender(streamWidth,streamHeight){
+
+        let canvas = document.getElementById("canvasVideo");
+        let ctx = canvas.getContext("2d");
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         this.socketA = io('http://localhost:6147');
 
@@ -90,9 +114,16 @@ class Camera {
                 //Faccio vedere il canvas
                 $('#canvasVideo').show('fast')
 
+
+
+                let xStart =  1230/2-streamWidth/2
+                let yStart =  1000/2-streamHeight/2
+
+                console.log(xStart+" e "+yStart)
+
                 img.onload = function () {
                     URL.revokeObjectURL(url);
-                    ctx.drawImage(img, 0, 0);
+                    ctx.drawImage(img, xStart, yStart);
                 };
                 img.src = url;
             });
@@ -106,6 +137,9 @@ class Camera {
         }
         if(this.divSocket !== undefined){
             this.divSocket.disconnect();
+        }
+        if(this.videoConnection !== undefined){
+            this.videoConnection.kill()
         }
     }
 }

@@ -18,7 +18,6 @@ class FlightStateThirdPerson extends FlightStateInterface{
 
         if(FlightData.navigationalValuesValid()){
             if(this.planeEntity == null){
-
                 this.createPlane().then(r => {
                     this.updateCamera()
                     super.zeroTerrain().then(r => {

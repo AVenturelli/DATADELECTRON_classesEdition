@@ -45,17 +45,18 @@
         </div>
         <div class="col-sm-8" id="cesiumBox" style="text-align: center;position: relative">
 
-            <div id="overlayCommands" class="row"></div>
+            <div id="overlayCommands" class="row" style="position: relative;z-index: 999999"></div>
 
-            <div id="cesiumContainer" style="max-height: 1000px;"></div>
+            <div id="cesiumContainer" style="max-height: 1000px;max-width: 1230px;"></div>
 
-            <div id="planeCamera">
+            <div id="planeCamera" style="position: absolute;max-width: 1230px;width: 100%">
               <div id="container">
-                <canvas id="canvasVideo" width='1000' height='1000' style="display: none"></canvas>
+                <canvas id="canvasVideo" width='1230' height='1000' style="display: none"></canvas>
                 <div id="loadingCamera" style="width: 1000px;height: 1000px;position: relative"></div>
 
               </div>
             </div>
+          <div id="modalLink"></div>
 
             <div id="tettolone" style="padding: 0;position: absolute;bottom:0;width: 100%;"></div>
         </div>
@@ -77,11 +78,12 @@
     const CustomAlert = require('./classes/utility/CustomAlert').CustomAlert;
     const MavlinkParams = require('./classes/dataReader/MavlinkParams').MavlinkParams;
     const AdsbPlaneList = require("./classes/adsb/AdsbPlaneList").AdsbPlaneList;
+    const Settings = require("./classes/utility/Settings").Settings;
     const PlaneCamera = require("./classes/camera/Camera").Camera;
 
     $('#cesiumContainer').height("950px")
 
-    globalThis.portname = "COM7";
+    /*globalThis.portname = "COM7";
     globalThis.baud = 115200;
     globalThis.portnameWrite = "COM5";
     globalThis.baudWrite = 115200;
@@ -134,10 +136,13 @@
     //Casa giovanardi
     globalThis.antennaX = 0
     globalThis.antennaY = 0
-    globalThis.antennaZ = 0
+    globalThis.antennaZ = 0*/
 
 
-    window.onload= function() {
+    window.onload= async function () {
+
+      //Prendi i dati dal file settings.json
+      Settings.fetchData()
 
       //Salvo i parametri del file nella classe statica
       MavlinkParams.populateParams();
