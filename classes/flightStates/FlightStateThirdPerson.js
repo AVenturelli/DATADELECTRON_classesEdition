@@ -27,9 +27,10 @@ class FlightStateThirdPerson extends FlightStateInterface{
 
             }
             this.updateCamera();
+            return true;
         }
         else{
-            //TODO ci metterò un avviso!
+            return false;
         }
     }
 
@@ -77,15 +78,16 @@ class FlightStateThirdPerson extends FlightStateInterface{
         this.viewer.trackedEntity = this.planeEntity
     }
 
-    returnToBaseView()
-    {
+    returnToBaseView() {
         this.removePlaneFromViewer();
         super.returnToBaseView(this.camera);
     }
 
     removePlaneFromViewer(){
-        this.viewer.entities.remove(this.planeEntity);
-        this.planeEntity = null;
+        if(this.planeEntity !== null){
+            this.viewer.entities.remove(this.planeEntity);
+            this.planeEntity = null;
+        }
     }
 }
 

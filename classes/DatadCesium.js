@@ -38,7 +38,12 @@ class DatadCesium{
                 }
             }
 
-            this.#currentFlightState.doFlight()
+            let result = this.#currentFlightState.doFlight()
+
+            if(!result){
+                new CustomAlert("navValuesNotValid","Dati di navigazione non validi","Attenzione: i dati di navigazione inseriti non sono validi!")
+                this.#renderLoopState = false;
+            }
 
             //Aggiorno tutti i contatori
             JQueryRender.updateSingleData();
@@ -78,28 +83,53 @@ class DatadCesium{
 
         this.#firstPersonView = new FlightStateFirstPerson(this.#viewer.camera);
         this.#thirdPersonView = new FlightStateThirdPerson(this.#viewer.camera);
-
         this.#currentFlightState = this.#firstPersonView;
+
+        this.#createListeners()
+    }
+
+    changeTopView()
+    {
+
+
+        if(globalThis.plano !== undefined)
+        {
+            viewer.entities.remove(plane_entity);
+            globalThis.plane_entity = undefined;
+            globalThis.plano = undefined;
+        }
+        set_plane()
+        globalThis.first_person = false;
+        $("#zoommatoio").show('fast')
+    }
+
+    static #createListeners(){
+        //Creo listener per prima persona
+        $('#firstPerson').on('click',() => {
+            this.#currentFlightState = this.#firstPersonView
+            this.#thirdPersonView.removePlaneFromViewer();
+
+            $('#firstPerson').css('border-color', 'lightcoral');
+            $('#firstPerson').css('cursor', 'not-allowed');
+
+            $('#thirdPerson').css('border-color', 'lightgray');
+            $('#thirdPerson').css('cursor', 'pointer');
+        })
+        //Creo listener per terza persona
+        $('#thirdPerson').on('click',() => {
+            this.#currentFlightState = this.#thirdPersonView
+            $('#thirdPerson').css('border-color', 'lightcoral');
+            $('#thirdPerson').css('cursor', 'not-allowed');
+
+            $('#firstPerson').css('border-color', 'lightgray');
+            $('#firstPerson').css('cursor', 'pointer');
+        })
     }
 }
 
 exports.DatadCesium = DatadCesium;
 
-/*function changeTopView()
-{
-    top_view = true;
-    third_person = false;
-    
-    if(globalThis.plano !== undefined)
-    {
-        viewer.entities.remove(plane_entity);
-        globalThis.plane_entity = undefined;
-        globalThis.plano = undefined;
-    }
-    set_plane()
-    globalThis.first_person = false;
-    $("#zoommatoio").show('fast')
-}*/
+/*function
 
 
 

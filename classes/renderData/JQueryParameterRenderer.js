@@ -1,6 +1,9 @@
 const MavlinkParams = require("../dataReader/MavlinkParams").MavlinkParams;
 
 class JQueryParameterRenderer{
+
+    constructor() {
+    }
     static createParamsButtonListener(){
         let modalAllParams = $('#modalAllParams')
         let modalModifyParams = $('#modalModifyParams')

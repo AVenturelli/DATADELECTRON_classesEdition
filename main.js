@@ -73,9 +73,12 @@ app.on('ready', function() {
             contextIsolation: false,
         },
         nodeIntegrationInWorker: true,
+        frame: false,
         width: 1902,
         height: 1080
     });
+
+    mainWindow.maximize()
 
     // and load the index.html of the app.
     mainWindow.loadURL('file://' + __dirname + '/index.html');

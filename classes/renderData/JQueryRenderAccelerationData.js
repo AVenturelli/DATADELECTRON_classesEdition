@@ -4,6 +4,9 @@ const FlightData = require("../dataReader/FlightData").FlightData;
 class JQueryRenderAccelerationData extends JQueryRenderInterface{
 
     //Classe per renderizzare ACCELERAZIONE, ACCELERAZIONE MINIMA E VIBRAZIONE
+    constructor() {
+        super();
+    }
 
     static render() {
         $('#acc').html(FlightData.acceleration)

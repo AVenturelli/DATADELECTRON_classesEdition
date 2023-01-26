@@ -3,6 +3,10 @@ const FlightData = require("../dataReader/FlightData").FlightData;
 
 class JQueryRenderAltitudeData extends JQueryRenderInterface{
 
+    constructor() {
+        super();
+    }
+
     //Classe per renderizzare ACCELERAZIONE, ACCELERAZIONE MINIMA E VIBRAZIONE
 
     static #pressure = $('#pressure');

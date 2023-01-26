@@ -19,7 +19,11 @@ class VideoConnection {
             console.log('Listening on localhost:6147');
         });
 
-        let stream = new rtsp.FFMpeg({input: linkStream, resolution: streamWidth+"x"+streamHeight, quality: streamQuality});
+        let stream = new rtsp.FFMpeg({
+            input: linkStream,
+            resolution: Settings.getData('')+"x"+streamHeight,
+            quality: streamQuality
+        });
 
         stream.on('start', function() {
             console.log('stream started');

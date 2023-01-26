@@ -59,10 +59,8 @@ class Camera {
 
             $('#planeCamera').css('z-index',9998)
             $('#cesiumContainer').css('z-index',9999)
-
-            //Rimuovo il loader
+            
             $('#loadingCamera').show('fast')
-            ///////
 
             //Faccio vedere il canvas
             $('#canvasVideo').hide('fast')
@@ -113,8 +111,6 @@ class Camera {
 
                 //Faccio vedere il canvas
                 $('#canvasVideo').show('fast')
-
-
 
                 let xStart =  1230/2-streamWidth/2
                 let yStart =  1000/2-streamHeight/2

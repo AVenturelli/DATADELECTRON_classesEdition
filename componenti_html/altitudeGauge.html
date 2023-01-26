@@ -1,0 +1,127 @@
+<canvas width="100px" height="400px" id="altitudeCanvas" style="background-color: rgba(0, 0, 0, 0.5)"></canvas>
+
+<script>
+    let deg = 0;
+    setInterval(()=>{
+        draw(deg);
+        deg++;
+    },1)
+
+    function draw(deg) {
+        let c = document.getElementById('altitudeCanvas')
+        let ctx = c.getContext('2d');
+        let textcTX = c.getContext('2d')
+        //Linea principale
+        ctx.beginPath();
+        ctx.strokeStyle = 'white';
+
+        ctx.clearRect(0, 0, c.width, c.height);
+
+        //Creo le posizioni dei vari numeri
+        //let deg = FlightData.planeHeading;
+       // if (deg === undefined) deg = Settings.getData('startingHeading');
+        deg = Math.round(deg/10)
+        //deg = deg - 10;
+        for (let i = 1; i < 36; i++) {
+
+            if (i === 21) {
+                ctx.stroke();
+                this.drawCentralIndicator(ctx, deg, i);
+                deg += 0.5
+                continue;
+            }
+
+            ctx.moveTo(95,20 + (i * 10))
+
+            let height = 0;
+
+           if (deg*10 % 100 === 0) {
+                ctx.fillStyle = "white";
+                ctx.font = "bold 22px serif";
+                let offset = 10
+                if (deg > 100) offset = 15
+                ctx.fillText(deg*10,30, 20 + (i * 10) - offset);
+                height = 40
+            }
+             else{
+                height = 80
+            }
+            ctx.lineTo(height,20 + (i * 10))
+            deg += 0.5
+        }
+
+        ctx.stroke();
+    }
+
+    function drawCentralIndicator(ctx,deg,i){
+
+
+        this.roundRect(10,180, 60, 40, 10,ctx);
+
+        ctx.strokeStyle="red";
+        ctx.lineWidth="2";
+
+        ctx.moveTo(70,200)
+        ctx.lineTo(95,200)
+
+        ctx.stroke()
+
+        ctx.beginPath()
+
+        ctx.strokeStyle="white";
+        ctx.lineWidth="1";
+
+        if(deg%1000 === 0){
+
+            ctx.font = "bold 30px serif";
+            ctx.fillStyle = "red";
+            ctx.fillText(deg*10, 30,20+(i*10)-20);
+
+        }
+        else {
+            ctx.fillStyle = "black";
+            ctx.font = "bold 22px serif";
+
+            let offset = 27;
+
+            if(deg*10<100) offset = 30;
+
+            if(deg*10>=100) offset = 25;
+
+            if(deg*10>=1000) offset = 20;
+
+            console.log(offset)
+
+            ctx.fillText(deg*10, offset,20+(i*10)-22);
+        }
+
+
+
+    }
+
+    function roundRect(x, y, w, h, radius,cont)
+    {
+        let r = x + w;
+        let b = y + h;
+
+        let c = document.getElementById('altitudeCanvas')
+        let context = c.getContext('2d');
+
+        context.beginPath()
+        context.strokeStyle="red";
+        context.lineWidth="2";
+
+        context.moveTo(x+radius, y);
+        context.lineTo(r-radius, y);
+        context.quadraticCurveTo(r, y, r, y+radius);
+        context.lineTo(r, y+h-radius);
+        context.quadraticCurveTo(r, b, r-radius, b);
+        context.lineTo(x+radius, b);
+        context.quadraticCurveTo(x, b, x, b-radius);
+        context.lineTo(x, y+radius);
+        context.quadraticCurveTo(x, y, x+radius, y);
+        context.fillStyle = "white"
+        context.fill()
+        context.stroke()
+    }
+</script>

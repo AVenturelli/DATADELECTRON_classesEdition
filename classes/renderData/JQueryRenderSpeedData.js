@@ -2,7 +2,9 @@ const {JQueryRenderInterface} = require("./JQueryRenderInterface");
 const FlightData = require("../dataReader/FlightData").FlightData;
 
 class JQueryRenderSpeedData extends JQueryRenderInterface{
-
+    constructor() {
+        super();
+    }
     //Classe per renderizzare ACCELERAZIONE, ACCELERAZIONE MINIMA E VIBRAZIONE
 
     static render() {

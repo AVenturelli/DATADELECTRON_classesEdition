@@ -1,6 +1,7 @@
 {
   "allSettings":
-    [{"name":"statingLatitude","value":44.647036},
+    [
+      {"name":"statingLatitude","value":44.647036},
       {"name":"startingLongitude","value":10.923773},
       {"name":"startingAltitude","value":120},
       {"name":"startingHeading","value":120}
