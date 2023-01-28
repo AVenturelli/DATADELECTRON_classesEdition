@@ -1,3 +1,5 @@
+const CanvasAltitudeRender = require("./CanvasAltitudeRender").CanvasAltitudeRender;
+const CanvasSpeedRender = require("./CanvasSpeedRender").CanvasSpeedRender;
 const CanvasCompassRender = require("./CanvasCompassRender").CanvasCompassRender;
 const JQueryRenderAltitudeData = require("./JQueryRenderAltitudeData").JQueryRenderAltitudeData;
 const JQueryRenderSpeedData = require("./JQueryRenderSpeedData").JQueryRenderSpeedData;
@@ -11,6 +13,8 @@ class JQueryRender {
         JQueryRenderAltitudeData.render()
         JQueryRenderSpeedData.render()
         CanvasCompassRender.render()
+        CanvasSpeedRender.render()
+        CanvasAltitudeRender.render()
     }
 }
 

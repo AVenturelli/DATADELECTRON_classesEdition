@@ -1,15 +1,9 @@
-<canvas width="100px" height="400px" id="altitudeCanvas" style="background-color: rgba(0, 0, 0, 0.5)"></canvas>
+class CanvasSpeedRender {
+    constructor() {
+    }
 
-<script>
-    let deg = 0;
-    draw(deg)
-    setInterval(()=>{
-        draw(deg);
-        deg++;
-    },100)
-
-    function draw(deg) {
-        let c = document.getElementById('altitudeCanvas')
+    static render(){
+        let c = document.getElementById('speedCanvas')
         let ctx = c.getContext('2d');
         let textcTX = c.getContext('2d')
         //Linea principale
@@ -19,24 +13,22 @@
         ctx.clearRect(0, 0, c.width, c.height);
 
         //Creo le posizioni dei vari numeri
-        //let deg = FlightData.planeHeading;
-       // if (deg === undefined) deg = Settings.getData('startingHeading');
-        //deg = Math.round(deg)
 
-        let originalDeg = deg
-        deg -= 15
+        let originalDeg = FlightData.airSpeed;
+        let deg = 0;
+        if(isNaN(originalDeg) || originalDeg === undefined){
+            deg = 0;
+            originalDeg = 0;
+        }
+        else{
+            deg = originalDeg;
+        }
+
+        deg -= 15;
 
         this.drawCentralIndicator(ctx, originalDeg);
 
         for (let i = 0; i < 60; i++) {
-
-
-            /*if (i === 30) {
-                //ctx.stroke();
-
-                deg+=0.5
-                continue;
-            }*/
 
             if(deg < 0) {
                 deg+=0.5
@@ -52,32 +44,32 @@
 
             let height = 0;
 
-           if (deg % 10 === 0 || deg === 0) {
-               if(deg%100 === 0 || deg === 0) {
-                   ctx.fillStyle = "red";
-                   ctx.font = "bold 22px serif";
-               }else {
-                   ctx.fillStyle = "white";
-                   ctx.font = "bold 22px serif";
-               }
+            if (deg % 10 === 0 || deg === 0) {
+                if(deg%100 === 0 || deg === 0) {
+                    ctx.fillStyle = "red";
+                    ctx.font = "bold 22px serif";
+                }else {
+                    ctx.fillStyle = "white";
+                    ctx.font = "bold 22px serif";
+                }
 
-               let offset = 27;
+                let offset = 27;
 
-               if(deg<100) offset = 47;
+                if(deg<100) offset = 47;
 
-               if(deg<10) offset = 55;
+                if(deg<10) offset = 55;
 
-               if(deg>=100) offset = 43;
+                if(deg>=100) offset = 43;
 
-               if(i===28 || i === 29 || i === 30 || i === 31 || i ===32){
+                if(i===28 || i === 29 || i === 30 || i === 31 || i ===32){
                     //Dont draw
-               }else
-               {
-                   ctx.fillText(deg,offset, 25 + (i/2 * 12));
-                   height = 35
-               }
+                }else
+                {
+                    ctx.fillText(deg,offset, 25 + (i/2 * 12));
+                    height = 35
+                }
             }
-             else{
+            else{
                 height = 15
             }
             ctx.lineTo(height,20+(i/2 * 12))
@@ -87,7 +79,7 @@
         ctx.stroke();
     }
 
-    function drawCentralIndicator(ctx,deg,i){
+    static drawCentralIndicator(ctx,deg,i){
 
         this.roundRect(30,180, 60, 40, 10,ctx);
 
@@ -119,12 +111,12 @@
 
     }
 
-    function roundRect(x, y, w, h, radius,cont)
+    static roundRect(x, y, w, h, radius,cont)
     {
         let r = x + w;
         let b = y + h;
 
-        let c = document.getElementById('altitudeCanvas')
+        let c = document.getElementById('speedCanvas')
         let context = c.getContext('2d');
 
         context.beginPath()
@@ -144,4 +136,6 @@
         context.fill()
         context.stroke()
     }
-</script>
+}
+
+exports.CanvasSpeedRender = CanvasSpeedRender;

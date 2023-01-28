@@ -1,0 +1,110 @@
+<canvas width="200px" height="680px" id="altitudeCanvas" style="background-color: rgba(0, 0, 0, 0.5)"></canvas>
+
+<script>
+    let deg = 0;
+    draw(deg)
+    let offset = -1
+    setInterval(() => {
+        draw(deg);
+        deg+=offset;
+        if(deg < -90) offset = 1
+        if(deg > 90) offset = -1
+    }, 100)
+
+    function draw(deg) {
+        let c = document.getElementById('altitudeCanvas')
+        let ctx = c.getContext('2d');
+        let textcTX = c.getContext('2d')
+        //Linea principale
+        ctx.beginPath();
+        ctx.strokeStyle = 'white';
+
+        ctx.clearRect(0, 0, c.width, c.height);
+
+        //Creo le posizioni dei vari numeri
+        //let deg = FlightData.planeHeading;
+        // if (deg === undefined) deg = Settings.getData('startingHeading');
+        //deg = Math.round(deg)
+
+
+
+        this.drawCentralIndicator(ctx);
+
+        let originalDeg = Math.round(deg)
+        //TODO ATTENZIONE! PROBABILMENTE DEVO CAMBIARE SEGNO!
+
+
+        //console.log(originalDeg)
+        if(originalDeg > 90 ){originalDeg = 90}
+        if(originalDeg < -90){originalDeg = -90}
+        deg = originalDeg - 20
+
+        for (let i = 0; i < 80; i++) {
+
+            let currentHeightUtity = i*8
+
+            if(deg > 90 || deg < -90){
+                deg+=0.5
+                continue
+            }
+
+            if (deg % 2.5 !== 0 && deg !== 0) {
+                deg += 0.5
+                continue
+            }
+
+            let height = 0;
+
+            if (deg % 10 === 0 || deg === 0) {
+                if (deg % 100 === 0 || deg === 0) {
+                    ctx.fillStyle = "red";
+                    ctx.font = "bold 22px serif";
+                } else {
+                    ctx.fillStyle = "white";
+                    ctx.font = "bold 22px serif";
+                }
+
+                let offset = 10;
+
+
+                if(deg !== 0){
+                ctx.fillText(Math.abs(deg), offset, 25 + currentHeightUtity);
+                ctx.fillText(Math.abs(deg), offset+160, 25 + currentHeightUtity);
+                }
+                else {
+                    ctx.fillText(Math.abs(deg), offset, 25 + currentHeightUtity);
+                    ctx.fillText(Math.abs(deg), offset+160, 25 + currentHeightUtity);
+                }
+            }
+            let center = 0;
+            if(deg%5 !== 0){height = 40;center=80}
+            if(deg%5 === 0){height = 70; center = 65}
+            if(deg%10 === 0){height = 120; center = 40}
+
+            ctx.moveTo(center, 20 + currentHeightUtity)
+            ctx.lineTo(height+center, 20 + currentHeightUtity)
+            deg += 0.5
+        }
+
+        ctx.stroke();
+    }
+
+    function drawCentralIndicator(ctx, deg, i) {
+
+        //this.roundRect(30, 180, 60, 40, 10, ctx);
+
+        ctx.strokeStyle = "lightcoral";
+        ctx.lineWidth = "4";
+
+        ctx.moveTo(0, 340)
+        ctx.lineTo(200, 340)
+        ctx.moveTo(100, 240)
+        ctx.lineTo(100, 440)
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = "2";
+    }
+
+</script>

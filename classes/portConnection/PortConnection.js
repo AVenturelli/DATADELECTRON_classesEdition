@@ -160,8 +160,11 @@ class PortConnection {
                 globalThis.currentWriter.startWriting()
             }*/
         } catch (error) {
-            console.error("Errore: "+ error)
+            //console.error("Errore: "+ error)
             this.#currentConnection = undefined
+            let a = new CustomAlert('failedConnection',"CONNESSIONE FALLITA","La connessione alla porta "+this.#currentPortName+" con baud rate di "+this.#currentBaudRate+" è fallita con errore: <br><strong>"+error+"</strong>")
+            a.printCode()
+            a.showAlert()
             //globalThis.#currentConnectionWrite = undefined
             //globalThis.#currentWriter = undefined
         }

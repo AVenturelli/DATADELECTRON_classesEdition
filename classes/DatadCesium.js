@@ -45,6 +45,22 @@ class DatadCesium{
                 this.#renderLoopState = false;
             }
 
+            //Mostro altimetro, spiiidometro e bussolo, prima e 3za persona
+            if(this.#currentConnection !== undefined) {
+                $('speedCanvas').show()
+                $('altitudeCanvas').show()
+                $('myCanvas').show()
+                $('firstPerson').show()
+                $('thirdPerson').show()
+            }
+            else {
+                $('speedCanvas').hide()
+                $('altitudeCanvas').hide()
+                $('myCanvas').hide()
+                $('firstPerson').hide()
+                $('thirdPerson').hide()
+            }
+
             //Aggiorno tutti i contatori
             JQueryRender.updateSingleData();
 
@@ -88,21 +104,6 @@ class DatadCesium{
         this.#createListeners()
     }
 
-    changeTopView()
-    {
-
-
-        if(globalThis.plano !== undefined)
-        {
-            viewer.entities.remove(plane_entity);
-            globalThis.plane_entity = undefined;
-            globalThis.plano = undefined;
-        }
-        set_plane()
-        globalThis.first_person = false;
-        $("#zoommatoio").show('fast')
-    }
-
     static #createListeners(){
         //Creo listener per prima persona
         $('#firstPerson').on('click',() => {
@@ -128,29 +129,3 @@ class DatadCesium{
 }
 
 exports.DatadCesium = DatadCesium;
-
-/*function
-
-
-
-/*function changeThirdPerson()
-{
-    top_view = true;
-    third_person = true;
-    
-    if(globalThis.plano !== undefined)
-    {
-        viewer.entities.remove(plane_entity);
-        globalThis.plane_entity = undefined;
-        globalThis.plano = undefined;
-    }
-
-    set_plane()
-    globalThis.first_person = false;
-    $("#zoommatoio").hide('fast')
-    $('#select_view').val('third_person_view')
-    //Metto le tettolone
-    $('#tettolone_container').show();
-    //Tolgo i display
-    $('#gauges').hide('fast')
-}*/

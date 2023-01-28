@@ -1,15 +1,8 @@
-<canvas width="100px" height="400px" id="altitudeCanvas" style="background-color: rgba(0, 0, 0, 0.5)"></canvas>
+class CanvasAltitudeRender {
+    constructor() {
+    }
 
-<script>
-    let deg = 0;
-    draw(deg)
-    setInterval(()=>{
-        draw(deg);
-        deg++;
-    },3
-    )
-
-    function draw(deg) {
+    static render(){
         let c = document.getElementById('altitudeCanvas')
         let ctx = c.getContext('2d');
         let textcTX = c.getContext('2d')
@@ -21,10 +14,19 @@
 
         //Creo le posizioni dei vari numeri
         //let deg = FlightData.planeHeading;
-       // if (deg === undefined) deg = Settings.getData('startingHeading');
-        let originalDeg = deg
-        deg = Math.round(deg/10)
-        deg = deg - 15;
+        // if (deg === undefined) deg = Settings.getData('startingHeading');
+        let originalDeg = FlightData.airSpeed;
+        let deg = 0;
+        if(isNaN(originalDeg) || originalDeg === undefined){
+            deg = 0;
+            originalDeg = 0;
+        }
+        else{
+            deg = Math.round(deg/10)
+            deg = originalDeg;
+        }
+
+        deg -= 15;
 
         this.drawCentralIndicator(ctx, Math.round(originalDeg/10));
 
@@ -44,32 +46,32 @@
 
             let height = 0;
 
-           if (deg*10 % 100 === 0 || deg===0) {
-               if(deg*10%100 === 0 || deg === 0) {
-                   ctx.fillStyle = "red";
-                   ctx.font = "bold 22px serif";
-               }else {
-                   ctx.fillStyle = "white";
-                   ctx.font = "bold 22px serif";
-               }
+            if (deg*10 % 100 === 0 || deg===0) {
+                if(deg*10%1000 === 0 || deg === 0) {
+                    ctx.fillStyle = "red";
+                    ctx.font = "bold 22px serif";
+                }else {
+                    ctx.fillStyle = "white";
+                    ctx.font = "bold 22px serif";
+                }
 
-               let offset = 27;
+                let offset = 27;
 
-               if(deg*10<100) offset = 30;
+                if(deg*10<100) offset = 30;
 
-               if(deg*10>=100) offset = 25;
+                if(deg*10>=100) offset = 25;
 
-               if(deg*10>=1000) offset = 20;
+                if(deg*10>=1000) offset = 20;
 
-               if(i===28 || i === 29 || i === 30 || i === 31 || i === 32){
-                   //Dont draw
-                   height = 65
-               }else {
-                   ctx.fillText(deg*10,offset, 20 + (i * 6));
-                   height = 65
-               }
+                if(i===28 || i === 29 || i === 30 || i === 31 || i === 32){
+                    //Dont draw
+                    height = 65
+                }else {
+                    ctx.fillText(deg*10,offset, 20 + (i * 6));
+                    height = 65
+                }
             }
-             else{
+            else{
                 height = 85
             }
             ctx.lineTo(height,20 + (i * 6))
@@ -79,7 +81,7 @@
         ctx.stroke();
     }
 
-    function drawCentralIndicator(ctx,deg){
+    static drawCentralIndicator(ctx,deg){
 
 
         this.roundRect(10,180, 60, 40, 10,ctx);
@@ -97,33 +99,22 @@
         ctx.strokeStyle="white";
         ctx.lineWidth="1";
 
-        if(deg%1000 === 0){
+        ctx.fillStyle = "black";
+        ctx.font = "bold 22px serif";
 
-            ctx.font = "bold 22px serif";
-            ctx.fillStyle = "red";
-            ctx.fillText(deg*10, 30,207);
+        let offset = 27;
 
-        }
-        else {
-            ctx.fillStyle = "black";
-            ctx.font = "bold 22px serif";
+        if(deg*10<100) offset = 30;
 
-            let offset = 27;
+        if(deg*10>=100) offset = 25;
 
-            if(deg*10<100) offset = 30;
+        if(deg*10>=1000) offset = 20;
 
-            if(deg*10>=100) offset = 25;
-
-            if(deg*10>=1000) offset = 20;
-
-            ctx.fillText(deg*10, offset,207);
-        }
-
-
+        ctx.fillText(deg*10, offset,207);
 
     }
 
-    function roundRect(x, y, w, h, radius,cont)
+    static roundRect(x, y, w, h, radius,cont)
     {
         let r = x + w;
         let b = y + h;
@@ -148,4 +139,5 @@
         context.fill()
         context.stroke()
     }
-</script>
+}
+exports.CanvasAltitudeRender = CanvasAltitudeRender;
