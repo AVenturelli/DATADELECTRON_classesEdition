@@ -1,0 +1,102 @@
+<lable>Roll: </lable><input id="roll" value="10">
+<lable>Pitch: </lable><input id="pitch" value="10">
+<button id="test">Controlla parametri</button>
+<button id="start">Oppure inizia girotondo</button><small><--- Il roll aumenta di 0,1 e il pitch di 1 ogni 100 millisecondi</small>
+
+<br><br>
+<canvas width="1000px" height="1000px" id="altitudeCanvas"></canvas>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+
+    let pitch = 0;
+    let roll = 0;
+    createCoords(pitch, roll);
+    let offset = -0.1;
+
+    $('#start').on('click',() => {
+        setInterval(() => {
+            createCoords(pitch, roll);
+            pitch += offset;
+            if (pitch < -90) offset = 0.1
+            if (pitch > 90) offset = -0.1
+            roll+=0.1;
+        }, 100)
+    })
+
+    $('#test').on('click',()=>{
+        createCoords($('#pitch').val(),$('#roll').val())
+    })
+
+
+
+    function createCoords(pitch, roll, heading) {
+        let canvas = document.getElementById('altitudeCanvas')
+        let ctx = canvas.getContext('2d');
+        ctx.restore()
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        let baseSkyCoords = [[-1000, -1000], [canvas.width + 2000, -1000], [canvas.width + 2000, canvas.height / 2], [-1000, canvas.height]]
+        let baseGroundCoords = [[-1000, canvas.height / 2], [canvas.width + 2000, canvas.height / 2], [canvas.width + 2000, canvas.height + 1000], [-1000, canvas.height + 1000]]
+
+        //Calcolo solamente il pitch: le prime due coordinate del cielo sono sempre uguali
+        //Successivamente applicherò il roll!
+
+        let baseValue = 5.55555;
+        baseSkyCoords[2][1] += pitch * baseValue;
+        baseSkyCoords[3][1] += pitch * baseValue;
+        baseGroundCoords[0][1] += pitch * baseValue;
+        baseGroundCoords[1][1] += pitch * baseValue;
+
+
+        ctx.translate(ctx.canvas.width * 0.5, ctx.canvas.height * 0.5);    // center
+        let oldRotation = getRotation(ctx)
+        ctx.rotate(-oldRotation);
+        ctx.rotate(getRadianAngle(roll));                                         // 90°
+        ctx.translate(-ctx.canvas.width * 0.5, -ctx.canvas.height * 0.5);
+
+
+        draw(canvas, baseSkyCoords, baseGroundCoords);
+
+    }
+
+    function getRotation(ctx) {
+        const mat = ctx.getTransform();
+        const rad = Math.atan2(mat.b, mat.a);
+        if (rad < 0) { // angle is > Math.PI
+            return rad + Math.PI * 2;
+        }
+        return rad;
+    }
+
+    function getRadianAngle(degreeValue) {
+        return degreeValue * Math.PI / 180;
+    }
+
+    function draw(canvas, skyCoords, groundCoords) {
+
+        let ctx = canvas.getContext('2d');
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        //SKY
+        ctx.beginPath()
+        ctx.moveTo(skyCoords[0][0], skyCoords[0][1]);
+        for (let i = 0; i < skyCoords.length; i++) {
+            ctx.lineTo(skyCoords[i][0], skyCoords[i][1]);
+        }
+        ctx.fillStyle = "lightblue"
+        ctx.fill()
+
+        //GROUND
+        ctx.beginPath()
+        ctx.moveTo(groundCoords[0][0], groundCoords[0][1]);
+        for (let i = 0; i < groundCoords.length; i++) {
+            ctx.lineTo(groundCoords[i][0], groundCoords[i][1]);
+        }
+        ctx.fillStyle = "orange"
+        ctx.fill()
+
+
+        //ctx.stroke();
+    }
+</script>
