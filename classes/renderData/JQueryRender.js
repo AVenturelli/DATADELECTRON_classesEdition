@@ -1,3 +1,5 @@
+const CanvasArtificialOrizon = require("./CanvasArtificialOrizon").CanvasArtificialOrizon;
+const CanvasPitch = require("./CanvasPitch").CanvasPitch;
 const CanvasAltitudeRender = require("./CanvasAltitudeRender").CanvasAltitudeRender;
 const CanvasSpeedRender = require("./CanvasSpeedRender").CanvasSpeedRender;
 const CanvasCompassRender = require("./CanvasCompassRender").CanvasCompassRender;
@@ -15,6 +17,8 @@ class JQueryRender {
         CanvasCompassRender.render()
         CanvasSpeedRender.render()
         CanvasAltitudeRender.render()
+        CanvasArtificialOrizon.render();
+        CanvasPitch.render()
     }
 }
 

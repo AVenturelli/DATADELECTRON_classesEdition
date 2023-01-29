@@ -28,8 +28,6 @@ class CanvasAltitudeRender {
 
         deg -= 15;
 
-        this.drawCentralIndicator(ctx, Math.round(originalDeg/10));
-
         for (let i = 0; i < 60; i++) {
 
             if(deg < 0) {
@@ -79,6 +77,8 @@ class CanvasAltitudeRender {
         }
 
         ctx.stroke();
+
+        this.drawCentralIndicator(ctx, Math.round(originalDeg/10));
     }
 
     static drawCentralIndicator(ctx,deg){
@@ -106,9 +106,13 @@ class CanvasAltitudeRender {
 
         if(deg*10<100) offset = 30;
 
+        if(deg === 0) offset = 35;
+
         if(deg*10>=100) offset = 25;
 
         if(deg*10>=1000) offset = 20;
+
+        console.log(offset)
 
         ctx.fillText(deg*10, offset,207);
 

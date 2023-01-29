@@ -20,6 +20,8 @@ class Camera {
 
             $('#showCesium').css('border-color', 'lightgray');
             $('#showCesium').css('cursor', 'pointer');
+            $('#showArtificialHorizon').css('border-color', 'lightgray');
+            $('#showArtificialHorizon').css('cursor', 'pointer');
 
             $('#planeCamera').show();
             $('#firstPerson').hide('fast');
@@ -50,6 +52,8 @@ class Camera {
 
             $('#showCamera').css('border-color', 'lightgray');
             $('#showCamera').css('cursor', 'pointer');
+            $('#showArtificialHorizon').css('border-color', 'lightgray');
+            $('#showArtificialHorizon').css('cursor', 'pointer');
 
 
             $('#cesiumContainer').show();
@@ -64,6 +68,48 @@ class Camera {
 
             //Faccio vedere il canvas
             $('#canvasVideo').hide('fast')
+
+            this.stopSocket();
+        })
+
+        $('#showArtificialHorizon').on('click',() => {
+
+            DatadCesium.changeRenderLoopState(false);
+
+            $('#showArtificialHorizon').css('border-color', 'lightcoral');
+            $('#showArtificialHorizon').css('cursor', 'not-allowed');
+
+            $('#showCamera').css('border-color', 'lightgray');
+            $('#showCamera').css('cursor', 'pointer');
+            $('#showCesium').css('border-color', 'lightgray');
+            $('#showCesium').css('cursor', 'pointer');
+            $('#horizonCanvas').hide();
+
+            $('#cesiumContainer').hide();
+            $( "#planeCamera" ).slideUp();
+            $('#firstPerson').hide('fast');
+            $('#thirdPerson').hide('fast');
+
+            $('#planeCamera').css('z-index',9998)
+            $('#cesiumContainer').css('z-index',9999)
+
+            $('#loadingCamera').show('fast')
+
+            //Faccio vedere il canvas
+            $('#canvasVideo').hide('fast')
+
+            $('#altitudeCanvas').show()
+            $('#speedCanvas').show()
+            $('#myCanvas').show()
+            $('#pitchCanvas').show()
+
+            $('#altitudeCanvas').css('border-radius','5px')
+            $('#speedCanvas').css('border-radius','5px')
+            $('#myCanvas').css('border-radius','5px')
+
+
+
+            $('#horizonCanvas').show();
 
             this.stopSocket();
         })
