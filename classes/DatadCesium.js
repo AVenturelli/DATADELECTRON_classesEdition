@@ -8,6 +8,9 @@ const FlightStateThirdPerson = require('./flightStates/FlightStateThirdPerson').
 
 class DatadCesium{
 
+    constructor() {
+    }
+
     static #viewer
     static #currentView = 'first';
     static #currentConnection = null;
@@ -16,6 +19,8 @@ class DatadCesium{
     static #thirdPersonView
     static #currentFlightState
     static #renderLoopState = true;
+
+    static #dataInterval = undefined;
 
     static changeRenderLoopState(state){
         this.#renderLoopState = state
@@ -31,6 +36,7 @@ class DatadCesium{
             if(this.#renderLoopState) {
                 if (this.#currentConnection === undefined && this.#currentConnectionUndefined !== true) {
                     this.#currentFlightState.returnToBaseView()
+                    this.stopDataInterval()
                 } else if (this.#currentView === 'first') {
                     this.#currentFlightState = this.#firstPersonView;
                 } else {
@@ -39,6 +45,7 @@ class DatadCesium{
             }
 
             let result = this.#currentFlightState.doFlight()
+
 
             if(!result){
                 new CustomAlert("navValuesNotValid","Dati di navigazione non validi","Attenzione: i dati di navigazione inseriti non sono validi!")
@@ -60,15 +67,28 @@ class DatadCesium{
                 $('firstPerson').hide()
                 $('thirdPerson').hide()
             }
+        }
 
+        //Creo loop data
+        this.#dataInterval = setInterval(() => {
             //Aggiorno tutti i contatori
             JQueryRender.updateSingleData();
 
             //Controllo gli aerei ADSB
             AdsbPlaneList.createCheckLoop();
-        }
+
+            //Aggiorno tutti i contatori
+            JQueryRender.updateSingleData();
+
+        },16)
 
         this.#viewer.scene.preRender.addEventListener(listener);
+    }
+
+    static stopDataInterval(){
+        if(this.#dataInterval !== undefined){
+            clearInterval(this.#dataInterval)
+        }
     }
 
     static #doBaseInitialization(){

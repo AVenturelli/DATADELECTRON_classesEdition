@@ -112,8 +112,6 @@ class CanvasAltitudeRender {
 
         if(deg*10>=1000) offset = 20;
 
-        console.log(offset)
-
         ctx.fillText(deg*10, offset,207);
 
     }

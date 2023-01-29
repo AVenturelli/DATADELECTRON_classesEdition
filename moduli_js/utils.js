@@ -15,7 +15,7 @@ $("#antennaGPS").load("componenti_html/antennaGPS.html");
 $("#overlayCommands").load("componenti_html/overlayButtons.html");
 $("#loadingCamera").load("componenti_html/loadingPlane.html");
 $("#modalLink").load("componenti_html/cameraAddress.html");
-
+$('#layoutManager').load("componenti_html/layoutSettings.html")
 
 ////////////////////////////////////////////   
 //            GROUND LEVELING             //

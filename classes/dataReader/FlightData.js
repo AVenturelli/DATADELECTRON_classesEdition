@@ -7,9 +7,9 @@
     static planePitch = undefined;
     static planeRoll = undefined;
     static planeHeading = undefined;
-    static planeRollSpeed
-    static planePitchSpeed
-    static planeHeadingSpeed
+    static planeRollSpeed = undefined
+    static planePitchSpeed = undefined
+    static planeHeadingSpeed = undefined
     static acceleration = undefined;
     static maxAcceleration = undefined;
     static vibration = undefined;

@@ -3,6 +3,8 @@ const VideoConnection = require("./VideoConnection").VideoConnection;
 const DatadCesium = require("../DatadCesium").DatadCesium;
 
 class Camera {
+    constructor() {
+    }
 
     static #streamingStatus = true;
     static socketA;
@@ -28,7 +30,6 @@ class Camera {
             $('#thirdPerson').hide('fast');
             $( "#cesiumContainer" ).slideUp();
 
-
             $('#planeCamera').css('z-index',9999)
             $('#cesiumContainer').css('z-index',9998)
 
@@ -38,6 +39,8 @@ class Camera {
             let streamQuality = $('#streamQuality').val()
 
             $('#cameraLinkModal').hide()
+
+
 
             this.startPlaying(linkStream,streamWidth,streamHeight,streamQuality).then(r => console.log("Avvio streaming"));
 
@@ -69,6 +72,9 @@ class Camera {
             //Faccio vedere il canvas
             $('#canvasVideo').hide('fast')
 
+            $('#horizonCanvas').hide();
+            $('#cameraLinkModal').hide()
+
             this.stopSocket();
         })
 
@@ -83,31 +89,18 @@ class Camera {
             $('#showCamera').css('cursor', 'pointer');
             $('#showCesium').css('border-color', 'lightgray');
             $('#showCesium').css('cursor', 'pointer');
-            $('#horizonCanvas').hide();
 
             $('#cesiumContainer').hide();
             $( "#planeCamera" ).slideUp();
             $('#firstPerson').hide('fast');
             $('#thirdPerson').hide('fast');
+            $('#cameraLinkModal').hide()
 
             $('#planeCamera').css('z-index',9998)
             $('#cesiumContainer').css('z-index',9999)
 
             $('#loadingCamera').show('fast')
-
-            //Faccio vedere il canvas
             $('#canvasVideo').hide('fast')
-
-            $('#altitudeCanvas').show()
-            $('#speedCanvas').show()
-            $('#myCanvas').show()
-            $('#pitchCanvas').show()
-
-            $('#altitudeCanvas').css('border-radius','5px')
-            $('#speedCanvas').css('border-radius','5px')
-            $('#myCanvas').css('border-radius','5px')
-
-
 
             $('#horizonCanvas').show();
 

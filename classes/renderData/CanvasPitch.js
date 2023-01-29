@@ -12,13 +12,13 @@ class CanvasPitch {
         ctx.strokeStyle = 'black';
 
         let deg = FlightData.planePitch
+        let roll = FlightData.planeRoll
         if(deg === undefined){deg=0}
-
         ctx.clearRect(0, 0, c.width, c.height);
 
         this.drawCentralIndicator(ctx);
 
-        let originalDeg = Math.round(deg)
+        let originalDeg = -1*Math.round(deg)
         //TODO ATTENZIONE! PROBABILMENTE DEVO CAMBIARE SEGNO!
 
 
@@ -26,6 +26,12 @@ class CanvasPitch {
         if(originalDeg > 90 ){originalDeg = 90}
         if(originalDeg < -90){originalDeg = -90}
         deg = originalDeg - 20
+
+        ctx.translate(ctx.canvas.width * 0.5, ctx.canvas.height * 0.5);    // center
+        let oldRotation = this.getRotation(ctx)
+        ctx.rotate(-oldRotation);
+        ctx.rotate(this.getRadianAngle(roll));                                         // 90°
+        ctx.translate(-ctx.canvas.width * 0.5, -ctx.canvas.height * 0.5);
 
         for (let i = 0; i < 80; i++) {
 
@@ -52,7 +58,7 @@ class CanvasPitch {
                     ctx.font = "bold 22px serif";
                 }
 
-                let offset = 10;
+                let offset = 250;
 
                 if(deg !== 0) {
                     ctx.fillText(Math.abs(deg), offset, 25 + currentHeightUtity);
@@ -64,9 +70,9 @@ class CanvasPitch {
                 }
             }
             let center = 0;
-            if(deg%5 !== 0){height = 40;center=80}
-            if(deg%5 === 0){height = 70; center = 65}
-            if(deg%10 === 0){height = 120; center = 40}
+            if(deg%5 !== 0){height = 40;center=80+240}
+            if(deg%5 === 0){height = 70; center = 65+240}
+            if(deg%10 === 0){height = 120; center = 40+240}
 
             ctx.moveTo(center, 20 + currentHeightUtity)
             ctx.lineTo(height+center, 20 + currentHeightUtity)
@@ -76,6 +82,19 @@ class CanvasPitch {
         ctx.stroke();
     }
 
+    static getRotation(ctx) {
+        const mat = ctx.getTransform();
+        const rad = Math.atan2(mat.b, mat.a);
+        if (rad < 0) { // angle is > Math.PI
+            return rad + Math.PI * 2;
+        }
+        return rad;
+    }
+
+    static getRadianAngle(degreeValue) {
+        return degreeValue * Math.PI / 180;
+    }
+
     static drawCentralIndicator(ctx, deg, i) {
 
         //this.roundRect(30, 180, 60, 40, 10, ctx);
@@ -83,10 +102,10 @@ class CanvasPitch {
         ctx.strokeStyle = "lightcoral";
         ctx.lineWidth = "4";
 
-        ctx.moveTo(0, 340)
-        ctx.lineTo(200, 340)
-        ctx.moveTo(100, 240)
-        ctx.lineTo(100, 440)
+        ctx.moveTo(240, 340)
+        ctx.lineTo(440, 340)
+        ctx.moveTo(340, 240)
+        ctx.lineTo(340, 440)
 
         ctx.stroke()
         ctx.beginPath()
