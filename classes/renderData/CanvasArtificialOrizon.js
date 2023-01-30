@@ -36,8 +36,7 @@ class CanvasArtificialOrizon {
         if(this.#oldHeading === null){this.#oldHeading = heading}
         if(this.#oldHeading !== null && this.#oldHeading - heading > 150 || this.#oldHeading - heading < -150){
             //Devo ruotare tutto!
-            if(this.#testaInGiu) {this.#testaInGiu=false}
-            else {this.#testaInGiu = true}
+            this.#testaInGiu = !this.#testaInGiu;
             this.#oldHeading = heading
         }
 
@@ -95,8 +94,28 @@ class CanvasArtificialOrizon {
         for (let i = 0; i < groundCoords.length; i++) {
             ctx.lineTo(groundCoords[i][0], groundCoords[i][1]);
         }
-        ctx.fillStyle = "orange"
+        ctx.fillStyle = "saddlebrown"
         ctx.fill()
+
+        canvas = document.getElementById('horizonBarCanvas')
+        ctx = canvas.getContext('2d');
+
+        ctx.strokeStyle="yellow";
+        ctx.lineWidth="5";
+
+        ctx.fillStyle = "black";
+        ctx.font = "bold 22px serif";
+
+        ctx.moveTo(200,400)
+        ctx.lineTo(400,400)
+
+        ctx.moveTo(600,400)
+        ctx.lineTo(800,400)
+
+        ctx.moveTo(495,400)
+        ctx.lineTo(505,400)
+
+        ctx.stroke();
     }
 }
 

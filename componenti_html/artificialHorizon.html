@@ -1,10 +1,11 @@
-<lable>Roll: </lable><input id="roll" value="10">
-<lable>Pitch: </lable><input id="pitch" value="10">
+<label for="roll">Roll: </label><input id="roll" value="10"/>
+<label for="pitch">Pitch: </label><input id="pitch" value="10"/>
 <button id="test">Controlla parametri</button>
 <button id="start">Oppure inizia girotondo</button><small><--- Il roll aumenta di 0,1 e il pitch di 1 ogni 100 millisecondi</small>
 
 <br><br>
-<canvas width="1000px" height="800px" id="altitudeCanvas"></canvas>
+<canvas width="1000px" height="800px" id="altitudeCanvas" style="position: absolute;: block;"></canvas>
+<canvas width="1000px" height="800px" id="horizonBarCanvas" style="position: absolute;z-index:99999"></canvas>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
 
@@ -63,8 +64,7 @@
         if(oldHeading === null){oldHeading = heading}
         if(oldHeading !== null && oldHeading - heading > 150 || oldHeading - heading < -150){
             //Devo ruotare tutto!
-            if(testaInGiu) {testaInGiu=false}
-            else {testaInGiu = true}
+            testaInGiu = !testaInGiu;
             oldHeading = heading
         }
 
@@ -122,10 +122,30 @@
         for (let i = 0; i < groundCoords.length; i++) {
             ctx.lineTo(groundCoords[i][0], groundCoords[i][1]);
         }
-        ctx.fillStyle = "orange"
+        ctx.fillStyle = "saddlebrown"
         ctx.fill()
 
 
-        //ctx.stroke();
+        ctx.beginPath()
+
+        canvas = document.getElementById('horizonBarCanvas')
+        ctx = canvas.getContext('2d');
+
+        ctx.strokeStyle="yellow";
+        ctx.lineWidth="5";
+
+        ctx.fillStyle = "black";
+        ctx.font = "bold 22px serif";
+
+        ctx.moveTo(200,400)
+        ctx.lineTo(400,400)
+
+        ctx.moveTo(600,400)
+        ctx.lineTo(800,400)
+
+        ctx.moveTo(495,400)
+        ctx.lineTo(505,400)
+
+        ctx.stroke();
     }
 </script>

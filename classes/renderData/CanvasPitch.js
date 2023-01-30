@@ -16,11 +16,9 @@ class CanvasPitch {
         if(deg === undefined){deg=0}
         ctx.clearRect(0, 0, c.width, c.height);
 
-        this.drawCentralIndicator(ctx);
+        //this.drawCentralIndicator(ctx);
 
         let originalDeg = -1*Math.round(deg)
-        //TODO ATTENZIONE! PROBABILMENTE DEVO CAMBIARE SEGNO!
-
 
         //console.log(originalDeg)
         if(originalDeg > 90 ){originalDeg = 90}

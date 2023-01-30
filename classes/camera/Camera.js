@@ -68,11 +68,13 @@ class Camera {
             $('#cesiumContainer').css('z-index',9999)
             
             $('#loadingCamera').show('fast')
+            $('#horizonBarCanvas').hide()
 
             //Faccio vedere il canvas
             $('#canvasVideo').hide('fast')
 
             $('#horizonCanvas').hide();
+            $('#horizonBarCanvas').hide()
             $('#cameraLinkModal').hide()
 
             this.stopSocket();
@@ -91,10 +93,12 @@ class Camera {
             $('#showCesium').css('cursor', 'pointer');
 
             $('#cesiumContainer').hide();
+
             $( "#planeCamera" ).slideUp();
             $('#firstPerson').hide('fast');
             $('#thirdPerson').hide('fast');
             $('#cameraLinkModal').hide()
+            $('#horizonBarCanvas').show()
 
             $('#planeCamera').css('z-index',9998)
             $('#cesiumContainer').css('z-index',9999)
