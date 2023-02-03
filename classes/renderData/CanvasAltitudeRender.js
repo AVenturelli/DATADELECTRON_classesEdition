@@ -15,15 +15,16 @@ class CanvasAltitudeRender {
         //Creo le posizioni dei vari numeri
         //let deg = FlightData.planeHeading;
         // if (deg === undefined) deg = Settings.getData('startingHeading');
-        let originalDeg = FlightData.airSpeed;
+        let originalDeg = FlightData.planeAltitude;
         let deg = 0;
         if(isNaN(originalDeg) || originalDeg === undefined){
             deg = 0;
             originalDeg = 0;
         }
         else{
-            deg = Math.round(deg/10)
-            deg = originalDeg;
+
+            deg = Math.round(originalDeg/10)
+            //deg = originalDeg;
         }
 
         deg -= 15;

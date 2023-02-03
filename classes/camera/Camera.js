@@ -158,7 +158,7 @@ class Camera {
                 let xStart =  1230/2-streamWidth/2
                 let yStart =  1000/2-streamHeight/2
 
-                console.log(xStart+" e "+yStart)
+                //console.log(xStart+" e "+yStart)
 
                 img.onload = function () {
                     URL.revokeObjectURL(url);

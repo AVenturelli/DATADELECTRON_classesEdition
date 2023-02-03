@@ -119,12 +119,10 @@ class PortConnection {
     #setIntervals(){
 
         setInterval(() => {
-            if(
-                Connection.getSerialPort() === undefined ||
-                !Connection.getSerialPort().checkIfConnected()
-            ) {
+
+            if(!Connection.getSerialPort() !== undefined || (Connection.getSerialPort() !== undefined && Connection.checkIfConnected())) {
                 ConnectionJQueryRenderer.setUiToNotConnected()
-                DatadSerialPort.listSerialPorts();
+                //DatadSerialPort.listSerialPorts();
             }
             else {
                 ConnectionJQueryRenderer.setUiToConnected()
@@ -137,16 +135,18 @@ class PortConnection {
 
             Connection.setPort(this.#currentPortName)
             Connection.setBaud(this.#currentBaudRate)
-
+            Connection.connectToPort();
             MavlinkReader.startReader();
 
-            this.#currentMavlinkReader = new MavlinkReader(
+            /*this.#currentMavlinkReader = new MavlinkReader(
                 this.#currentConnection.connectToPort(),
                 this.#flightData,
                 this.#mavlinkParams
             );
 
-            this.#currentMavlinkReader.startReader()
+            this.#currentMavlinkReader.startReader()*/
+
+
 
             ConnectionJQueryRenderer.setUiToConnected();
 

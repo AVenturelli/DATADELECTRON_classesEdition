@@ -1,17 +1,17 @@
 //Classe con tutti i dati di volo!!!
  class FlightData {
-    static planeLatitude = undefined;
-    static planeLongitude = undefined;
-    static planeAltitude = undefined;
-    static planeDeltaAltitude = undefined;
-    static planePitch = undefined;
-    static planeRoll = undefined;
-    static planeHeading = undefined;
-    static planeRollSpeed = undefined
-    static planePitchSpeed = undefined
-    static planeHeadingSpeed = undefined
-    static acceleration = undefined;
-    static maxAcceleration = undefined;
+    static planeLatitude = 0;
+    static planeLongitude = 0;
+    static planeAltitude = 100;
+    static planeDeltaAltitude = 0;
+    static planePitch = 0;
+    static planeRoll = 0;
+    static planeHeading = 0;
+    static planeRollSpeed = 0
+    static planePitchSpeed = 0
+    static planeHeadingSpeed = 0
+    static acceleration = 0;
+    static maxAcceleration = 0;
     static vibration = undefined;
     static groundSpeed = undefined;
     static airSpeed = undefined;

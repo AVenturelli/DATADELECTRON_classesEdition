@@ -75,7 +75,7 @@ class DatadCesium{
             JQueryRender.updateSingleData();
 
             //Controllo gli aerei ADSB
-            AdsbPlaneList.createCheckLoop();
+            //AdsbPlaneList.createCheckLoop();
 
             //Aggiorno tutti i contatori
             JQueryRender.updateSingleData();
@@ -118,7 +118,7 @@ class DatadCesium{
         this.#viewer.scene.debugShowFramesPerSecond = true;
 
         this.#firstPersonView = new FlightStateFirstPerson(this.#viewer.camera);
-        this.#thirdPersonView = new FlightStateThirdPerson(this.#viewer.camera);
+        this.#thirdPersonView = new FlightStateThirdPerson(this.#viewer);
         this.#currentFlightState = this.#firstPersonView;
 
         this.#createListeners()
@@ -127,8 +127,8 @@ class DatadCesium{
     static #createListeners(){
         //Creo listener per prima persona
         $('#firstPerson').on('click',() => {
+            this.#currentFlightState.removePlaneFromViewer();
             this.#currentFlightState = this.#firstPersonView
-            this.#thirdPersonView.removePlaneFromViewer();
 
             $('#firstPerson').css('border-color', 'lightcoral');
             $('#firstPerson').css('cursor', 'not-allowed');
@@ -139,6 +139,7 @@ class DatadCesium{
         //Creo listener per terza persona
         $('#thirdPerson').on('click',() => {
             this.#currentFlightState = this.#thirdPersonView
+            this.#currentFlightState.createPlane();
             $('#thirdPerson').css('border-color', 'lightcoral');
             $('#thirdPerson').css('cursor', 'not-allowed');
 

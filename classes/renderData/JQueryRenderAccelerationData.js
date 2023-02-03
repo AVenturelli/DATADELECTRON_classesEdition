@@ -11,7 +11,7 @@ class JQueryRenderAccelerationData extends JQueryRenderInterface{
     static render() {
         $('#acc').html(FlightData.acceleration)
         $('#acc_max').html(FlightData.maxAcceleration)
-        $('#vibr').html(FlightData.vibration)
+        $('#vibr').val(FlightData.vibration)
     }
 }
 

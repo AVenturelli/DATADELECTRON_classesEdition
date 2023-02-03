@@ -14,7 +14,8 @@ class CanvasCompassRender {
         ctx.clearRect(0, 0, c.width, c.height);
 
         //Creo le posizioni dei vari numeri
-        let originalDeg = FlightData.planeHeading;
+        let originalDeg = Math.round(FlightData.planeHeading);
+        if(originalDeg < 0){ originalDeg+=360;}
         let deg = 0;
         if (originalDeg === undefined) originalDeg = Settings.getData('startingHeading');
         deg = originalDeg - 25;
@@ -62,7 +63,7 @@ class CanvasCompassRender {
             deg += 0.5
         }
         ctx.stroke();
-        this.drawCentralIndicator(ctx, originalDeg);
+        this.drawCentralIndicator(ctx, Math.round(originalDeg));
     }
 
     static drawCentralIndicator(ctx, deg, i) {

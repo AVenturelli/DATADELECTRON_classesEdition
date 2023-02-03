@@ -64,15 +64,15 @@ class JQueryRendererConnection {
 
     static displaySerialPorts(ports){
         let comPort = $('#com_port');
-        let comPortOut = $('#com_port_out');
+        //let comPortOut = $('#com_port_out');
         comPort.empty()
-        comPortOut.empty()
+        //comPortOut.empty()
         if (ports !== "")
         {
             for (let port of ports)
             {
                 comPort.append("<option value='"+ port.path +"' >"+ port.path +"</option>")
-                comPortOut.append("<option value='"+ port.path +"' >"+ port.path +"</option>")
+                //comPortOut.append("<option value='"+ port.path +"' >"+ port.path +"</option>")
             }
         }
     }

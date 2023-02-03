@@ -29,14 +29,18 @@ class FlightStateFirstPerson extends FlightStateInterface{
                 FlightData.planeAltitude+FlightData.planeDeltaAltitude
             ),
             orientation : {
-                heading : FlightData.planeHeading,
-                pitch : FlightData.planePitch,
-                roll : FlightData.planeRoll
+                heading : this.getRadianAngle(FlightData.planeHeading),
+                pitch : this.getRadianAngle(FlightData.planePitch),
+                roll : this.getRadianAngle(FlightData.planeRoll)
             },
         });
     }
     returnToBaseView() {
         super.returnToBaseView(this.camera);
+    }
+
+    getRadianAngle(degreeValue) {
+        return degreeValue * Math.PI / 180;
     }
 }
 

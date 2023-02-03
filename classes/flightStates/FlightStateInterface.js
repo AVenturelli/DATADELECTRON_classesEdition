@@ -14,7 +14,7 @@ class FlightStateInterface {
             },
         });
     }
-    async zeroTerrain() {
+    async zeroTerrain(viewer) {
 
         let positions = [
             Cesium.Cartographic.fromDegrees(
@@ -26,7 +26,7 @@ class FlightStateInterface {
         try {
             let [updatedHeight] = await Promise.all([Cesium.sampleTerrain(viewer.terrainProvider, 12, positions)]);
             let newDelta = updatedHeight[0].height - FlightData.planeAltitude + FlightData.planeDeltaAltitude
-            FlightData.planeDeltaAltitude(newDelta);
+            FlightData.planeDeltaAltitude = newDelta;
         } catch (error) {
             console.log(error)
         }

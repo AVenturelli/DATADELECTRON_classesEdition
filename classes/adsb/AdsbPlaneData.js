@@ -73,3 +73,5 @@ class AdsbPlaneData {
         return this.#adsbPlaneICAO;
     }
 }
+
+exports.AdsbPlaneData = AdsbPlaneData;

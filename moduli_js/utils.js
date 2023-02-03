@@ -10,7 +10,7 @@ $("#zoommatoio").load("componenti_html/zoomatoio.html");
 //$("#siummatoio").load("componenti_html/levelTerrain.html"); 
 $("#tettolone").load("componenti_html/roll_pitch.html"); 
 $("#flight_data").load("componenti_html/flight_data.html"); 
-$("#antennaGPS").load("componenti_html/antennaGPS.html");
+//$("#antennaGPS").load("componenti_html/antennaGPS.html");
 
 $("#overlayCommands").load("componenti_html/overlayButtons.html");
 $("#loadingCamera").load("componenti_html/loadingPlane.html");

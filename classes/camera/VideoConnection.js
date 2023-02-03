@@ -21,7 +21,7 @@ class VideoConnection {
 
         let stream = new rtsp.FFMpeg({
             input: linkStream,
-            resolution: Settings.getData('')+"x"+streamHeight,
+            resolution: streamWidth+"x"+streamHeight,
             quality: streamQuality
         });
 

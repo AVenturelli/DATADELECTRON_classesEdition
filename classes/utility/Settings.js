@@ -24,7 +24,7 @@ class Settings {
 
 //usage:
     static async fetchData() {
-        let text = await this.fs.readFile("./settings.json");
+        let text = await this.fs.readFile("settings.json");
         let data = JSON.parse(text.toString());
         this.#settingsData = data.allSettings
     }

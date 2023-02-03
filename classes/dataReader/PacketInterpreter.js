@@ -1,30 +1,30 @@
+const {AdsbPlaneData} = require("../adsb/AdsbPlaneData");
 const FlightData = require("./FlightData").FlightData;
 const AdsbPlaneList = require("../adsb/AdsbPlaneList").AdsbPlaneList;
 
 class PacketInterpreter{
     constructor() {
     }
-    static setData() {
-
+    static setData(data) {
 
         switch (data.constructor.name) {
             case 'ParamValue': break;
             case 'Heartbeat': break;
             case 'GlobalPositionInt' :
                 FlightData.planeLatitude = (data.lat/10000000)
-                FlightData.planeLongitude = (data.lat/10000000)
-                FlightData.planeAltitude = (data.lat/10000000)
+                FlightData.planeLongitude = (data.lon/10000000)
+                FlightData.planeAltitude = (data.alt/1000)
                 break;
             case 'RawGps' : break;
             case 'ScaledImu2':
                 let acceleration = Math.round(Math.sqrt(data.xacc*data.xacc+data.yacc*data.yacc+data.zacc*data.zacc)/1000*100)/100
                 FlightData.acceleration = (acceleration);
-                if(acceleration > FlightData.maxAcceleration() ) {
-                    FlightData.acceleration = (acceleration)
+                if(acceleration > FlightData.maxAcceleration ) {
+                    FlightData.maxAcceleration = (acceleration)
                 }
                 break;
             case 'Vibration':
-                let vibration = Math.round((data.vibrationX+data.vibrationY+data.vibrationX)/3*100)/100
+                let vibration = Math.round((data.vibrationX+data.vibrationY+data.vibrationX)/3)
                 FlightData.vibration = (vibration)
                 break;
             case 'VfrHud':
@@ -34,13 +34,13 @@ class PacketInterpreter{
                 FlightData.airSpeed = (airSpeed)
                 break;
             case 'ScaledPressure':
-                let pressure = Math.round(data.pressAbs*100)/100
+                let pressure = Math.round(data.pressAbs)
                 FlightData.atmosphericPressure = (pressure)
                 break;
             case 'Attitude':
-                FlightData.planeHeading = data.yaw
-                FlightData.planePitch = data.pitch
-                FlightData.planeRoll = (data.roll)
+                FlightData.planeHeading = this.getDegreeAngleFromRad(data.yaw)
+                FlightData.planePitch =  this.getDegreeAngleFromRad(data.pitch)
+                FlightData.planeRoll =  this.getDegreeAngleFromRad(data.roll)
                 FlightData.planeHeadingSpeed = (data.yawspeed)
                 FlightData.planePitchSpeed = (data.pitchspeed)
                 FlightData.planeRollSpeed = (data.rollspeed)
@@ -58,6 +58,9 @@ class PacketInterpreter{
 
                 break;
         }
+    }
+    static getDegreeAngleFromRad(radValue) {
+        return radValue / Math.PI * 180;
     }
 }
 exports.PacketInterpreter = PacketInterpreter;

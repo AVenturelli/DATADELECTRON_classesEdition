@@ -12,7 +12,7 @@ class CanvasPitch {
         ctx.strokeStyle = 'black';
 
         let deg = FlightData.planePitch
-        let roll = FlightData.planeRoll
+        let roll = -FlightData.planeRoll
         if(deg === undefined){deg=0}
         ctx.clearRect(0, 0, c.width, c.height);
 
@@ -25,11 +25,11 @@ class CanvasPitch {
         if(originalDeg < -90){originalDeg = -90}
         deg = originalDeg - 20
 
-        ctx.translate(ctx.canvas.width * 0.5, ctx.canvas.height * 0.5);    // center
+        /*ctx.translate(ctx.canvas.width * 0.5, ctx.canvas.height * 0.5);    // center
         let oldRotation = this.getRotation(ctx)
         ctx.rotate(-oldRotation);
         ctx.rotate(this.getRadianAngle(roll));                                         // 90°
-        ctx.translate(-ctx.canvas.width * 0.5, -ctx.canvas.height * 0.5);
+        ctx.translate(-ctx.canvas.width * 0.5, -ctx.canvas.height * 0.5);*/
 
         for (let i = 0; i < 80; i++) {
 

@@ -5,61 +5,72 @@ class FlightStateThirdPerson extends FlightStateInterface{
 
     camera = null;
     viewer = null
-    planeEntity=null;
+    planeEntity=undefined;
 
     constructor(viewer){
         super();
         //per ora non gli passo niente se non l'oggetto camera
         this.camera = viewer.camera;
         this.viewer = viewer;
+        //this.createPlane();
     }
 
-    doFlight(){
+    async doFlight() {
 
-        if(FlightData.navigationalValuesValid()){
-            if(this.planeEntity == null){
-                this.createPlane().then(r => {
+        if (FlightData.navigationalValuesValid()) {
+            /*if (this.planeEntity === undefined) {
+                await this.createPlane().then(r => {
                     this.updateCamera()
-                    super.zeroTerrain().then(r => {
+                    super.zeroTerrain(this.viewer).then(r => {
                         console.log("Plane leveled")
                     });
                 });
 
-            }
+            } else {
+
+            }*/
             this.updateCamera();
             return true;
-        }
-        else{
+        } else {
             return false;
         }
+    }
+
+    getRadianAngle(degreeValue) {
+        return degreeValue * Math.PI / 180;
     }
 
     updateCamera(){
 
         let currentHeadingPitchRoll = new Cesium.HeadingPitchRoll(
-            FlightData.planeHeading,
-            FlightData.planePitch,
-            FlightData.planeRoll)
+            this.getRadianAngle(FlightData.planeHeading),
+            this.getRadianAngle(-FlightData.planeRoll),
+            this.getRadianAngle(FlightData.planePitch)
+        )
 
         let currentPlanePositionCartesian3 = Cesium.Cartesian3.fromDegrees(
             FlightData.planeLongitude,
             FlightData.planeLatitude,
             FlightData.planeAltitude+FlightData.planeDeltaAltitude)
 
-        this.planeEntity.orientation = Cesium.Transforms.headingPitchRollQuaternion(
-            currentPlanePositionCartesian3,currentHeadingPitchRoll
-        )
-        this.planeEntity.position = currentPlanePositionCartesian3
+        if(this.planeEntity !== undefined){
+            this.planeEntity.orientation = Cesium.Transforms.headingPitchRollQuaternion(
+                currentPlanePositionCartesian3,currentHeadingPitchRoll
+            )
+            this.planeEntity.position = currentPlanePositionCartesian3
 
-        this.viewer.trackedEntity = this.planeEntity
+            this.viewer.trackedEntity = this.planeEntity
+        }
+
+
     }
 
 
     async createPlane(){
         //Creo il plano
+        //console.log("Creo")
         let planeAssets = await Cesium.IonResource.fromAssetId(449252);
-
-        this.planeEntity = viewer.entities.add({
+        this.planeEntity = this.viewer.entities.add({
             path: {
                 leadTime: 0,
                 trailTime: 3 * 60
@@ -75,7 +86,7 @@ class FlightStateThirdPerson extends FlightStateInterface{
             },
         });
 
-        this.viewer.trackedEntity = this.planeEntity
+        //this.viewer.trackedEntity = this.planeEntity
     }
 
     returnToBaseView() {
@@ -86,7 +97,7 @@ class FlightStateThirdPerson extends FlightStateInterface{
     removePlaneFromViewer(){
         if(this.planeEntity !== null){
             this.viewer.entities.remove(this.planeEntity);
-            this.planeEntity = null;
+            this.planeEntity = undefined;
         }
     }
 }

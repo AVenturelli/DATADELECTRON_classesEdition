@@ -20,13 +20,10 @@ class Connection {
     }
     static connectToPort() {
         try {
-            this.#serialPort = new SerialPort({path: this.#port, baudRate: this.#baud})
-
             //Mando un HeartBeat una volta ogni 1 secondi.
+            this.#serialPort = new SerialPort({path: this.#port, baudRate: this.#baud})
             this.#heartBeatInterval = setInterval(this.#sendHeartbeat, 1000);
-
         } catch (error) {
-            console.error(error)
             //Rimuovo il timer se presente
             this.#serialPort = undefined
             if (this.#heartBeatInterval !== undefined) {
@@ -38,7 +35,7 @@ class Connection {
         return this.#serialPort.isOpen
     }
     static closeConnection() {
-        globalThis.serial_port.close()
+        this.#serialPort.close()
     }
     static get portName() {
         return this.#port

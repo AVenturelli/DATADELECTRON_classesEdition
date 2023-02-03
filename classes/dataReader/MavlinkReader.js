@@ -1,4 +1,5 @@
 const { MavLinkPacketSplitter, MavLinkPacketParser,minimal, common, ardupilotmega, uavionix, icarous, asluav, ualberta } = require('node-mavlink')
+const {SerialPort} = require("serialport");
 //const FlightData = require("./FlightData").FlightData;
 const Connection = require("../portConnection/Connection").Connection;
 const PacketInterpreter = require("../dataReader/PacketInterpreter").PacketInterpreter;
@@ -26,10 +27,11 @@ class MavlinkReader {
 
     }
 
-    static startReader()
-    {
-        this.reader = Connection.getSerialPort().pipe(new MavLinkPacketSplitter()).pipe(new MavLinkPacketParser())
+    static startReader() {
 
+        //await console.log()
+        //let a = new SerialPort({path: "COM5", baudRate: 115200})
+        this.reader = Connection.getSerialPort().pipe(new MavLinkPacketSplitter()).pipe(new MavLinkPacketParser())
         const REGISTRY = {
             ...minimal.REGISTRY,
             ...common.REGISTRY,
@@ -38,7 +40,7 @@ class MavlinkReader {
             ...icarous.REGISTRY,
             ...asluav.REGISTRY,
             ...ualberta.REGISTRY,
-            }
+        }
 
         this.reader.on('data', packet => {
 
@@ -114,4 +116,4 @@ class MavlinkReader {
     }*/
 }
 
-  module.exports = MavlinkReader
+exports.MavlinkReader = MavlinkReader

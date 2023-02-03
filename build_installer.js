@@ -34,5 +34,5 @@ const msiCreator = new MSICreator({
 msiCreator.create().then(function(){
 
     // Step 5: Compile the template to a .msi file
-    msiCreator.compile();
+    msiCreator.compile().then(r => console.log("Msi creato!"));
 });

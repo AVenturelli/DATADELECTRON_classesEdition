@@ -17,7 +17,7 @@ class CanvasArtificialOrizon {
         //Calcolo solamente il pitch: le prime due coordinate del cielo sono sempre uguali
         //Successivamente applicherò il roll!
 
-        let roll = FlightData.planeRoll
+        let roll = -FlightData.planeRoll
         let pitch = FlightData.planePitch
         let heading = FlightData.planeHeading
 
@@ -34,7 +34,8 @@ class CanvasArtificialOrizon {
         baseGroundCoords[1][1] += pitch * baseValue;
 
         if(this.#oldHeading === null){this.#oldHeading = heading}
-        if(this.#oldHeading !== null && this.#oldHeading - heading > 150 || this.#oldHeading - heading < -150){
+        if((this.#oldHeading !== null && this.#oldHeading - heading > 150 || this.#oldHeading - heading < -150)
+        && (pitch > 88 || pitch < -88)){
             //Devo ruotare tutto!
             this.#testaInGiu = !this.#testaInGiu;
             this.#oldHeading = heading
@@ -63,7 +64,8 @@ class CanvasArtificialOrizon {
     static getRotation(ctx) {
         const mat = ctx.getTransform();
         const rad = Math.atan2(mat.b, mat.a);
-        if (rad < 0) { // angle is > Math.PI
+        if (rad < 0) {
+            // angle is > Math.PI
             return rad + Math.PI * 2;
         }
         return rad;
