@@ -1,6 +1,5 @@
 const {app,BrowserWindow,ipcMain } = require('electron')
 const application = require('express')()
-const VideoConnection = require('./classes/camera/VideoConnection').VideoConnection;
 // Keep a global reference of the window object. If you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 

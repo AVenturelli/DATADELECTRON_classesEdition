@@ -22,6 +22,7 @@
     "exe-icon-extractor": "^1.0.8",
     "express": "^4.18.2",
     "jquery": "^3.6.0",
+    "leaflet-imageoverlay-rotated": "^0.2.1",
     "node-mavlink": "^1.0.13",
     "node-rtsp-stream": "^0.0.9",
     "particlesjs": "^2.2.3",

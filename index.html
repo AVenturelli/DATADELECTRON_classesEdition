@@ -8,8 +8,6 @@
       window.$ = window.jQuery = require('./assets/js/jquery.js');
     </script>
 
-    <script src="./assets/js/particles.min.js"></script>
-
     <link rel="stylesheet" type="text/css" href="./assets/gauges/css/flightindicators.css" />
 
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
@@ -18,35 +16,47 @@
     
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.83/Build/Cesium/Cesium.js"></script>
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <script src="./classes/map/Leaflet.ImageOverlay.Rotated.js"></script>
     <title>DATAD</title>
 
 
   </head>
   <body style="height: 1000px;max-height: 1000px;overflow-y:hidden">
-    <div class="container main container" style="margin: 0;padding: 20px 30px;width: 100%;max-width: 100%;">
+    <div class="container main container" style="margin: 0;padding: 10px 5px;width: 100%;max-width: 100%;">
       <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-4" style="padding: 0;">
           <div class="row">
+            <div class="col-sm-6" style="padding: 0px 10px">
+              <div class="row">
 
-            <div class="col-sm-12" style="padding: 0;">
-              <div id="connessione_centralina"></div>            
+                <div class="col-sm-12" style="padding: 0;">
+                  <div id="connessione_centralina"></div>
+                </div>
+
+                <div class="col-sm-12" style="padding: 0;">
+                  <div id="layoutManager"></div>
+                </div>
+
+                <div class="col-sm-12" >
+                  <div id="adsb_container" style="display: none;"></div>
+                </div>
+
+              </div>
             </div>
-
-            <div class="col-sm-12" style="padding: 0;">
-              <div id="layoutManager"></div>
+            <div class="col-sm-6" style="padding: 0px 10px">
+              <div id="flight_data" style="padding: 0;display: block;"></div>
+              <!--<div id="antennaGPS" style="display: block;"></div>-->
             </div>
-
-            <div class="col-sm-12" >
-              <div id="adsb_container" style="display: none;"></div>             
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div id="map" style="width: 400px ;height: 500px"></div>
             </div>
-
-          </div>   
+          </div>
         </div>
-        <div class="col-sm-2">
-          <div id="flight_data" style="padding: 0;display: block;"></div>
-          <!--<div id="antennaGPS" style="display: block;"></div>-->
-        </div>
-        <div class="col-sm-8" id="cesiumBox" style="text-align: center;position: relative;min-height: 1030px">
+        <div class="col-sm-8" id="cesiumBox" style="text-align: center;position: relative;min-height: 1030px;padding: 0px 10px">
 
           <canvas width="100px" height="400px" id="altitudeCanvas" style="border-radius:10px;display: none;right: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"></canvas>
           <canvas width="100px" height="400px" id="speedCanvas" style="border-radius:10px;display: none;left: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"></canvas>
@@ -58,7 +68,7 @@
 
           <div id="overlayCommands" class="row" style="position: relative;z-index: 999999"></div>
 
-            <div id="cesiumContainer" style="max-height: 1100px;max-width: 1230px;width: 100%;height: 1100px !Important"></div>
+            <div id="cesiumContainer" style="max-height: 1100px;max-width: 1270px;width: 100%;height: 1100px !Important"></div>
 
             <div id="planeCamera" style="position: absolute;max-width: 1230px;width: 100%">
               <div id="container">
@@ -71,7 +81,6 @@
 
             <div id="tettolone" style="padding: 0;position: absolute;bottom:0;width: 100%;"></div>
         </div>
-
       </div>
     </div>
     <div id="modals"></div>
@@ -91,6 +100,215 @@
     const PlaneCamera = require("./classes/camera/Camera").Camera;
 
     $('#cesiumContainer').height("1040px")
+
+    $(document).ready(() => {
+
+        const yCoord = 44.647129;
+        const xCoord = 10.925227;
+        let deg = 0;
+        const planeImg = "./assets/img/jet-plane-svgrepo-com.svg"
+
+        const map = L.map('map').setView([yCoord, xCoord], 19);
+
+        const googleSat = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3']
+        }).addTo(map)
+
+        const marker = L.marker([44.647129, 10.925227]).addTo(map).bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
+
+        /*const circle = L.circle([51.508, -0.11], {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: 500
+        }).addTo(map).bindPopup('I am a circle.');*/
+
+        /*const polygon = L.polygon([
+            [51.509, -0.08],
+            [51.503, -0.06],
+            [51.51, -0.047]
+        ]).addTo(map).bindPopup('I am a polygon.');*/
+
+
+        /*const popup = L.popup()
+            .setLatLng([51.513, -0.09])
+            .setContent('I am a standalone popup.')
+            .openOn(map);*/
+
+      function onMapClick(e) {
+        L.popup()
+                .setLatLng(e.latlng)
+                .setContent(`You clicked the map at ${e.latlng.toString()}`)
+                .openOn(map);
+      }
+
+      map.on('click', onMapClick);
+
+
+      let zoom = map._zoom
+
+      let dimValues = 0;
+
+      switch (zoom){
+        case 20: dimValues = 0.000050; break;
+        case 19: dimValues = 0.000100; break;
+        case 18: dimValues = 0.000200; break;
+        case 17: dimValues = 0.000400; break;
+        case 16: dimValues = 0.000700; break;
+        case 15: dimValues = 0.001200; break;
+        case 14: dimValues = 0.002000; break;
+        case 13: dimValues = 0.004000; break;
+        case 12: dimValues = 0.007000; break;
+        case 11: dimValues = 0.012000; break;
+        case 10: dimValues = 0.02000; break;
+        default: dimValues = 0.02;
+      }
+
+      let centerX = xCoord;
+      let centerY = yCoord;
+
+      let leftUpperCorner_x = xCoord-dimValues;
+      let leftUpperCorner_y = yCoord+dimValues;
+
+      let rightUpperCorner_x = xCoord+dimValues;
+      let rightUpperCorner_y = yCoord+dimValues;
+
+      let leftBottomCorner_x = xCoord-dimValues;
+      let leftBottomCorner_y = yCoord-dimValues;
+
+      let rotation = 90;
+
+      let topLeftNotCoords = rotate(centerX,centerY,leftUpperCorner_x,leftUpperCorner_y,0);
+      let topRightNotCoords = rotate(centerX,centerY,rightUpperCorner_x,rightUpperCorner_y,0);
+      let bottomLeftNotCoords = rotate(centerX,centerY,leftBottomCorner_x,leftBottomCorner_y,0);
+
+      let topleft = L.latLng(topLeftNotCoords[1],topLeftNotCoords[0])
+      let topright = L.latLng(topRightNotCoords[1],topRightNotCoords[0])
+      let bottomleft = L.latLng(bottomLeftNotCoords[1],bottomLeftNotCoords[0])
+
+      let imageBounds = [[yCoord-0.000100, xCoord-0.000100], [yCoord+0.000100, xCoord+0.000100]]
+      let planeImageNew = L.imageOverlay.rotated(planeImg, topleft, topright, bottomleft).addTo(map);
+
+      let counter = 0;
+
+      setInterval( () =>{
+
+        let zoom = map._zoom
+
+        let dimValues = 0;
+
+        switch (zoom){
+          case 20: dimValues = 0.000050; break;
+          case 19: dimValues = 0.000100; break;
+          case 18: dimValues = 0.000200; break;
+          case 17: dimValues = 0.000400; break;
+          case 16: dimValues = 0.000700; break;
+          case 15: dimValues = 0.001200; break;
+          case 14: dimValues = 0.002000; break;
+          case 13: dimValues = 0.004000; break;
+          case 12: dimValues = 0.007000; break;
+          case 11: dimValues = 0.012000; break;
+          case 10: dimValues = 0.02000; break;
+          default: dimValues = 0.02;
+        }
+
+
+
+        let centerX = xCoord;
+        let centerY = yCoord;
+
+        let leftUpperCorner_x = xCoord-dimValues;
+        let leftUpperCorner_y = yCoord+dimValues;
+
+        let rightUpperCorner_x = xCoord+dimValues;
+        let rightUpperCorner_y = yCoord+dimValues;
+
+        let leftBottomCorner_x = xCoord-dimValues;
+        let leftBottomCorner_y = yCoord-dimValues;
+
+        let rotation = 90;
+
+        let topLeftNotCoords = rotate(centerX,centerY,leftUpperCorner_x,leftUpperCorner_y,deg);
+        let topRightNotCoords = rotate(centerX,centerY,rightUpperCorner_x,rightUpperCorner_y,deg);
+        let bottomLeftNotCoords = rotate(centerX,centerY,leftBottomCorner_x,leftBottomCorner_y,deg);
+
+        let topleft = L.latLng(topLeftNotCoords[1],topLeftNotCoords[0])
+        let topright = L.latLng(topRightNotCoords[1],topRightNotCoords[0])
+        let bottomleft = L.latLng(bottomLeftNotCoords[1],bottomLeftNotCoords[0])
+
+
+        planeImageNew.reposition(topleft, topright, bottomleft)//.addTo(map);
+
+        deg+=0.1;
+
+      },10)
+
+
+      map.on('zoomend', function() {
+
+        console.log(this._zoom)
+
+        let dimValues = 0;
+
+        switch (this._zoom){
+          case 20: dimValues = 0.000050; break;
+          case 19: dimValues = 0.000100; break;
+          case 18: dimValues = 0.000200; break;
+          case 17: dimValues = 0.000400; break;
+          case 16: dimValues = 0.000700; break;
+          case 15: dimValues = 0.001200; break;
+          case 14: dimValues = 0.002000; break;
+          case 13: dimValues = 0.004000; break;
+          case 12: dimValues = 0.007000; break;
+          case 11: dimValues = 0.012000; break;
+          case 10: dimValues = 0.02000; break;
+          default: dimValues = 0.02;
+        }
+
+        map.removeLayer(planeImageNew);
+
+
+        let centerX = xCoord;
+        let centerY = yCoord;
+
+        let leftUpperCorner_x = xCoord-dimValues;
+        let leftUpperCorner_y = yCoord+dimValues;
+
+        let rightUpperCorner_x = xCoord+dimValues;
+        let rightUpperCorner_y = yCoord+dimValues;
+
+        let leftBottomCorner_x = xCoord-dimValues;
+        let leftBottomCorner_y = yCoord-dimValues;
+
+        let rotation = 90;
+
+        let topLeftNotCoords = rotate(centerX,centerY,leftUpperCorner_x,leftUpperCorner_y,deg);
+        let topRightNotCoords = rotate(centerX,centerY,rightUpperCorner_x,rightUpperCorner_y,deg);
+        let bottomLeftNotCoords = rotate(centerX,centerY,leftBottomCorner_x,leftBottomCorner_y,deg);
+
+        let topleft = L.latLng(topLeftNotCoords[1],topLeftNotCoords[0])
+        let topright = L.latLng(topRightNotCoords[1],topRightNotCoords[0])
+        let bottomleft = L.latLng(bottomLeftNotCoords[1],bottomLeftNotCoords[0])
+
+
+        planeImageNew = L.imageOverlay.rotated(planeImg, topleft, topright, bottomleft).addTo(map);
+
+        //console.log(planeImage)
+
+      });
+
+      function rotate(centerX, centerY, x, y, angle) {
+        var radians = (Math.PI / 180) * angle,
+                cos = Math.cos(radians),
+                sin = Math.sin(radians),
+                nx = (cos * (x - centerX)) + (sin * (y - centerY)) + centerX,
+                ny = (cos * (y - centerY)) - (sin * (x - centerX)) + centerY;
+        return [nx, ny];
+      }
+    })
+
+
 
     /*globalThis.portname = "COM7";
     globalThis.baud = 115200;

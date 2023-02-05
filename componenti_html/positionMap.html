@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    <title>Quick Start - Leaflet</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="..  /favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        .leaflet-container {
+            height: 400px;
+            width: 600px;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+
+
+</head>
+<body>
+
+
+<button id="reomoveImg">Rimuovi</button>
+<div id="map" style="width: 1000px; height: 800px;"></div>
+<script>
+
+    const k = require('leaflet-imageoverlay-rotated');
+
+    const yCoord = 44.647129;
+    const xCoord = 10.925227;
+
+    const map = L.map('map').setView([yCoord, xCoord], 19);
+
+    const googleSat = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    }).addTo(map)
+
+    const marker = L.marker([44.647129, 10.925227]).addTo(map).bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
+
+    /*const circle = L.circle([51.508, -0.11], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 500
+    }).addTo(map).bindPopup('I am a circle.');*/
+
+    /*const polygon = L.polygon([
+        [51.509, -0.08],
+        [51.503, -0.06],
+        [51.51, -0.047]
+    ]).addTo(map).bindPopup('I am a polygon.');*/
+
+
+    /*const popup = L.popup()
+        .setLatLng([51.513, -0.09])
+        .setContent('I am a standalone popup.')
+        .openOn(map);*/
+
+    function onMapClick(e) {
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(`You clicked the map at ${e.latlng.toString()}`)
+            .openOn(map);
+    }
+
+    map.on('click', onMapClick);
+
+
+    let imageBounds = [[yCoord-0.000100, xCoord-0.000100], [yCoord+0.000100, xCoord+0.000100]]
+    let planeImage = L.imageOverlay("../assets/img/stencil-ease-commercial-stencils-cc0081m-64_600.webp", imageBounds).addTo(map);
+
+
+    map.on('zoomend', function() {
+
+        console.log(this._zoom)
+
+        let dimValues = 0;
+
+        switch (this._zoom){
+            case 20: dimValues = 0.000050; break;
+            case 19: dimValues = 0.000100; break;
+            case 18: dimValues = 0.000200; break;
+            case 17: dimValues = 0.000400; break;
+            case 16: dimValues = 0.000700; break;
+            case 15: dimValues = 0.001200; break;
+            case 14: dimValues = 0.002000; break;
+            case 13: dimValues = 0.004000; break;
+            case 12: dimValues = 0.007000; break;
+            case 11: dimValues = 0.012000; break;
+            case 10: dimValues = 0.02000; break;
+            default: dimValues = 0.02;
+        }
+
+        map.removeLayer(planeImage);
+
+        //imageBounds = [[44.647129-dimValues, 10.925227-dimValues], [44.647129+dimValues, 10.925227+dimValues]]
+        //planeImage.addTo(map)
+
+        let centerX = xCoord;
+        let centerY = yCoord;
+
+        let leftUpperCorner_x = xCoord-dimValues;
+        let leftUpperCorner_y = yCoord+dimValues;
+
+        let rightUpperCorner_x = xCoord+dimValues;
+        let rightUpperCorner_y = yCoord-dimValues;
+
+        let leftBottomCorner_x = xCoord-dimValues;
+        let leftBottomCorner_y = yCoord-dimValues;
+
+        let rotation = 90;
+
+        let topLeftNotCoords = rotate(centerX,centerY,leftUpperCorner_x,leftUpperCorner_y,90);
+        let topRightNotCoords = rotate(centerX,centerY,rightUpperCorner_x,rightUpperCorner_y,90);
+        let bottomLeftNotCoords = rotate(centerX,centerY,leftBottomCorner_x,leftBottomCorner_y,90);
+
+        let topleft = L.latLng(topLeftNotCoords[0],topLeftNotCoords[1])
+        let topright = L.latLng(topRightNotCoords[0],topRightNotCoords[1])
+        let bottomleft = L.latLng(bottomLeftNotCoords[0],bottomLeftNotCoords[1])
+
+
+
+        planeImage = L.imageOverlay.rotated("../assets/img/stencil-ease-commercial-stencils-cc0081m-64_600.webp", topleft, topright, bottomleft).addTo(map);
+
+
+
+    });
+
+    function rotate(centerX, centerY, x, y, angle) {
+        var radians = (Math.PI / 180) * angle,
+            cos = Math.cos(radians),
+            sin = Math.sin(radians),
+            nx = (cos * (x - centerX)) + (sin * (y - centerY)) + centerX,
+            ny = (cos * (y - centerY)) - (sin * (x - centerX)) + centerY;
+        return [nx, ny];
+    }
+
+    function rotateImage(image, angle) {
+        if (!this.originalTransformValue) {
+            this.originalTransformValue = image.style.transform;
+        }
+        image.style.transform = `${this.originalTransformValue} rotateZ(${angle}deg)`;
+    }
+
+</script>
+
+
+
+
+
+</body>
+</html>
