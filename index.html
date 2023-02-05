@@ -8,6 +8,8 @@
       window.$ = window.jQuery = require('./assets/js/jquery.js');
     </script>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
     <link rel="stylesheet" type="text/css" href="./assets/gauges/css/flightindicators.css" />
 
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
@@ -23,7 +25,7 @@
 
 
   </head>
-  <body style="height: 1000px;max-height: 1000px;overflow-y:hidden">
+  <body style="height: 1000px;max-height: 1000px;overflow:hidden">
     <div class="container main container" style="margin: 0;padding: 10px 5px;width: 100%;max-width: 100%;">
       <div class="row">
         <div class="col-sm-4" style="padding: 0;">
@@ -50,9 +52,9 @@
               <!--<div id="antennaGPS" style="display: block;"></div>-->
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <div id="map" style="width: 400px ;height: 500px"></div>
+          <div class="row" style="padding: 0;">
+            <div class="col-sm-12" style="padding: 0px 10px">
+              <div id="map_container"></div>
             </div>
           </div>
         </div>
