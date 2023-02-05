@@ -6,6 +6,8 @@ const CanvasCompassRender = require("./CanvasCompassRender").CanvasCompassRender
 const JQueryRenderAltitudeData = require("./JQueryRenderAltitudeData").JQueryRenderAltitudeData;
 const JQueryRenderSpeedData = require("./JQueryRenderSpeedData").JQueryRenderSpeedData;
 const JQueryRenderAccelerationData = require("./JQueryRenderAccelerationData").JQueryRenderAccelerationData;
+const MapPosition = require("../map/MapPosition").MapPosition;
+
 
 class JQueryRender {
     constructor() {
@@ -19,6 +21,7 @@ class JQueryRender {
         CanvasAltitudeRender.render()
         CanvasArtificialOrizon.render();
         CanvasPitch.render()
+        MapPosition.render();
     }
 }
 
