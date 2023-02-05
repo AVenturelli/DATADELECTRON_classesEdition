@@ -108,8 +108,6 @@ class MapPosition {
 
         this.plane.reposition(topLeft, topRight, bottomLeft)
 
-        console.log(topLeft)
-
     }
     static rotate(centerX, centerY, x, y, angle) {
         let radians = (Math.PI / 180) * angle,

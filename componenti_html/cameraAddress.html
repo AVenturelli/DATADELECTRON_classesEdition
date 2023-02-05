@@ -1,10 +1,12 @@
 <!-- The Modal -->
-<div id="cameraLinkModal" class="modal">
+<div id="cameraLinkModal" class="modal" style="z-index: 999999999">
     <!-- Modal content -->
-    <div class="modal-content">
+    <div class="modal-content" id="cameraConnContent">
         <div class="row" style="margin-bottom: 15px">
             <div class="col-sm-11">
+                <span class="close">X</span>
                 <h3>Inserisci i dati dello stream video</h3>
+
                 <small>Attenzione: con alcuni WIFI pubblici potrebbe non essere possibile ricevere stream video</small>
             </div>
         </div>
@@ -48,7 +50,8 @@
 <script>
     let modalCamera = document.getElementById("cameraLinkModal");
     let btnCamera = document.getElementById("showCamera");
-    let span = document.getElementsByClassName("close")[0];
+    let span = $('.close');
+    let cameraConnContent = document.getElementById('cameraConnContent');
 
     btnCamera.onclick = () => {
         modalCamera.style.display = "block";
@@ -56,12 +59,10 @@
     }
 
     span.onclick = () => {
-        modalCamera.style.display = "none";
+        $('#cameraLinkModal').hide();
     }
 
-    window.onclick = (event) => {
-        if (event.target === modalCamera) {
-            modalCamera.style.display = "none";
-        }
-    }
+    span.on('click', (event) => {
+        $('#cameraLinkModal').hide();
+    });
 </script>

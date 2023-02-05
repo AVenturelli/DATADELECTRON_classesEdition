@@ -9,9 +9,6 @@ class JQueryRenderAltitudeData extends JQueryRenderInterface{
 
     //Classe per renderizzare ACCELERAZIONE, ACCELERAZIONE MINIMA E VIBRAZIONE
 
-
-
-
     static render() {
         let pressure = $('#pressure');
         let altitude = $('#alt');
@@ -27,8 +24,8 @@ class JQueryRenderAltitudeData extends JQueryRenderInterface{
             altitudeVal = FlightData.planeAltitude
         }
 
-        pressure.html(pressureVal+" <small>kPa</small>")
-        altitude.html(altitudeVal+" <small>mt</small>")
+        pressure.html(pressureVal)
+        altitude.html(altitudeVal)
     }
 }
 

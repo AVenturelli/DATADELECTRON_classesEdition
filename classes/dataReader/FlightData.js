@@ -2,7 +2,7 @@
  class FlightData {
     static planeLatitude = 0;
     static planeLongitude = 0;
-    static planeAltitude = 100;
+    static planeAltitude = 0;
     static planeDeltaAltitude = 0;
     static planePitch = 0;
     static planeRoll = 0;

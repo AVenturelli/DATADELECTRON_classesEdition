@@ -60,28 +60,23 @@
         </div>
         <div class="col-sm-8" id="cesiumBox" style="text-align: center;position: relative;min-height: 1030px;padding: 0px 10px">
 
-          <canvas width="100px" height="400px" id="altitudeCanvas" style="border-radius:10px;display: none;right: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"></canvas>
-          <canvas width="100px" height="400px" id="speedCanvas" style="border-radius:10px;display: none;left: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"></canvas>
-          <canvas width="1230px" height="100px" id="myCanvas" style="border-radius:10px;display: none;left:15px;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5);border-bottom-left-radius: 12px;border-bottom-right-radius: 12px;bottom: 0"></canvas>
-          <canvas width="680px" height="680px" id="pitchCanvas" style="border-radius:10px;display: none;top:160px;left:290px;position: absolute;;z-index: 99999;"></canvas>
-          <canvas width="1000px" height="800px" id="horizonCanvas" style="border-radius:10px;display:none;left:130px;top:100px;z-index:9999;position: absolute;"></canvas>
-          <canvas width="1000px" height="800px" id="horizonBarCanvas" style="border-radius:10px;display:none;left:130px;top:100px;z-index:99999;position: absolute;"></canvas>
-
+          <canvas width="100px" height="400px" id="altitudeCanvas" style="pointer-events:none;border-radius:10px;display: none;right: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"></canvas>
+          <canvas width="100px" height="400px" id="speedCanvas" style="pointer-events:none;border-radius:10px;display: none;left: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"></canvas>
+          <canvas width="1230px" height="100px" id="myCanvas" style="pointer-events:none;border-radius:10px;display: none;left:20px;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5);border-bottom-left-radius: 12px;border-bottom-right-radius: 12px;bottom: 0"></canvas>
+          <canvas width="680px" height="680px" id="pitchCanvas" style="pointer-events:none;border-radius:10px;display: none;top:160px;left:290px;position: absolute;;z-index: 99999;"></canvas>
+          <canvas width="1000px" height="800px" id="horizonCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:100px;z-index:9999;position: absolute;"></canvas>
+          <canvas width="1000px" height="800px" id="horizonBarCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:100px;z-index:99999;position: absolute;"></canvas>
 
           <div id="overlayCommands" class="row" style="position: relative;z-index: 999999"></div>
-
             <div id="cesiumContainer" style="max-height: 1100px;max-width: 1270px;width: 100%;height: 1100px !Important"></div>
-
             <div id="planeCamera" style="position: absolute;max-width: 1230px;width: 100%">
               <div id="container">
                 <canvas id="canvasVideo" width='1230' height='1000' style="display: none"></canvas>
                 <div id="loadingCamera" style="width: 1000px;height: 1000px;position: relative"></div>
-
               </div>
             </div>
           <div id="modalLink"></div>
-
-            <div id="tettolone" style="padding: 0;position: absolute;bottom:0;width: 100%;"></div>
+          <div id="tettolone" style="padding: 0;position: absolute;bottom:0;width: 100%;"></div>
         </div>
       </div>
     </div>

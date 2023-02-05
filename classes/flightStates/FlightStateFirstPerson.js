@@ -1,4 +1,4 @@
-const Cesium = require("cesium");
+    const Cesium = require("cesium");
 const FlightData = require("../dataReader/FlightData").FlightData;
 const FlightStateInterface = require('./FlightStateInterface').FlightStateInterface;
 
