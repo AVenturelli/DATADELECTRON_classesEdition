@@ -1,4 +1,5 @@
 const Cesium = require("cesium");
+const {FlightData} = require("../dataReader/FlightData");
 const FlightStateInterface = require('./FlightStateInterface').FlightStateInterface;
 // noinspection JSUnusedGlobalSymbols
 class FlightStateThirdPerson extends FlightStateInterface{
@@ -16,23 +17,8 @@ class FlightStateThirdPerson extends FlightStateInterface{
     }
 
     async doFlight() {
-
         if (FlightData.navigationalValuesValid()) {
-            /*if (this.planeEntity === undefined) {
-                await this.createPlane().then(r => {
-                    this.updateCamera()
-                    super.zeroTerrain(this.viewer).then(r => {
-                        console.log("Plane leveled")
-                    });
-                });
-
-            } else {
-
-            }*/
             this.updateCamera();
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -42,16 +28,32 @@ class FlightStateThirdPerson extends FlightStateInterface{
 
     updateCamera(){
 
+        //super.zeroTerrain(this.viewer)
+
+
+
+        let longitude = FlightData.planeLongitude
+        let latidude = FlightData.planeLatitude
+        let alt = FlightData.planeAltitude
+        let heading = FlightData.planeHeading;
+
+        if(longitude === 0 || latidude === 0){
+            longitude = Settings.getData('startingLongitude')
+            latidude = Settings.getData('statingLatitude')
+            alt = Settings.getData('startingAltitude')
+            heading = Settings.getData('startingHeading')
+        }
+
         let currentHeadingPitchRoll = new Cesium.HeadingPitchRoll(
-            this.getRadianAngle(FlightData.planeHeading),
+            this.getRadianAngle(heading),
             this.getRadianAngle(-FlightData.planeRoll),
             this.getRadianAngle(FlightData.planePitch)
         )
 
         let currentPlanePositionCartesian3 = Cesium.Cartesian3.fromDegrees(
-            FlightData.planeLongitude,
-            FlightData.planeLatitude,
-            FlightData.planeAltitude+FlightData.planeDeltaAltitude)
+            longitude,
+            latidude,
+            alt+FlightData.planeDeltaAltitude)
 
         if(this.planeEntity !== undefined){
             this.planeEntity.orientation = Cesium.Transforms.headingPitchRollQuaternion(

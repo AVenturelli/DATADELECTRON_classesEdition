@@ -401,9 +401,26 @@ input:checked + .slider:before {
 
 .row{
     width: 100%;
-    margin: 0px;
+    margin: 0;
 }
 
 .leaflet-control-container{
     display: none;
+}
+
+.nav-link{
+    background-color: white;
+    color: #34568b !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+.nav-link.active{
+    color: white !Important;
+    background-color: #34568b !important;
+}
+
+.tab-pane{
+    background-color: white !Important;
+    border-bottom-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
 }

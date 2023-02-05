@@ -8,7 +8,9 @@ $("#param_button").load("componenti_html/allParameters.html");
 $("#adsb_container").load("componenti_html/adsb.html"); 
 $("#zoommatoio").load("componenti_html/zoomatoio.html"); 
 //$("#siummatoio").load("componenti_html/levelTerrain.html"); 
-$("#tettolone").load("componenti_html/roll_pitch.html"); 
+$("#pathSettings").load("componenti_html/pathSettings.html");
+$("#mapSettings").load("componenti_html/mapSettings.html");
+
 $("#flight_data").load("componenti_html/flight_data.html"); 
 //$("#antennaGPS").load("componenti_html/antennaGPS.html");
 

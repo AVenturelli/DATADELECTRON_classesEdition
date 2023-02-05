@@ -3,15 +3,22 @@ class MapPosition {
     static map = undefined;
     static planeImg = "./assets/img/jet-plane-svgrepo-com.svg"
 
+    static showTrail = true;
     static plane = undefined;
+    static planeLocked = true;
+    static trailPoints = undefined;
+
+    static oldLat = undefined;
+    static oldLon = undefined;
+
     constructor() {
     }
 
     static setUp(){
 
-        const yCoord = 44.647129;
-        const xCoord = 10.925227;
-        const deg = Settings.getData('startingHeading')
+        let yCoord = Settings.getData('statingLatitude');
+        let xCoord = Settings.getData('startingLongitude')
+        let deg = Settings.getData('startingHeading')
 
         this.map = L.map('map').setView([yCoord, xCoord], 19);
 
@@ -44,11 +51,33 @@ class MapPosition {
         let imageBounds = [[yCoord-0.000100, xCoord-0.000100], [yCoord+0.000100, xCoord+0.000100]]
         this.plane = L.imageOverlay.rotated(this.planeImg, topLeft, topRight, bottomLeft).addTo(this.map);
 
-        /*const polygon = L.polygon([
-           [51.509, -0.08],
-           [51.503, -0.06],
-           [51.51, -0.047]
-       ]).addTo(map).bindPopup('I am a polygon.');*/
+
+        $('#trailMap').on('change',()=>{
+            this.showTrail = $('#trailMap').val() !== '0';
+        })
+
+        $('#planeLocked').on('change',()=>{
+            this.planeLocked = $('#planeLocked').val() !== '0';
+        })
+
+        $('#mapPathDelete').on('click',()=>{
+            this.removeAllTrailPoints()
+        })
+
+        /*let index = 0;
+        setInterval(()=>{
+            if(index%10 === 0){
+                //index = 0;
+                yCoord+=0.00001;
+            }
+            if(index!== 0 && index%100 === 0){
+                yCoord-=0.0002;
+            }
+            this.render(yCoord,xCoord)
+            //this.addPointToTrail(yCoord,xCoord);
+            xCoord+=0.00001;
+            index++;
+        },10)*/
 
 
         /*const popup = L.popup()
@@ -75,16 +104,39 @@ class MapPosition {
         //TODO in futuro cliccando sulla mappa puoi aggiungere un punto sul navigatore del plano
     }
 
+    static addPointToTrail(lat,lon){
+        if(this.trailPoints === undefined){
+            this.trailPoints = L.polyline([[lat,lon]], {color: 'red'}).addTo(this.map);
+        }
+        else {
+            this.trailPoints.addLatLng([lat,lon])
+        }
+    }
+
+    static removeAllTrailPoints(){
+        if(this.trailPoints !== undefined){
+            this.map.removeLayer(this.trailPoints)
+            this.trailPoints = undefined
+        }
+    }
+
+    static render(/*yCoord,xCoord*/) {
 
 
-    static render() {
 
         let yCoord = FlightData.planeLatitude;
         let xCoord = FlightData.planeLongitude;
-        const deg = FlightData.planeHeading;
+        let deg = FlightData.planeHeading;
 
-        if(yCoord === 0 || yCoord === undefined){yCoord=44.647129}
-        if(xCoord === 0 || xCoord === undefined){xCoord=10.925227}
+        if(yCoord === 0 || yCoord === undefined){
+            yCoord=Settings.getData('statingLatitude')
+            xCoord=Settings.getData('startingLongitude')
+            deg = Settings.getData('startingHeading')
+        }
+
+        if(this.showTrail && this.oldLat !== yCoord && this.oldLon !== xCoord){
+            this.addPointToTrail(yCoord,xCoord);
+        }
 
         let dimValues = this.getZoom();
 
@@ -107,6 +159,10 @@ class MapPosition {
         let imageBounds = [[yCoord-0.000100, xCoord-0.000100], [yCoord+0.000100, xCoord+0.000100]]
 
         this.plane.reposition(topLeft, topRight, bottomLeft)
+
+        if(this.planeLocked){
+           this.map.setView([yCoord, xCoord],  this.map._zoom);
+        }
 
     }
     static rotate(centerX, centerY, x, y, angle) {

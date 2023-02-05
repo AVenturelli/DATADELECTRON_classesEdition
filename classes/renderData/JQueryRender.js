@@ -21,7 +21,7 @@ class JQueryRender {
         CanvasAltitudeRender.render()
         CanvasArtificialOrizon.render();
         CanvasPitch.render()
-        MapPosition.render();
+        //MapPosition.render();
     }
 }
 

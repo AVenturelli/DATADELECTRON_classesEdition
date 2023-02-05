@@ -30,35 +30,41 @@
       <div class="row">
         <div class="col-sm-4" style="padding: 0;">
           <div class="row">
-            <div class="col-sm-12" style="padding: 0px 10px">
-              <div class="row" style="padding: 0px">
+            <div class="col-sm-12" style="padding: 0 10px;">
+              <div class="row" style="padding: 0">
                 <div class="col-sm-6" style="padding: 0;">
-                  <div id="connessione_centralina"></div>
+                  <div id="connessione_centralina" style="height: 200px"></div>
                 </div>
-                <div class="col-sm-6" style="padding-right: 0px">
-                  <div id="flight_data" style="padding: 0;display: block;"></div>
+                <div class="col-sm-6" style="padding-right: 0">
+                  <div id="flight_data" style="padding: 0;display: block;height: 200px"></div>
                   <!--<div id="antennaGPS" style="display: block;"></div>-->
                 </div>
               </div>
             </div>
-            <div class="col-sm-12" style="padding: 0px 10px">
-              <div class="row">
-                <div class="col-sm-6" style="padding: 0;">
-                  <div id="layoutManager"></div>
+            <div class="col-sm-12 infobox" style="margin-top:10px;margin-left:10px;max-width:616px;background-color: white;border-radius: 10px">
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Settings Layout</button>
+                  <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Adsb</button>
+                  <button class="nav-link" id="nav-path-settings-tab" data-bs-toggle="tab" data-bs-target="#nav-path-settings" type="button" role="tab" aria-controls="nav-path-settings" aria-selected="false">Path Settings</button>
+                  <button class="nav-link" id="nav-map-settings-tab" data-bs-toggle="tab" data-bs-target="#nav-map-settings" type="button" role="tab" aria-controls="nav-map-settings" aria-selected="false">Map Settings</button>
                 </div>
-                <div class="col-sm-12" >
-                  <div id="adsb_container" style="display: none;"></div>
-                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"><div id="layoutManager"></div></div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"><div id="adsb_container" style="display: block;"></div></div>
+                <div class="tab-pane fade" id="nav-path-settings" role="tabpanel" aria-labelledby="nav-path-settings-tab"><div id="pathSettings" style="display: block;"></div></div>
+                <div class="tab-pane fade" id="nav-map-settings" role="tabpanel" aria-labelledby="nav-map-settings-tab"><div id="mapSettings" style="display: block;"></div></div>
               </div>
-            </div>
+              </div>
           <div class="row" style="padding: 0;">
-            <div class="col-sm-12" style="padding: 0px 10px">
+            <div class="col-sm-12" style="padding: 0 10px">
               <div id="map_container"></div>
             </div>
           </div>
         </div>
         </div>
-        <div class="col-sm-8" id="cesiumBox" style="text-align: center;position: relative;min-height: 1030px;padding: 0px 10px">
+        <div class="col-sm-8" id="cesiumBox" style="text-align: center;position: relative;min-height: 1030px;padding: 0 10px">
 
           <canvas width="100px" height="400px" id="altitudeCanvas" style="pointer-events:none;border-radius:10px;display: none;right: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"></canvas>
           <canvas width="100px" height="400px" id="speedCanvas" style="pointer-events:none;border-radius:10px;display: none;left: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"></canvas>

@@ -22,14 +22,27 @@ class FlightStateFirstPerson extends FlightStateInterface{
         }
     }
     updateCamera(){
+
+        let longitude = FlightData.planeLongitude
+        let latidude = FlightData.planeLatitude
+        let alt = FlightData.planeAltitude;
+        let heading = FlightData.planeHeading;
+
+        if(longitude === 0 || latidude === 0){
+            longitude = Settings.getData('startingLongitude')
+            latidude = Settings.getData('statingLatitude')
+            alt = Settings.getData('startingAltitude')
+            heading = Settings.getData('startingHeading')
+        }
+
         this.camera.setView({
             destination : Cesium.Cartesian3.fromDegrees(
-                FlightData.planeLongitude,
-                FlightData.planeLatitude,
-                FlightData.planeAltitude+FlightData.planeDeltaAltitude
+                longitude,
+                latidude,
+                alt+FlightData.planeDeltaAltitude
             ),
             orientation : {
-                heading : this.getRadianAngle(FlightData.planeHeading),
+                heading : this.getRadianAngle(heading),
                 pitch : this.getRadianAngle(FlightData.planePitch),
                 roll : this.getRadianAngle(FlightData.planeRoll)
             },
