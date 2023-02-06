@@ -1,3 +1,4 @@
+const CanvasRoll = require("./CanvasRoll").CanvasRoll;
 const CanvasArtificialOrizon = require("./CanvasArtificialOrizon").CanvasArtificialOrizon;
 const CanvasPitch = require("./CanvasPitch").CanvasPitch;
 const CanvasAltitudeRender = require("./CanvasAltitudeRender").CanvasAltitudeRender;
@@ -21,7 +22,8 @@ class JQueryRender {
         CanvasAltitudeRender.render()
         CanvasArtificialOrizon.render();
         CanvasPitch.render()
-        //MapPosition.render();
+        MapPosition.render();
+        CanvasRoll.render();
     }
 }
 

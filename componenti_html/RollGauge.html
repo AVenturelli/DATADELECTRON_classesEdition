@@ -1,15 +1,14 @@
-<canvas width="1000px" height="1000px" id="altitudeCanvas" style="background-color: rgba(0, 0, 0, 0.5)"></canvas>
+<canvas width="1000px" height="1000px" id="altitudeCanvas" style="background-color: transparent;pointer-events: none"></canvas>
 
 <script>
     let deg = 0;
     draw(deg)
     let offset = -1
     setInterval(() => {
-        draw(deg);
-        deg+=offset;
-        if(deg < -90) offset = 1
-        if(deg > 90) offset = -1
-    }, 100)
+        draw(deg+210);
+        //deg+=1;
+
+    }, 10)
 
     function draw(deg) {
         let c = document.getElementById('altitudeCanvas')
@@ -36,48 +35,69 @@
         ctx.lineTo(502, 498)
         ctx.lineTo(502, 502)
         ctx.lineTo(498, 502)
-        ctx.lineTo(498,498)
+        ctx.lineTo(498, 498)
 
         //0
-        ctx.moveTo(500,100)
-        ctx.lineTo(500,170)
+        ctx.moveTo(500, 100)
+        ctx.lineTo(500, 170)
 
         //-90
-        ctx.moveTo(100,500)
-        ctx.lineTo(170,500)
+        ctx.moveTo(100, 500)
+        ctx.lineTo(170, 500)
 
         //90
-        ctx.moveTo(900,500)
-        ctx.lineTo(830,500)
+        ctx.moveTo(900, 500)
+        ctx.lineTo(830, 500)
 
         //45
-        ctx.moveTo(733,267)
-        ctx.lineTo(783,217)
+        ctx.moveTo(733, 267)
+        ctx.lineTo(783, 217)
 
         //-45
-        ctx.moveTo(266.65,266.65)
-        ctx.lineTo(217,217)
+        ctx.moveTo(266.65, 266.65)
+        ctx.lineTo(217, 217)
 
 
         //-60
-        ctx.moveTo(153.58,300)
-        ctx.lineTo(214.21,335)
+        ctx.moveTo(153.58, 300)
+        ctx.lineTo(214.21, 335)
 
         //-30
-        ctx.moveTo(300,153.58)
-        ctx.lineTo(335,214.21)
+        ctx.moveTo(300, 153.58)
+        ctx.lineTo(335, 214.21)
 
         //30
-        ctx.moveTo(846.42,300)
-        ctx.lineTo(785.78,335)
+        ctx.moveTo(846.42, 300)
+        ctx.lineTo(785.78, 335)
 
         //60
-        ctx.moveTo(700,153.58)
-        ctx.lineTo(665,214.21)
+        ctx.moveTo(700, 153.58)
+        ctx.lineTo(665, 214.21)
 
-        ctx.stroke()
-        ctx.beginPath()
-        ctx.strokeStyle = "red";
+        ctx.stroke();
+
+        /*ctx.translate(ctx.canvas.width * 0.5, ctx.canvas.height * 0.5);    // center
+        let oldRotation = getRotation(ctx)
+        ctx.rotate(-oldRotation);
+        ctx.rotate(getRadianAngle(deg+180));                                         // 90°
+        ctx.translate(-ctx.canvas.width * 0.5, -ctx.canvas.height * 0.5);*/
+    }
+
+    /*function getRotation(ctx) {
+        const mat = ctx.getTransform();
+        const rad = Math.atan2(mat.b, mat.a);
+        if (rad < 0) { // angle is > Math.PI
+            return rad + Math.PI * 2;
+        }
+        return rad;
+    }
+
+    function getRadianAngle(degreeValue) {
+        return degreeValue * Math.PI / 180;
+    }
+        //
+        // ctx.beginPath()
+        /*ctx.strokeStyle = "red";
         ctx.lineWidth = "2";
 
         //-60 gradi
@@ -209,8 +229,7 @@
         ctx.lineTo(250,250)*/
 
 
-        ctx.stroke()
+        //ctx.stroke()*/
 
-    }
 
 </script>
