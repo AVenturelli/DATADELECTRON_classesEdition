@@ -1,5 +1,6 @@
 // noinspection EqualityComparisonWithCoercionJS
 const {promises: fs} = require("fs");
+const path = require("path");
 
 class Settings {
 
@@ -24,7 +25,7 @@ class Settings {
 
 //usage:
     static async fetchData() {
-        let text = await this.fs.readFile("./settings.json");
+        let text = await this.fs.readFile(path.resolve(__dirname,"../../settings.json"));
         let data = JSON.parse(text.toString());
         this.#settingsData = data.allSettings
     }

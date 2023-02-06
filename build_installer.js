@@ -20,7 +20,7 @@ const msiCreator = new MSICreator({
     description: 'This is a demo application',
     exe: 'DataDTest',
     name: 'DataD',
-    appIconPath: path.resolve(__dirname,'./favicon.ico'),
+    appIconPath: path.resolve(__dirname,'./datad_icon.ico'),
     manufacturer: 'Goatse Inc',
     version: '0.0.1',
 

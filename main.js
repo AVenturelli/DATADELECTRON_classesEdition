@@ -1,4 +1,5 @@
 const {app,BrowserWindow,ipcMain } = require('electron')
+const path = require("path");
 const application = require('express')()
 // Keep a global reference of the window object. If you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -73,6 +74,7 @@ app.on('ready', function() {
         },
         nodeIntegrationInWorker: true,
         frame: false,
+        icon: path.resolve(__dirname,'./datad_icon.ico'),
         width: 1902,
         height: 1080
     });
