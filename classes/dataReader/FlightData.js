@@ -4,7 +4,7 @@
     static planeLongitude = 0;
     static planeAltitude = 0;
     static planeDeltaAltitude = 0;
-    static planePitch = 0;
+    static planePitch =0;
     static planeRoll = 0;
     static planeHeading = 0;
     static planeRollSpeed = 0

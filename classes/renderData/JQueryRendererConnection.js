@@ -3,11 +3,11 @@ class JQueryRendererConnection {
     }
 
     static setConnectionMessageNoneAvailable() {
-        $('#connection_status').html("NESSUNA PORTA DISPONIBILE")
+        $('#connection_status').html("NO PORTS AVAILABLE")
     }
 
     static setConnectionMessageAvailable() {
-        $('#connection_status').html("NON CONNESSO, CONNESSIONI DISPONIBILI")
+        $('#connection_status').html("NOT CONNECTED")
     }
 
     static setUiToNotConnected(){

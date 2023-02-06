@@ -1,7 +1,9 @@
+const FlightPath = require('./FlightPath').FlightPath;
 class MapPosition {
 
     static map = undefined;
     static planeImg = "./assets/img/jet-plane-svgrepo-com.svg"
+    static homeImg = "./assets/img/home-svgrepo-com.svg"
 
     static showTrail = true;
     static plane = undefined;
@@ -10,6 +12,10 @@ class MapPosition {
 
     static oldLat = undefined;
     static oldLon = undefined;
+    static home = undefined;
+    static homeCoords = undefined;
+
+    static flightPathData = undefined;
 
     constructor() {
     }
@@ -64,36 +70,156 @@ class MapPosition {
             this.removeAllTrailPoints()
         })
 
-        /*let index = 0;
-        setInterval(()=>{
-            if(index%10 === 0){
-                //index = 0;
-                yCoord+=0.00001;
+        this.map.on('click', (e) =>{
+
+            let doPopUp = true;
+            if(this.homeCoords !== undefined){
+                let dimValues = this.getZoom()/2;
+                let imageBounds = [[this.homeCoords[0]-dimValues, this.homeCoords[1]-dimValues], [this.homeCoords[0]+dimValues, this.homeCoords[1]+dimValues]]
+
+                if(e.latlng.lat > imageBounds[0][0] && e.latlng.lat <  imageBounds[1][0] && e.latlng.lng > imageBounds[0][1] && e.latlng.lng < imageBounds[1][1]){
+                    //Sono sopra la casa!!
+                    doPopUp = false;
+                }
+
+                let markerPositions = FlightPath.getMarkersPosition()
+                let marker = undefined;
+                for(let i = 0; i < markerPositions.length; i++){
+                    let imageBounds = [
+                        [
+                            markerPositions[i].lat-dimValues, markerPositions[i].lng-dimValues
+                        ],
+                        [
+                            markerPositions[i].lat+dimValues, markerPositions[i].lng+dimValues
+                        ]]
+
+                    if(e.latlng.lat > imageBounds[0][0] && e.latlng.lat <  imageBounds[1][0] && e.latlng.lng > imageBounds[0][1] && e.latlng.lng < imageBounds[1][1]){
+                        //Sono sopra la casa!!
+                        doPopUp = false;
+                        marker = markerPositions[i];
+                    }
+                }
+
+
+                if(doPopUp){
+                    let html = "<div style='margin-top: 5px'><strong >Click here to add to the plane's path</strong></div><div style='width: 100%;font-weight: 600' id='addToPath' data-lat='"+e.latlng.lat+"' data-lon='"+e.latlng.lng+"' class='btn btn-info btn-small'>ADD TO PATH</div>"
+                    L.popup().setLatLng(e.latlng).setContent(html).openOn(this.map);
+                }
+                else{
+                    //Sono sopra ad un marker!
+                    let html = "<div style='margin-top: 5px'><strong >Click here to remove the marker</strong></div><div style='width: 100%;font-weight: 600' id='removeMarker' data-lat='"+marker.lat+"' data-lon='"+marker.lng+"' class='btn btn-warning btn-small'>REMOVE MARKER</div>"
+                    L.popup().setLatLng(e.latlng).setContent(html).openOn(this.map);
+                }
+
+            }else{
+                    let html = "<div style='margin-top: 5px'><strong >Click here to set the plane's home</strong></div><div style='width: 100%;font-weight: 600' id='setHomeFromMap' data-lat='"+e.latlng.lat+"' data-lon='"+e.latlng.lng+"' class='btn btn-warning btn-small'>SET HOME</div>"
+                    L.popup().setLatLng(e.latlng).setContent(html).openOn(this.map);
             }
-            if(index!== 0 && index%100 === 0){
-                yCoord-=0.0002;
+
+        });
+
+
+        $(document).on('click', '#removeMarker',() => {
+            let lat = $('#removeMarker').data('lat')
+            let lon = $('#removeMarker').data('lon')
+            /*let alert = new CustomAlert(
+                'planeHomeSetAndReceived',
+                'Point Removed from FlightPath',
+                'Il punto di coordinate Lat: '+Math.round(lat*100000)/100000+" e Lon: "+Math.round(lon*100000)/100000+" è stato rimosso dal piano di volo.");
+            alert.printCode()
+            alert.showAlert();*/
+
+            FlightPath.removePoint(lat,lon)
+
+            $('.leaflet-popup-close-button').children('span').trigger('click')
+        })
+
+
+            $(document).on('click', '#addToPath',() =>{
+            let lat = $('#addToPath').data('lat')
+            let lon = $('#addToPath').data('lon')
+            /*let alert = new CustomAlert(
+                'planeHomeSetAndReceived',
+                'Point Added to FlightPath',
+                'Il punto di coordinate Lat: '+Math.round(lat*100000)/100000+" e Lon: "+Math.round(lon*100000)/100000+" è stato aggiunto al piano di volo.");
+            alert.printCode()
+            alert.showAlert();*/
+
+            FlightPath.addPoint([lat,lon])
+
+            $('.leaflet-popup-close-button').children('span').trigger('click')
+        })
+
+        $(document).on('click', '#setHomeFromMap',() =>{
+
+            let lat = $('#setHomeFromMap').data('lat')
+            let lon = $('#setHomeFromMap').data('lon')
+            /*let alert = new CustomAlert(
+                'planeHomeSetAndReceived',
+                'Plane Home set correctly (Ti piacerebbe)',
+                'La home è stata impostata correttamente alle coordinate Lat: '+Math.round(lat*100000)/100000+" e Lon: "+Math.round(lon*100000)/100000);
+            alert.printCode()
+            alert.showAlert();*/
+
+            this.homeCoords = [lat,lon];
+
+            //Metto la home nel flight path!
+            FlightPath.setStatingPoint(lat,lon,this.map)
+
+            this.drawHome();
+
+            $('.leaflet-popup-close-button').children('span').trigger('click')
+
+        })
+
+        $(document).on('click', '#removeHome',() =>{
+
+            let alert = new CustomAlert(
+                'planeHomeSetAndReceived',
+                'Plane Home removed correctly (Ti piacerebbe)',
+                'La home è stata rimossa correttamente dalle coordinate Lat: '+Math.round(this.homeCoords[1]*100000)/100000+" e Lon: "+Math.round(this.homeCoords[0]*100000)/100000+" e il path è stato cancellato.");
+            alert.printCode()
+            alert.showAlert();
+
+            $('.leaflet-popup-close-button').children('span').trigger('click')
+
+            this.map.removeLayer(this.home);
+            this.home = undefined;
+            this.homeCoords = undefined;
+
+            //Tolgo la home dal flight path e lo cancello!
+            FlightPath.clearPath()
+        })
+
+        this.map.on('zoomend',()=>{
+            this.drawHome();
+        })
+
+
+    }
+
+    static getHomeCoords(){
+        return this.homeCoords;
+    }
+
+    static drawHome(){
+
+        if(this.homeCoords  !== undefined){
+            let dimValues = this.getZoom()/2;
+
+            let imageBounds = [[this.homeCoords[0]-dimValues, this.homeCoords[1]-dimValues], [this.homeCoords[0]+dimValues, this.homeCoords[1]+dimValues]]
+            if(this.home !== undefined){
+                this.map.removeLayer(this.home)
             }
-            this.render(yCoord,xCoord)
-            //this.addPointToTrail(yCoord,xCoord);
-            xCoord+=0.00001;
-            index++;
-        },10)*/
-
-
-        /*const popup = L.popup()
-            .setLatLng([51.513, -0.09])
-            .setContent('I am a standalone popup.')
-            .openOn(map);
-
-        function onMapClick(e) {
-            L.popup()
-                .setLatLng(e.latlng)
-                .setContent(`You clicked the map at ${e.latlng.toString()}`)
-                .openOn(map);
+            this.home = L.imageOverlay(this.homeImg, imageBounds,{interactive: true}).addTo(this.map).on('click', (e) =>{
+                console.log("ok")
+                let html = "<div style='margin-top: 5px'><strong >Click here to remove the plane's home</strong></div><div style='width: 100%;font-weight: 600' id='removeHome' class='btn btn-danger btn-small'>REMOVE HOME</div>"
+                L.popup()
+                    .setLatLng(e.latlng)
+                    .setContent(html)
+                    .openOn(this.map);
+            })
         }
-
-        map.on('click', onMapClick);
-         */
     }
 
     static setHome(){
@@ -121,8 +247,6 @@ class MapPosition {
     }
 
     static render(/*yCoord,xCoord*/) {
-
-
 
         let yCoord = FlightData.planeLatitude;
         let xCoord = FlightData.planeLongitude;
@@ -155,8 +279,6 @@ class MapPosition {
         let topLeft = this.rotate(centerX,centerY,leftUpperCorner_x,leftUpperCorner_y,deg);
         let topRight = this.rotate(centerX,centerY,rightUpperCorner_x,rightUpperCorner_y,deg);
         let bottomLeft = this.rotate(centerX,centerY,leftBottomCorner_x,leftBottomCorner_y,deg);
-
-        let imageBounds = [[yCoord-0.000100, xCoord-0.000100], [yCoord+0.000100, xCoord+0.000100]]
 
         this.plane.reposition(topLeft, topRight, bottomLeft)
 
@@ -196,6 +318,11 @@ class MapPosition {
             default: dimValues = 0.02;
         }
         return dimValues
+    }
+
+    static getMap() {
+        console.log(this.map)
+        return this.map;
     }
 }
 

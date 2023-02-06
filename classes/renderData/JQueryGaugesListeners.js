@@ -34,6 +34,15 @@ class JQueryGaugesListeners {
                 $('#pitchCanvas').hide('fast')
             }
         })
+        $('#rollGauge').on('change', (elem) => {
+            if($('#rollGauge').is(":checked")){
+                $('#horizonBarCanvas').show('fast')
+                $('#rollCanvas').show('fast')
+            } else {
+                $('#horizonBarCanvas').hide('fast')
+                $('#rollCanvas').hide('fast')
+            }
+        })
     }
 }
 exports.JQueryGaugesListeners = JQueryGaugesListeners;

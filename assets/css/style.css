@@ -403,6 +403,27 @@ input:checked + .slider:before {
     margin: 0;
 }
 
+.leaflet-div-icon2 {
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50% 50% 0;
+    background: #00cae9;
+    position: absolute;
+    transform: rotate(-45deg);
+    left: 50%;
+    top: 50%;
+    margin: -20px 0 0 -20px;
+}
+.leaflet-div-icon2::after {
+    content: "";
+    width: 14px;
+    height: 14px;
+    margin: 8px 0 0 8px;
+    background: #e6e6e6;
+    position: absolute;
+    border-radius: 50%;
+}
+
 .leaflet-control-container{
     display: none;
 }
@@ -422,4 +443,9 @@ input:checked + .slider:before {
     background-color: white !Important;
     border-bottom-right-radius: 10px !important;
     border-bottom-left-radius: 10px !important;
+}
+
+.leaflet-popup-content{
+    margin-left: 10px;
+    margin-right: 10px;
 }

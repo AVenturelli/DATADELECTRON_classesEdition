@@ -57,7 +57,7 @@ class CanvasArtificialOrizon {
             ctx.translate(-ctx.canvas.width * 0.5, -ctx.canvas.height * 0.5);
         }
 
-        this.draw(canvas, baseSkyCoords, baseGroundCoords);
+        this.draw(canvas, baseSkyCoords, baseGroundCoords,roll);
 
     }
 
@@ -75,7 +75,7 @@ class CanvasArtificialOrizon {
         return degreeValue * Math.PI / 180;
     }
 
-    static draw(canvas, skyCoords, groundCoords){
+    static draw(canvas, skyCoords, groundCoords,roll){
 
         let ctx = canvas.getContext('2d');
 
@@ -98,25 +98,6 @@ class CanvasArtificialOrizon {
         }
         ctx.fillStyle = "saddlebrown"
         ctx.fill()
-
-        canvas = document.getElementById('horizonBarCanvas')
-        ctx = canvas.getContext('2d');
-
-        ctx.strokeStyle="yellow";
-        ctx.lineWidth="5";
-
-        ctx.fillStyle = "black";
-        ctx.font = "bold 22px serif";
-
-        ctx.moveTo(200,400)
-        ctx.lineTo(400,400)
-
-        ctx.moveTo(600,400)
-        ctx.lineTo(800,400)
-
-        ctx.moveTo(495,400)
-        ctx.lineTo(505,400)
-
         ctx.stroke();
     }
 }

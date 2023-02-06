@@ -17,10 +17,11 @@
     <link href="https://cesium.com/downloads/cesiumjs/releases/1.83/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
     
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.83/Build/Cesium/Cesium.js"></script>
-
+    <link rel="stylesheet" href="./assets/css/awensomeMarker.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <script src="./classes/map/Leaflet.ImageOverlay.Rotated.js"></script>
+    <script src="./assets/js/awensomeMarker.js"></script>
     <title>DATAD</title>
 
 
@@ -33,10 +34,10 @@
             <div class="col-sm-12" style="padding: 0 10px;">
               <div class="row" style="padding: 0">
                 <div class="col-sm-6" style="padding: 0;">
-                  <div id="connessione_centralina" style="height: 200px"></div>
+                  <div id="connessione_centralina" style="height: 175px"></div>
                 </div>
                 <div class="col-sm-6" style="padding-right: 0">
-                  <div id="flight_data" style="padding: 0;display: block;height: 200px"></div>
+                  <div id="flight_data" style="padding: 0;display: block;height: 175px"></div>
                   <!--<div id="antennaGPS" style="display: block;"></div>-->
                 </div>
               </div>
@@ -72,7 +73,7 @@
           <canvas width="680px" height="680px" id="pitchCanvas" style="pointer-events:none;border-radius:10px;display: none;top:160px;left:290px;position: absolute;;z-index: 99999;"></canvas>
           <canvas width="1000px" height="800px" id="horizonCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:100px;z-index:9999;position: absolute;"></canvas>
           <canvas width="1000px" height="800px" id="horizonBarCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:100px;z-index:99999;position: absolute;"></canvas>
-          <canvas width="1000px" height="1000px" id="rollCanvas" style="pointer-events:none;border-radius:10px;display:block;left:130px;top:0;z-index:999999;position: absolute;"></canvas>
+          <canvas width="1000px" height="1000px" id="rollCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:0;z-index:999999;position: absolute;"></canvas>
 
 
           <div id="overlayCommands" class="row" style="position: relative;z-index: 999999"></div>
@@ -94,8 +95,7 @@
               <small style="float: left;margin-left: 20px;margin-top: 0;color:white">Cose a sinistra</small>
             </div>
             <div class="col-sm-6">
-              <strong style="color:white">Produzione Venturello e Giorgianardo S.P.G. <small>(Società Per Goatse)</small> Tutti i diritti stanno risserrvatti</strong>
-
+              <strong style="color:white">Produzione Venturello e Giorgianardo S.p.G. <small>(Società Per Goatse)</small> Tutti i diritti stanno risserrvatti</strong>
             </div>
             <div class="col-sm-3">
               <small style="float: right;margin-right: 20px;margin-top: -10px;color:white;cursor: pointer"><img id="realoadPage" width="40px" src="./assets/img/reload-svgrepo-com.svg" alt=""></small>

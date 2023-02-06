@@ -2,6 +2,8 @@ class CanvasPitch {
     constructor() {
     }
 
+    //ALTEZZA 680 PX CON 20PX DA OGNI PARTE DI BORDOS
+
     static render(){
 
         let c = document.getElementById('pitchCanvas')
@@ -31,17 +33,17 @@ class CanvasPitch {
         ctx.rotate(this.getRadianAngle(roll));                                         // 90°
         ctx.translate(-ctx.canvas.width * 0.5, -ctx.canvas.height * 0.5);*/
 
-        for (let i = 0; i < 80; i++) {
+        for (let i = 0; i < 320; i++) {
 
-            let currentHeightUtity = i*8
+            let currentHeightUtity = i*2
 
             if(deg > 90 || deg < -90){
-                deg+=0.5
+                deg+=0.125
                 continue
             }
 
             if (deg % 2.5 !== 0 && deg !== 0) {
-                deg += 0.5
+                deg += 0.125
                 continue
             }
 
@@ -67,6 +69,7 @@ class CanvasPitch {
                     ctx.fillText(Math.abs(deg), offset+160, 25 + currentHeightUtity);
                 }
             }
+
             let center = 0;
             if(deg%5 !== 0){height = 40;center=80+240}
             if(deg%5 === 0){height = 70; center = 65+240}
@@ -74,23 +77,10 @@ class CanvasPitch {
 
             ctx.moveTo(center, 20 + currentHeightUtity)
             ctx.lineTo(height+center, 20 + currentHeightUtity)
-            deg += 0.5
+            deg += 0.125
         }
 
         ctx.stroke();
-    }
-
-    static getRotation(ctx) {
-        const mat = ctx.getTransform();
-        const rad = Math.atan2(mat.b, mat.a);
-        if (rad < 0) { // angle is > Math.PI
-            return rad + Math.PI * 2;
-        }
-        return rad;
-    }
-
-    static getRadianAngle(degreeValue) {
-        return degreeValue * Math.PI / 180;
     }
 
     static drawCentralIndicator(ctx, deg, i) {

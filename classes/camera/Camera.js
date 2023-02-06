@@ -68,7 +68,7 @@ class Camera {
             $('#cesiumContainer').css('z-index',9999)
             
             $('#loadingCamera').show('fast')
-            $('#horizonBarCanvas').hide()
+            ///$('#horizonBarCanvas').hide()
 
             //Faccio vedere il canvas
             $('#canvasVideo').hide('fast')
@@ -98,7 +98,7 @@ class Camera {
             $('#firstPerson').hide('fast');
             $('#thirdPerson').hide('fast');
             $('#cameraLinkModal').hide()
-            $('#horizonBarCanvas').show()
+            //$('#horizonBarCanvas').show()
 
             $('#planeCamera').css('z-index',9998)
             $('#cesiumContainer').css('z-index',9999)

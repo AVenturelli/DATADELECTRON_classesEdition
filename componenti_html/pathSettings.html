@@ -1,23 +1,13 @@
 <div class="row" style="height: 207px">
   <div class="col-sm-12" style="padding: 0">
     <div class="row">
-     <div class="col-sm-12" style="padding-top: 10px">
-        <h5>Flight Path</h5>
-      </div>
-        <hr style="margin-bottom: 7px;margin-top: 7px">
-      <div class="col-sm-12">
-        <label for="setHome">Set the home for the antenna and for the plane</label>
-        <div class="btn btn-dark" id="setHome" style="float: right;">SET</div>
-      </div>
-        <hr style="margin-bottom: 7px;margin-top: 7px">
-      <div class="col-sm-12">
-          <label for="checkFlightPlan">Check all the wavepoints for the flight plan</label>
-          <div style="float: right"  class="btn btn-dark" id="checkFlightPlan">Check</div>
-      </div>
-        <hr style="margin-bottom: 7px;margin-top: 7px">
-      <div class="col-sm-12">
+        <div class="col-sm-12" style="margin-top: 10px">
+            <label for="travelAltitude">Set the altitude of the flight path</label>
+            <input style="float: right" value="50" id="travelAltitude"/>
+        </div>
+      <div class="col-sm-12" style="margin-top: 10px">
           <label for="startJourney">Start the planned route with the plane</label>
-        <div class="btn btn-danger" style="float: right" id="startJourney">START FLIGHT</div>
+        <button type="button" class="btn btn-danger" style="float: right" disabled id="startJourney">START FLIGHT</button>
       </div>
     </div>
   </div>

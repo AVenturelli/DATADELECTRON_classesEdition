@@ -84,6 +84,30 @@
             ctx.translate(-ctx.canvas.width * 0.5, -ctx.canvas.height * 0.5);
         }
 
+        ctx.strokeStyle="yellow";
+        ctx.lineWidth="5";
+
+        ctx.fillStyle = "black";
+        ctx.font = "bold 22px serif";
+
+
+        //Iniziamo a calcolare
+        //Centro
+        ctx.moveTo(495,400)
+        ctx.lineTo(505,400)
+
+
+
+        ctx.moveTo(200,400)
+        ctx.lineTo(400,400)
+
+        ctx.moveTo(600,400)
+        ctx.lineTo(800,400)
+
+
+
+        ctx.stroke();
+
         draw(canvas, baseSkyCoords, baseGroundCoords);
 
     }
@@ -125,27 +149,6 @@
         ctx.fillStyle = "saddlebrown"
         ctx.fill()
 
-
         ctx.beginPath()
-
-        canvas = document.getElementById('horizonBarCanvas')
-        ctx = canvas.getContext('2d');
-
-        ctx.strokeStyle="yellow";
-        ctx.lineWidth="5";
-
-        ctx.fillStyle = "black";
-        ctx.font = "bold 22px serif";
-
-        ctx.moveTo(200,400)
-        ctx.lineTo(400,400)
-
-        ctx.moveTo(600,400)
-        ctx.lineTo(800,400)
-
-        ctx.moveTo(495,400)
-        ctx.lineTo(505,400)
-
-        ctx.stroke();
     }
 </script>
