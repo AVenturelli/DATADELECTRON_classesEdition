@@ -1,0 +1,216 @@
+<canvas width="1000px" height="1000px" id="altitudeCanvas" style="background-color: rgba(0, 0, 0, 0.5)"></canvas>
+
+<script>
+    let deg = 0;
+    draw(deg)
+    let offset = -1
+    setInterval(() => {
+        draw(deg);
+        deg+=offset;
+        if(deg < -90) offset = 1
+        if(deg > 90) offset = -1
+    }, 100)
+
+    function draw(deg) {
+        let c = document.getElementById('altitudeCanvas')
+        let ctx = c.getContext('2d');
+        let textcTX = c.getContext('2d')
+        //Linea principale
+        ctx.beginPath();
+        ctx.strokeStyle = 'white';
+
+        ctx.clearRect(0, 0, c.width, c.height);
+
+        //Creo le posizioni dei vari numeri
+        //let deg = FlightData.planeHeading;
+        // if (deg === undefined) deg = Settings.getData('startingHeading');
+        //deg = Math.round(deg)
+
+        //console.log(originalDe
+        //this.roundRect(30, 180, 60, 40, 10, ctx);
+
+        ctx.strokeStyle = "yellow";
+        ctx.lineWidth = "2";
+
+        ctx.moveTo(498, 498)
+        ctx.lineTo(502, 498)
+        ctx.lineTo(502, 502)
+        ctx.lineTo(498, 502)
+        ctx.lineTo(498,498)
+
+        //0
+        ctx.moveTo(500,100)
+        ctx.lineTo(500,170)
+
+        //-90
+        ctx.moveTo(100,500)
+        ctx.lineTo(170,500)
+
+        //90
+        ctx.moveTo(900,500)
+        ctx.lineTo(830,500)
+
+        //45
+        ctx.moveTo(733,267)
+        ctx.lineTo(783,217)
+
+        //-45
+        ctx.moveTo(266.65,266.65)
+        ctx.lineTo(217,217)
+
+
+        //-60
+        ctx.moveTo(153.58,300)
+        ctx.lineTo(214.21,335)
+
+        //-30
+        ctx.moveTo(300,153.58)
+        ctx.lineTo(335,214.21)
+
+        //30
+        ctx.moveTo(846.42,300)
+        ctx.lineTo(785.78,335)
+
+        //60
+        ctx.moveTo(700,153.58)
+        ctx.lineTo(665,214.21)
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = "2";
+
+        //-60 gradi
+        ctx.arc(500, 500, 400, Math.PI, Math.PI+Math.PI/6);
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = "2";
+        //-45 gradi
+        ctx.arc(500, 500, 400, Math.PI+Math.PI/6, Math.PI+Math.PI/4);
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "green";
+        ctx.lineWidth = "2";
+        //-45 gradi
+        ctx.arc(500, 500, 400, Math.PI+Math.PI/4, Math.PI+Math.PI/3);
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "purple";
+        ctx.lineWidth = "2";
+        //-30 gradi
+        ctx.arc(500, 500, 400, Math.PI+Math.PI/3, Math.PI+Math.PI/2);
+
+
+        ////////
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = "2";
+
+        //-60 gradi
+        ctx.arc(500, 500, 400, -Math.PI/6, 0);
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = "2";
+        //-45 gradi
+        ctx.arc(500, 500, 400, -Math.PI/4, -Math.PI/6);
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "green";
+        ctx.lineWidth = "2";
+        //-45 gradi
+        ctx.arc(500, 500, 400, -Math.PI/3, -Math.PI/4);
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "cyan";
+        ctx.lineWidth = "2";
+        //-30 gradi
+        ctx.arc(500, 500, 400, -Math.PI/2, -Math.PI/3);
+
+        ////////////////////////////
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "cyan";
+        ctx.lineWidth = "2";
+        //-60 gradi
+        ctx.arc(500, 500, 330, Math.PI, Math.PI+Math.PI/6);
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = "2";
+        //-45 gradi
+        ctx.arc(500, 500, 330, Math.PI+Math.PI/6, Math.PI+Math.PI/4);
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "green";
+        ctx.lineWidth = "2";
+        //-45 gradi
+        ctx.arc(500, 500, 330, Math.PI+Math.PI/4, Math.PI+Math.PI/3);
+
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = "purple";
+        ctx.lineWidth = "2";
+        //-30 gradi
+        ctx.arc(500, 500, 330, Math.PI+Math.PI/3, Math.PI+Math.PI/2);
+
+
+        ///////
+        ctx.stroke()
+
+
+        ctx.beginPath()
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = "2";
+        //-60 gradi
+        ctx.arc(500, 500, 330, -Math.PI/6, 0);
+        ctx.stroke()
+
+
+        ctx.beginPath()
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = "2";
+        //-45 gradi
+        ctx.arc(500, 500, 330, -Math.PI/4, -Math.PI/6);
+        ctx.stroke()
+
+
+        ctx.beginPath()
+        ctx.strokeStyle = "green";
+        ctx.lineWidth = "2";
+        //-45 gradi
+        ctx.arc(500, 500, 330, -Math.PI/3, -Math.PI/4);
+        ctx.stroke()
+
+
+        ctx.beginPath()
+        ctx.strokeStyle = "cyan";
+        ctx.lineWidth = "2";
+        //-30 gradi
+        ctx.arc(500, 500, 330, -Math.PI/2, -Math.PI/3);
+
+
+
+        /*ctx.moveTo(250,250)
+        ctx.lineTo(750,250)
+        ctx.lineTo(750,750)
+        ctx.lineTo(250,750)
+        ctx.lineTo(250,250)*/
+
+
+        ctx.stroke()
+
+    }
+
+</script>

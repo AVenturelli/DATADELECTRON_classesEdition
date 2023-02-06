@@ -25,6 +25,8 @@ class MavlinkParams {
 
     static requestAllParams() {
         const message = new common.ParamRequestList()
+        //new common.MavCmd.DO_SET_HOME
+        //message.Latitude = 1
         message.targetSystem = 1
         message.targetComponent = 0
         if(Connection.getSerialPort() !== undefined) {
