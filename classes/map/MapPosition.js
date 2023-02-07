@@ -1,4 +1,4 @@
-const FlightPath = require('./FlightPath').FlightPath;
+const FlightPath = require('./FlightPathWithWavePoints').FlightPathWithWavePoints;
 class MapPosition {
 
     static map = undefined;
@@ -83,7 +83,9 @@ class MapPosition {
                 }
 
                 let markerPositions = FlightPath.getMarkersPosition()
+
                 let marker = undefined;
+
                 for(let i = 0; i < markerPositions.length; i++){
                     let imageBounds = [
                         [

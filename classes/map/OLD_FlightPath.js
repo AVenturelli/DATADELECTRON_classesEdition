@@ -1,6 +1,6 @@
 const MapPosition = require("./MapPosition").MapPosition;
 
-class FlightPath {
+class OLD_FlightPath {
     static path = [];
 
     static flightPath = undefined;
@@ -101,19 +101,9 @@ class FlightPath {
 
                     currentMarker.on('dragstart ',(e) =>{this.currentDragLatLng = L.latLng(e.target._latlng.lat,e.target._latlng.lng)})
 
-                    //currentMarker.on('dragstart ',(e) =>{this.currentDragLatLng = e.target._latlng})
-
-
                     this.markers.push(currentMarker);
                 }
             }
-
-            //Disegno l'ultimo path verso casa!
-            //this.flightPath.addLatLng(this.path[0])
-
-
-
-
         }
     }
 
@@ -125,4 +115,4 @@ class FlightPath {
         return points;
     }
 }
-exports.FlightPath = FlightPath
+exports.FlightPath = OLD_FlightPath
