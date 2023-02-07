@@ -7,6 +7,8 @@ class FlightPath {
     static map = undefined;
 
     static markers = [];
+
+    static currentDragLatLng = undefined;
     constructor() {
     }
 
@@ -14,7 +16,7 @@ class FlightPath {
         //let startingCoordinates = MapPosition.getHomeCoords()
         //if(startingCoordinates === undefined){return false;}
         this.map = map;
-        this.path.push([lat,lon]);
+        this.path.push(L.latLng(lat,lon));
         this.updatePathList();
 
 
@@ -35,10 +37,9 @@ class FlightPath {
         }
     }
 
-    static removePoint(lat,lon){
+    static removePoint(latLon){
         for (let i=0; i<this.path.length; i++){
-            console.log(lat+" : "+this.path[i][0])
-            if(this.path[i][0] === lat && this.path[i][1] === lon){
+            if(this.path[i].equals(latLon)){
                 this.path.splice(i, 1);
             }
             this.updatePathList();
@@ -74,7 +75,7 @@ class FlightPath {
             }
 
             //Creo il primo punto!
-            this.flightPath = L.polyline([[this.path[0][0],this.path[0][1]]], {color: 'blue'}).addTo(this.map);
+            this.flightPath = L.polyline(this.path[0], {color: 'blue'}).addTo(this.map);
 
             for(let i = 0; i < this.path.length; i++) {
 
@@ -86,7 +87,24 @@ class FlightPath {
                         markerColor: 'red'
                     });
 
-                    this.markers.push(L.marker([this.path[i][0], this.path[i][1]], {icon: redMarker}).addTo(this.map));
+                    let currentMarker = L.marker(this.path[i], {icon: redMarker,draggable: true}).addTo(this.map);
+
+                    currentMarker.on('dragend',(e) => {
+                        for(let k = 0; k < this.path.length; k++){
+                            if(this.path[k].equals(this.currentDragLatLng)){
+                                this.path[k] = L.latLng(e.target._latlng.lat,e.target._latlng.lng)
+                                this.currentDragLatLng = undefined;
+                            }
+                            this.updatePathList()
+                        }
+                    })
+
+                    currentMarker.on('dragstart ',(e) =>{this.currentDragLatLng = L.latLng(e.target._latlng.lat,e.target._latlng.lng)})
+
+                    //currentMarker.on('dragstart ',(e) =>{this.currentDragLatLng = e.target._latlng})
+
+
+                    this.markers.push(currentMarker);
                 }
             }
 

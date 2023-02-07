@@ -129,7 +129,7 @@ class MapPosition {
             alert.printCode()
             alert.showAlert();*/
 
-            FlightPath.removePoint(lat,lon)
+            FlightPath.removePoint(L.latLng(lat,lon))
 
             $('.leaflet-popup-close-button').children('span').trigger('click')
         })
@@ -145,7 +145,7 @@ class MapPosition {
             alert.printCode()
             alert.showAlert();*/
 
-            FlightPath.addPoint([lat,lon])
+            FlightPath.addPoint(L.latLng(lat,lon))
 
             $('.leaflet-popup-close-button').children('span').trigger('click')
         })
@@ -232,10 +232,10 @@ class MapPosition {
 
     static addPointToTrail(lat,lon){
         if(this.trailPoints === undefined){
-            this.trailPoints = L.polyline([[lat,lon]], {color: 'red'}).addTo(this.map);
+            this.trailPoints = L.polyline(L.latLng(lat,lon), {color: 'red'}).addTo(this.map);
         }
         else {
-            this.trailPoints.addLatLng([lat,lon])
+            this.trailPoints.addLatLng(L.latLng(lat,lon))
         }
     }
 
