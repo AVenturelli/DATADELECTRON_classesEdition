@@ -1,4 +1,5 @@
 const {WavePoint} = require("./WavePoint");
+const WavePointManager = require("./WavePointManager").WavePointManager;
 const MapPosition = require("./MapPosition").MapPosition;
 
 class FlightPathWithWavePoints {
@@ -8,8 +9,6 @@ class FlightPathWithWavePoints {
     constructor() {
     }
     static setStatingPoint(lat,lon,map) {
-        //let startingCoordinates = MapPosition.getHomeCoords()
-        //if(startingCoordinates === undefined){return false;}
         this.map = map;
         this.wavePoints.push(new WavePoint(L.latLng(lat,lon),map));
         this.updatePathList();
@@ -20,7 +19,8 @@ class FlightPathWithWavePoints {
         this.updatePathList();
 
         //SE HO PIU DI UN PUNTO ABILITO IL PULSANTE
-        //Abilito lo start del volo
+        //Abilito lo
+        // del volo
         if(this.wavePoints.length > 1){
             $('#startJourney').prop('disabled',false);
         }
@@ -90,6 +90,37 @@ class FlightPathWithWavePoints {
             points.push(this.wavePoints[i].getLatLngPosition())
         }
         return points;
+    }
+
+    static getWavePoints(){
+        return this.wavePoints;
+    }
+
+    static setWavePointGreen(index){
+        for(let i = 0; i < this.wavePoints.length; i++){
+            if(i === index){
+                this.wavePoints[index].setMarkerGreen()
+            }
+            else{
+                this.wavePoints[i].setMarkerRed()
+            }
+        }
+        this.updatePathList()
+    }
+
+    static getWavePoint(index){
+        return this.wavePoints[index];
+    }
+
+    static changeWavePoint(oldIndex,newIndex){
+        let newPoint = this.getWavePoint(newIndex);
+        let oldPoint = this.getWavePoint(oldIndex);
+
+        this.wavePoints[oldIndex] = newPoint;
+        this.wavePoints[newIndex] = oldPoint;
+
+
+        this.updatePathList();
     }
 }
 exports.FlightPathWithWavePoints = FlightPathWithWavePoints

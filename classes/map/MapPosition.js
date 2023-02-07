@@ -1,3 +1,4 @@
+const WavePointManager = require("./WavePointManager").WavePointManager;
 const FlightPath = require('./FlightPathWithWavePoints').FlightPathWithWavePoints;
 class MapPosition {
 
@@ -114,12 +115,16 @@ class MapPosition {
                 }
 
             }else{
-                    let html = "<div style='margin-top: 5px'><strong >Click here to set the plane's home</strong></div><div style='width: 100%;font-weight: 600' id='setHomeFromMap' data-lat='"+e.latlng.lat+"' data-lon='"+e.latlng.lng+"' class='btn btn-warning btn-small'>SET HOME</div>"
-                    L.popup().setLatLng(e.latlng).setContent(html).openOn(this.map);
+                let html = "<div style='margin-top: 5px'><strong >Click here to set the plane's home</strong></div><div style='width: 100%;font-weight: 600' id='setHomeFromMap' data-lat='"+e.latlng.lat+"' data-lon='"+e.latlng.lng+"' class='btn btn-warning btn-small'>SET HOME</div>"
+                L.popup().setLatLng(e.latlng).setContent(html).openOn(this.map);
             }
 
         });
 
+        //Serve per aggiornare il modal con i wavepoint quando trascino da mappa
+        $(document).on('mouseup', '.awesome-marker', () => {
+            WavePointManager.populateWavePoints();
+        })
 
         $(document).on('click', '#removeMarker',() => {
             let lat = $('#removeMarker').data('lat')
@@ -134,10 +139,12 @@ class MapPosition {
             FlightPath.removePoint(L.latLng(lat,lon))
 
             $('.leaflet-popup-close-button').children('span').trigger('click')
+
+            WavePointManager.showTabWavepoints();
         })
 
 
-            $(document).on('click', '#addToPath',() =>{
+        $(document).on('click', '#addToPath',() =>{
             let lat = $('#addToPath').data('lat')
             let lon = $('#addToPath').data('lon')
             /*let alert = new CustomAlert(
@@ -148,6 +155,8 @@ class MapPosition {
             alert.showAlert();*/
 
             FlightPath.addPoint(L.latLng(lat,lon))
+
+            WavePointManager.showTabWavepoints();
 
             $('.leaflet-popup-close-button').children('span').trigger('click')
         })
@@ -172,6 +181,8 @@ class MapPosition {
 
             $('.leaflet-popup-close-button').children('span').trigger('click')
 
+            WavePointManager.showTabWavepoints();
+
         })
 
         $(document).on('click', '#removeHome',() =>{
@@ -191,6 +202,8 @@ class MapPosition {
 
             //Tolgo la home dal flight path e lo cancello!
             FlightPath.clearPath()
+
+            WavePointManager.showTabWavepoints();
         })
 
         this.map.on('zoomend',()=>{
@@ -285,7 +298,7 @@ class MapPosition {
         this.plane.reposition(topLeft, topRight, bottomLeft)
 
         if(this.planeLocked){
-           this.map.setView([yCoord, xCoord],  this.map._zoom);
+            this.map.setView([yCoord, xCoord],  this.map._zoom);
         }
 
     }

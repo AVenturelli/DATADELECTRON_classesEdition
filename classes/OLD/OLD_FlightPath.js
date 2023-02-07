@@ -1,4 +1,4 @@
-const MapPosition = require("./MapPosition").MapPosition;
+const MapPosition = require("../map/MapPosition").MapPosition;
 
 class OLD_FlightPath {
     static path = [];
