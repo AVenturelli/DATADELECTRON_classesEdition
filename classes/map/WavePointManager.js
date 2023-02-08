@@ -19,7 +19,6 @@ class WavePointManager {
         $(document).on('click', '.wavePointLiItem', function() {
 
             $('.wavePointLiItem').each(function(i, obj) {
-                console.log("ok")
                 $(this).css('background-color', 'transparent')
                 $(this).css('border-color', 'gray')
             });

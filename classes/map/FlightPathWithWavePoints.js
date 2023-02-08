@@ -113,12 +113,19 @@ class FlightPathWithWavePoints {
     }
 
     static changeWavePoint(oldIndex,newIndex){
+
         let newPoint = this.getWavePoint(newIndex);
         let oldPoint = this.getWavePoint(oldIndex);
 
         this.wavePoints[oldIndex] = newPoint;
-        this.wavePoints[newIndex] = oldPoint;
 
+        for(let i = oldIndex+1; i < this.wavePoints.length; i++){
+            let temp = oldPoint;
+            oldPoint = this.wavePoints[i];
+            this.wavePoints[i] = temp;
+        }
+
+        this.wavePoints[newIndex] = oldPoint;
 
         this.updatePathList();
     }
