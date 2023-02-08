@@ -23,14 +23,34 @@ class WavePointManager {
                 $(this).css('border-color', 'gray')
             });
 
-            if( !$(this).hasClass('unsortable')){
-                $(this).css('background-color', 'lightgreen')
-                $(this).css('border-color', 'green')
-
+            if(!$(this).hasClass('wavePointSelected')){
+                if( !$(this).hasClass('unsortable')){
+                    $(this).css('background-color', 'lightgreen')
+                    $(this).css('border-color', 'green')
+                    $(this).addClass('wavePointSelected');
+                }
+                else
+                {
+                    $(this).css('border-color', 'lightcoral')
+                }
+                let wavePointIndex = $(this).data('index');
+                FlightPathWithWavePoints.setWavePointGreen(wavePointIndex)
             }
-            let wavePointIndex = $(this).data('index');
-            FlightPathWithWavePoints.setWavePointGreen(wavePointIndex)
+            else{
+                $(this).css('background-color', 'transparent')
+                $(this).css('border-color', 'gray')
+                $(this).removeClass('wavePointSelected');
+                let wavePointIndex = $(this).data('index');
+                FlightPathWithWavePoints.setWavePointRed()
+            }
+
+
         });
+
+        $(document).on('click','.buttonUpdateWavePoint ', function (event){
+            event.stopPropagation();
+            console.log("Wee")
+        })
 
 
         $("#wavePointList").sortable({
@@ -78,14 +98,14 @@ class WavePointManager {
             let number = "N°"+i
             let className=""
             let css = ""
-            if(i === 0){number = "HOME"; className="unsortable";css='border-color:lightred !Important'}
+            if(i === 0){number = "HOME"; className="unsortable";css='border-color:lightcoral !Important'}
             html +="<li class='wavePointLiItem "+className+"' style='"+css+"' data-index='"+i+"' id='li_"+i+"'><div class='row'>" +
                 "<div class='col-sm-1'><h4 style='margin-top: 13px'>"+number+"</h4></div>" +
                 "<div class='col-sm-3'><label for='lat_"+i+"'>Latitude </label><br><input id='lat_"+i+"' value='"+latLng.lat+"'></div> " +
                 "<div class='col-sm-3'><label for='lng_"+i+"'>Longitude: </label><br><input id='lng_"+i+"' value='"+latLng.lng+"'></div> " +
                 "<div class='col-sm-2'><label for='alt_"+i+"'>Altitude: </label><br><input id='alt_"+i+"' value='"+alt+"'></div> " +
-                "<div class='col-sm-1'></div> " +
-                "<div class='col-sm-1' style='float: right;margin-top: 17'><button type='button' id='updateValues_"+i+"' class='btn btn-success'>Update</button> </div> " +
+                "<div class='col-sm-2'></div> " +
+                "<div class='col-sm-1' style='float: right;margin-top: 10px'><button type='button' id='updateValues_"+i+"' class='buttonUpdateWavePoint btn btn-success'>Update</button> </div> " +
                 "</div></li>"
         }
         $('#wavePointList').html(html)

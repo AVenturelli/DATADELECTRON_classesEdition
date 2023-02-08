@@ -1,6 +1,4 @@
 const {WavePoint} = require("./WavePoint");
-const WavePointManager = require("./WavePointManager").WavePointManager;
-const MapPosition = require("./MapPosition").MapPosition;
 
 class FlightPathWithWavePoints {
     static wavePoints = [];
@@ -104,6 +102,13 @@ class FlightPathWithWavePoints {
             else{
                 this.wavePoints[i].setMarkerRed()
             }
+        }
+        this.updatePathList()
+    }
+
+    static setWavePointRed(){
+        for(let i = 0; i < this.wavePoints.length; i++){
+            this.wavePoints[i].setMarkerRed()
         }
         this.updatePathList()
     }
