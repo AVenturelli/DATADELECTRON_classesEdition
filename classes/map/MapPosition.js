@@ -1,5 +1,5 @@
-const WavePointManager = require("./WavePointManager").WavePointManager;
-const FlightPath = require('./FlightPathWithWavePoints').FlightPathWithWavePoints;
+const WayPointManager = require("./WayPointManager").WayPointManager;
+const FlightPath = require('./FlightPathWithWayPoints').FlightPathWithWayPoints;
 class MapPosition {
 
     static map = undefined;
@@ -86,6 +86,7 @@ class MapPosition {
                 let markerPositions = FlightPath.getMarkersPosition()
 
                 let marker = undefined;
+                let markerIndex = undefined;
 
                 for(let i = 0; i < markerPositions.length; i++){
                     let imageBounds = [
@@ -100,6 +101,7 @@ class MapPosition {
                         //Sono sopra la casa!!
                         doPopUp = false;
                         marker = markerPositions[i];
+                        markerIndex = i;
                     }
                 }
 
@@ -110,7 +112,8 @@ class MapPosition {
                 }
                 else{
                     //Sono sopra ad un marker!
-                    let html = "<div style='margin-top: 5px'><strong >Click here to remove the marker</strong></div><div style='width: 100%;font-weight: 600' id='removeMarker' data-lat='"+marker.lat+"' data-lon='"+marker.lng+"' class='btn btn-warning btn-small'>REMOVE MARKER</div>"
+                    let waypoint = FlightPath.getWayPoint(markerIndex)
+                    let html = "<div style='margin-top: 5px'><strong >WayPoint height: "+waypoint.getWayPointAltitude()+" mt.</strong></div><div style='width: 100%;font-weight: 600' id='removeMarker' data-lat='"+marker.lat+"' data-lon='"+marker.lng+"' class='btn btn-warning btn-small'>REMOVE MARKER</div>"
                     L.popup().setLatLng(e.latlng).setContent(html).openOn(this.map);
                 }
 
@@ -121,9 +124,9 @@ class MapPosition {
 
         });
 
-        //Serve per aggiornare il modal con i wavepoint quando trascino da mappa
+        //Serve per aggiornare il modal con i Waypoint quando trascino da mappa
         $(document).on('mouseup', '.awesome-marker', () => {
-            WavePointManager.populateWavePoints();
+            WayPointManager.populateWayPoints();
         })
 
         $(document).on('click', '#removeMarker',() => {
@@ -140,7 +143,7 @@ class MapPosition {
 
             $('.leaflet-popup-close-button').children('span').trigger('click')
 
-            WavePointManager.showTabWavepoints();
+            WayPointManager.showTabWaypoints();
         })
 
 
@@ -156,7 +159,7 @@ class MapPosition {
 
             FlightPath.addPoint(L.latLng(lat,lon))
 
-            WavePointManager.showTabWavepoints();
+            WayPointManager.showTabWaypoints();
 
             $('.leaflet-popup-close-button').children('span').trigger('click')
         })
@@ -181,7 +184,7 @@ class MapPosition {
 
             $('.leaflet-popup-close-button').children('span').trigger('click')
 
-            WavePointManager.showTabWavepoints();
+            WayPointManager.showTabWaypoints();
 
         })
 
@@ -203,7 +206,7 @@ class MapPosition {
             //Tolgo la home dal flight path e lo cancello!
             FlightPath.clearPath()
 
-            WavePointManager.showTabWavepoints();
+            WayPointManager.showTabWaypoints();
         })
 
         this.map.on('zoomend',()=>{

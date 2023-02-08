@@ -450,7 +450,7 @@ input:checked + .slider:before {
     margin-right: 10px;
 }
 
-.wavePointLi{
+.wayPointLi{
     height: 500px;
     list-style: none;
     width: 100%;
@@ -459,7 +459,7 @@ input:checked + .slider:before {
     padding: 10px 15px;
     overflow-y: auto;
 }
-.wavePointLiItem{
+.wayPointLiItem{
     height: 70px;
     border: 2px solid gray;
     margin-bottom: 5px;
@@ -467,6 +467,6 @@ input:checked + .slider:before {
     border-radius: 10px;
 }
 
-.wavePointLiItem label{
+.wayPointLiItem label{
     font-weight: 700;
 }

@@ -107,7 +107,7 @@
     </div>
 
     <div id="modals"></div>
-    <div id="wavePointModalDiv"></div>
+    <div id="wayPointModalDiv"></div>
   </body>
 
   <script src="./assets/gauges/js/jquery.flightindicators.js"></script>
@@ -124,7 +124,7 @@
     const Settings = require("./classes/utility/Settings").Settings;
     const PlaneCamera = require("./classes/camera/Camera").Camera;
     const MapPosition = require("./classes/map/MapPosition").MapPosition;
-    const WavePointManager = require("./classes/map/WavePointManager").WavePointManager;
+    const WayPointManager = require("./classes/map/WayPointManager").WayPointManager;
 
     $('#cesiumContainer').height("1000px")
 
@@ -191,7 +191,7 @@
 
         //Creo la mappa
         MapPosition.setUp();
-        WavePointManager.setupListeners();
+        WayPointManager.setupListeners();
 
         //Salvo i parametri del file nella classe statica
         MavlinkParams.populateParams();

@@ -19,7 +19,7 @@ $("#loadingCamera").load("componenti_html/loadingPlane.html");
 $("#modalLink").load("componenti_html/cameraAddress.html");
 $('#layoutManager').load("componenti_html/layoutSettings.html")
 $('#map_container').load("componenti_html/positionMap.html")
-$('#wavePointModalDiv').load("componenti_html/wavePointsConfigurator.html")
+$('#wayPointModalDiv').load("componenti_html/wayPointsConfigurator.html")
 
 ////////////////////////////////////////////   
 //            GROUND LEVELING             //

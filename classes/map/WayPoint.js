@@ -1,4 +1,4 @@
-class WavePoint {
+class WayPoint {
 
     #latLng
     #alt
@@ -10,21 +10,27 @@ class WavePoint {
     constructor(latLng,map) {
         this.#map = map;
         this.#latLng = latLng;
+        this.#alt = $('#travelAltitude').val()
     }
 
     getLatLngPosition(){
         return this.#latLng
     }
 
-    setWavePointAltitude(altInMeters){
+    setWayPointAltitude(altInMeters){
         this.#alt = altInMeters;
     }
 
-    getWavePointAltitude(){
+    getWayPointAltitude(){
         return this.#alt;
     }
     updatePosition(latLng){
         this.#latLng = latLng;
+    }
+
+    updatePositionAndAlt(latLng,alt){
+        this.#latLng = latLng;
+        this.#alt = alt;
     }
 
     updateMarker(){
@@ -58,4 +64,4 @@ class WavePoint {
 
 }
 
-exports.WavePoint = WavePoint;
+exports.WayPoint = WayPoint;
