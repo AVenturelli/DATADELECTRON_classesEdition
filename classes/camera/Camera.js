@@ -3,17 +3,16 @@ const VideoConnection = require("./VideoConnection").VideoConnection;
 const DatadCesium = require("../DatadCesium").DatadCesium;
 
 class Camera {
-    constructor() {
-    }
-
     static #streamingStatus = true;
     static socketA;
     static divSocket;
-
     static videoConnection;
 
-    static createListener(){
-        $('#startStreaming').on('click',() => {
+    constructor() {
+    }
+
+    static createListener() {
+        $('#startStreaming').on('click', () => {
 
             DatadCesium.changeRenderLoopState(false);
 
@@ -28,10 +27,10 @@ class Camera {
             $('#planeCamera').show();
             $('#firstPerson').hide('fast');
             $('#thirdPerson').hide('fast');
-            $( "#cesiumContainer" ).slideUp();
+            $("#cesiumContainer").slideUp();
 
-            $('#planeCamera').css('z-index',9999)
-            $('#cesiumContainer').css('z-index',9998)
+            $('#planeCamera').css('z-index', 9999)
+            $('#cesiumContainer').css('z-index', 9998)
 
             let linkStream = $('#streamLink').val()
             let streamWidth = $('#streamWidth').val()
@@ -41,12 +40,11 @@ class Camera {
             $('#cameraLinkModal').hide()
 
 
-
-            this.startPlaying(linkStream,streamWidth,streamHeight,streamQuality).then(r => console.log("Avvio streaming"));
+            this.startPlaying(linkStream, streamWidth, streamHeight, streamQuality).then(r => console.log("Avvio streaming"));
 
         })
 
-        $('#showCesium').on('click',() => {
+        $('#showCesium').on('click', () => {
 
             DatadCesium.changeRenderLoopState(true);
 
@@ -60,13 +58,13 @@ class Camera {
 
 
             $('#cesiumContainer').show();
-            $( "#planeCamera" ).slideUp();
+            $("#planeCamera").slideUp();
             $('#firstPerson').show('fast');
             $('#thirdPerson').show('fast');
 
-            $('#planeCamera').css('z-index',9998)
-            $('#cesiumContainer').css('z-index',9999)
-            
+            $('#planeCamera').css('z-index', 9998)
+            $('#cesiumContainer').css('z-index', 9999)
+
             $('#loadingCamera').show('fast')
             ///$('#horizonBarCanvas').hide()
 
@@ -80,7 +78,7 @@ class Camera {
             this.stopSocket();
         })
 
-        $('#showArtificialHorizon').on('click',() => {
+        $('#showArtificialHorizon').on('click', () => {
 
             DatadCesium.changeRenderLoopState(false);
 
@@ -94,14 +92,14 @@ class Camera {
 
             $('#cesiumContainer').hide();
 
-            $( "#planeCamera" ).slideUp();
+            $("#planeCamera").slideUp();
             $('#firstPerson').hide('fast');
             $('#thirdPerson').hide('fast');
             $('#cameraLinkModal').hide()
             //$('#horizonBarCanvas').show()
 
-            $('#planeCamera').css('z-index',9998)
-            $('#cesiumContainer').css('z-index',9999)
+            $('#planeCamera').css('z-index', 9998)
+            $('#cesiumContainer').css('z-index', 9999)
 
             $('#loadingCamera').show('fast')
             $('#canvasVideo').hide('fast')
@@ -112,16 +110,16 @@ class Camera {
         })
     }
 
-    static async startPlaying(linkStream, streamWidth, streamHeight,streamQuality) {
+    static async startPlaying(linkStream, streamWidth, streamHeight, streamQuality) {
 
         this.videoConnection = new VideoConnection();
-        this.videoConnection.initialize(linkStream,streamWidth,streamHeight,streamQuality).then(r => {
-            this.doRender(streamWidth,streamHeight)
+        this.videoConnection.initialize(linkStream, streamWidth, streamHeight, streamQuality).then(r => {
+            this.doRender(streamWidth, streamHeight)
         });
 
     }
 
-    static doRender(streamWidth,streamHeight){
+    static doRender(streamWidth, streamHeight) {
 
         let canvas = document.getElementById("canvasVideo");
         let ctx = canvas.getContext("2d");
@@ -155,8 +153,8 @@ class Camera {
                 //Faccio vedere il canvas
                 $('#canvasVideo').show('fast')
 
-                let xStart =  1230/2-streamWidth/2
-                let yStart =  1000/2-streamHeight/2
+                let xStart = 1230 / 2 - streamWidth / 2
+                let yStart = 1000 / 2 - streamHeight / 2
 
                 //console.log(xStart+" e "+yStart)
 
@@ -169,15 +167,15 @@ class Camera {
         });
     }
 
-    static stopSocket(){
+    static stopSocket() {
 
-        if(this.socketA !== undefined){
+        if (this.socketA !== undefined) {
             this.socketA.disconnect();
         }
-        if(this.divSocket !== undefined){
+        if (this.divSocket !== undefined) {
             this.divSocket.disconnect();
         }
-        if(this.videoConnection !== undefined){
+        if (this.videoConnection !== undefined) {
             this.videoConnection.kill()
         }
     }

@@ -15,7 +15,7 @@ class Settings {
         let rawFile = new XMLHttpRequest();
         rawFile.overrideMimeType("application/json");
         rawFile.open("GET", file, true);
-        rawFile.onreadystatechange = function() {
+        rawFile.onreadystatechange = function () {
             if (rawFile.readyState === 4 && rawFile.status === 200) {
                 callback(rawFile.responseText);
             }
@@ -25,26 +25,26 @@ class Settings {
 
 //usage:
     static async fetchData() {
-        let text = await this.fs.readFile(path.resolve(__dirname,"../../settings.json"));
+        let text = await this.fs.readFile(path.resolve(__dirname, "../../settings.json"));
         let data = JSON.parse(text.toString());
         this.#settingsData = data.allSettings
+        $('#streamLink').val(this.getData('cameraAddress'));
     }
 
-    static getData(paramName){
+    static getData(paramName) {
         let result = this.getSingleData(paramName);
         return result[0].value
     }
 
     static getSingleData(paramName) {
 
-        if(this.#settingsData !== undefined) {
+        if (this.#settingsData !== undefined) {
             return this.#settingsData.filter(
                 (data) => {
                     return data.name === paramName
                 }
             );
-        }
-        else {
+        } else {
             console.log("Errore: la variabile dati è vuota!")
         }
     }

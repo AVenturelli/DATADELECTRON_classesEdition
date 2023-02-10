@@ -34,7 +34,7 @@ class AdsbPlaneList {
 
     #removePlaneFromAdsbList(adsbPlane){
 
-        adsbPlane.removeAdsbPlaneEntity();
+        adsbPlane.removeAdsbPlaneEntity(adsbPlane);
         const index = this.#planeList.indexOf(adsbPlane);
         if (index > -1) { // only splice array when item is found
             this.#planeList.splice(index, 1); // 2nd parameter means remove one item only

@@ -1,97 +1,99 @@
 <div class="infobox" style="margin-top: 0;">
     <div class="boxTitle">
-      <h6>Connessione Centralina</h6>
+        <h6>Connessione Centralina</h6>
     </div>
     <div class="boxContent">
-      <div class="alert alert-danger text-center" id="connection_status">NON CONNESSO</div>
-      <div class="row">
-        <div class="col-xl-6 col-lg-12 text-center">
-          <button class="btn btn-success btn-sm" id="connect">Connect</button>
-          <button class="btn btn-danger btn-sm" id="disconnect" style="display: none;">Disconnect</button>
+        <div class="alert alert-danger text-center" id="connection_status">NON CONNESSO</div>
+        <div class="row">
+            <div class="col-xl-6 col-lg-12 text-center">
+                <button class="btn btn-success btn-sm" id="connect">Connect</button>
+                <button class="btn btn-danger btn-sm" id="disconnect" style="display: none;">Disconnect</button>
+            </div>
+            <div class="col-xl-6 col-lg-12 text-center">
+                <button class="btn btn-info btn-sm" id="myBtn">Impostazioni</button>
+            </div>
+            <div class="col-sm-12" style="margin-top: 10px;">
+                <div id="sendingDataFeedback"></div>
+            </div>
         </div>
-        <div class="col-xl-6 col-lg-12 text-center">
-          <button class="btn btn-info btn-sm" id="myBtn">Impostazioni</button>
-        </div>
-        <div class="col-sm-12" style="margin-top: 10px;">
-          <div id="sendingDataFeedback"></div>
-        </div>
-      </div>
     </div>
 </div>
 
 <!-- The Modal -->
 <div id="connection_modal" class="modal">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h3>Choose a port and select the baud rate</h3>
-    <div class="row">
-      <div class="col-sm-6">
-        <label for="baud_rate">Select a Baud Rate</label>
-        <select id="baud_rate" style="width: 100%;">
-          <option value="38400">38400</option>
-          <option value="57600">57600</option>
-          <option value="115200" selected>115200</option>
-          <option value="230400">230400</option>
-        </select>
-      </div>
-      <div class="col-sm-6">
-        <label for="com_port">Select a COM port</label>
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Choose a port and select the baud rate</h3>
         <div class="row">
-          <div class="col-sm-11">
-            <select id="com_port" style="width: 100%;">
-  
-            </select>
-          </div>
-          <div class="col-sm-1">
-            <svg id="port_refresh" style="cursor: pointer;" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
-              <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
-            </svg>
-          </div>
+            <div class="col-sm-6">
+                <label for="baud_rate">Select a Baud Rate</label>
+                <select id="baud_rate" style="width: 100%;">
+                    <option value="38400">38400</option>
+                    <option value="57600">57600</option>
+                    <option value="115200" selected>115200</option>
+                    <option value="230400">230400</option>
+                </select>
+            </div>
+            <div class="col-sm-6">
+                <label for="com_port">Select a COM port</label>
+                <div class="row">
+                    <div class="col-sm-11">
+                        <select id="com_port" style="width: 100%;">
+
+                        </select>
+                    </div>
+                    <div class="col-sm-1">
+                        <svg id="port_refresh" style="cursor: pointer;" width="16" height="16" fill="currentColor"
+                             class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12" style="margin-top: 20px">
+                <button class="btn btn-success btn" id="save_conn_param">Save PortConnection</button>
+            </div>
         </div>
-      </div>
-      <div class="col-sm-12" style="margin-top: 20px">
-            <button class="btn btn-success btn" id="save_conn_param">Save PortConnection</button>
-      </div>
-    </div>
-    <!--<div class="row">
-      <div class="col-sm-12" style="margin-top: 15px;">
-        <h3>Connect the antenna tracker</h3>
-        <div class="custom-control custom-switch">
-          <input type="checkbox" class="custom-control-input" id="customSwitch1">
-          <label class="custom-control-label" for="customSwitch1">Manda i dati</label>
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <label for="baud_rate_out">Select a Baud Rate</label>
-            <select id="baud_rate_out" style="width: 100%;" disabled>
-              <option value="38400">38400</option>
-              <option value="57600">57600</option>
-              <option value="115200">115200</option>
-              <option value="230400">230400</option>
-            </select>
-          </div>
-          <div class="col-sm-6" >
-            <label for="com_port_out">Select a COM port</label>
+        <!--<div class="row">
+          <div class="col-sm-12" style="margin-top: 15px;">
+            <h3>Connect the antenna tracker</h3>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="customSwitch1">
+              <label class="custom-control-label" for="customSwitch1">Manda i dati</label>
+            </div>
             <div class="row">
-              <div class="col-sm-11">
-                <select id="com_port_out" style="width: 100%;" disabled>
-      
+              <div class="col-sm-6">
+                <label for="baud_rate_out">Select a Baud Rate</label>
+                <select id="baud_rate_out" style="width: 100%;" disabled>
+                  <option value="38400">38400</option>
+                  <option value="57600">57600</option>
+                  <option value="115200">115200</option>
+                  <option value="230400">230400</option>
                 </select>
               </div>
-              <div class="col-sm-1">
-                <svg id="port_refresh_out" style="cursor: pointer;" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
-                  <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
-                </svg>
-              </div>
-            </div>
-          </div>    
-      </div>
+              <div class="col-sm-6" >
+                <label for="com_port_out">Select a COM port</label>
+                <div class="row">
+                  <div class="col-sm-11">
+                    <select id="com_port_out" style="width: 100%;" disabled>
 
+                    </select>
+                  </div>
+                  <div class="col-sm-1">
+                    <svg id="port_refresh_out" style="cursor: pointer;" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                      <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+        </div>
+      </div>-->
     </div>
-  </div>-->
-  </div>
 </div>

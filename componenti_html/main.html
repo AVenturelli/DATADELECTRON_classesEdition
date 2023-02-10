@@ -1,0 +1,114 @@
+<div class="container main container"
+     style="margin: 0;padding: 10px 0 20px 0;width: 100%;max-width: 100%;height: inherit">
+  <div class="row" style="max-height: 1010px">
+    <div class="col-sm-4" style="padding: 0;">
+      <div class="row">
+        <div class="col-sm-12" style="padding: 0 10px;">
+          <div class="row" style="padding: 0">
+            <div class="col-sm-6" style="padding: 0;">
+              <div id="connessione_centralina" style="height: 175px"></div>
+            </div>
+            <div class="col-sm-6" style="padding-right: 0">
+              <div id="flight_data" style="padding: 0;display: block;height: 175px"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 infobox"
+             style="margin-top:10px;margin-left:10px;max-width:616px;background-color: white;border-radius: 10px">
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button aria-controls="nav-home" aria-selected="true" class="nav-link active"
+                      data-bs-target="#nav-home" data-bs-toggle="tab" id="nav-home-tab" role="tab"
+                      type="button">Settings Layout
+              </button>
+              <button aria-controls="nav-profile" aria-selected="false" class="nav-link"
+                      data-bs-target="#nav-profile" data-bs-toggle="tab" id="nav-profile-tab" role="tab"
+                      type="button">Adsb
+              </button>
+              <button aria-controls="nav-path-settings" aria-selected="false" class="nav-link"
+                      data-bs-target="#nav-path-settings" data-bs-toggle="tab" id="nav-path-settings-tab"
+                      role="tab" type="button">Path Settings
+              </button>
+              <button aria-controls="nav-map-settings" aria-selected="false" class="nav-link"
+                      data-bs-target="#nav-map-settings" data-bs-toggle="tab" id="nav-map-settings-tab"
+                      role="tab" type="button">Map Settings
+              </button>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div aria-labelledby="nav-home-tab" class="tab-pane fade show active" id="nav-home"
+                 role="tabpanel">
+              <div id="layoutManager"></div>
+            </div>
+            <div aria-labelledby="nav-profile-tab" class="tab-pane fade" id="nav-profile" role="tabpanel">
+              <div id="adsb_container" style="display: block;"></div>
+            </div>
+            <div aria-labelledby="nav-path-settings-tab" class="tab-pane fade" id="nav-path-settings"
+                 role="tabpanel">
+              <div id="pathSettings" style="display: block;"></div>
+            </div>
+            <div aria-labelledby="nav-map-settings-tab" class="tab-pane fade" id="nav-map-settings"
+                 role="tabpanel">
+              <div id="mapSettings" style="display: block;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="padding: 0;">
+          <div class="col-sm-12" id="mapContainer" style="padding: 0 10px">
+            <div id="map_container"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8" id="cesiumBox"
+         style="text-align: center;position: relative;min-height: 1030px;padding: 0 10px">
+
+      <canvas height="400px" id="altitudeCanvas" style="pointer-events:none;border-radius:10px;display: none;right: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"
+              width="100px"></canvas>
+      <canvas height="400px" id="speedCanvas" style="pointer-events:none;border-radius:10px;display: none;left: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"
+              width="100px"></canvas>
+      <canvas height="100px" id="myCanvas" style="pointer-events:none;border-radius:10px;display: none;left:20px;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5);border-bottom-left-radius: 12px;border-bottom-right-radius: 12px;bottom: 30px"
+              width="1230px"></canvas>
+      <canvas height="680px" id="pitchCanvas" style="pointer-events:none;border-radius:10px;display: none;top:160px;left:290px;position: absolute;;z-index: 99999;"
+              width="680px"></canvas>
+      <canvas height="800px" id="horizonCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:100px;z-index:9999;position: absolute;"
+              width="1000px"></canvas>
+      <canvas height="800px" id="horizonBarCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:100px;z-index:99999;position: absolute;"
+              width="1000px"></canvas>
+      <canvas height="1000px" id="rollCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:0;z-index:999999;position: absolute;"
+              width="1000px"></canvas>
+
+      <div class="row" id="overlayCommands" style="position: relative;z-index: 999999"></div>
+      <div id="cesiumContainer"
+           style="max-height: 1100px;max-width: 1270px;width: 100%;height: 1100px !Important"></div>
+      <div id="planeCamera" style="position: absolute;max-width: 1230px;width: 100%">
+        <div id="container">
+          <canvas height='1000' id="canvasVideo" style="display: none" width='1230'></canvas>
+          <div id="loadingCamera" style="width: 1000px;height: 1000px;position: relative"></div>
+        </div>
+      </div>
+      <div id="modalLink"></div>
+      <div id="tettolone" style="padding: 0;position: absolute;bottom:0;width: 100%;"></div>
+    </div>
+  </div>
+  <div class="row" style="padding:0">
+    <div class="col-sm-12" style="background-color:#34568b;padding: 0;width: 100%;height: 100px">
+      <div class="row" style="width: 100%;text-align: center;margin-top: 20px;">
+        <div class="col-sm-3">
+          <small style="float: left;margin-left: 20px;margin-top: 0;color:white">Cose a sinistra</small>
+        </div>
+        <div class="col-sm-6">
+          <strong style="color:white">Produzione Venturello e Giorgianardo S.p.G. <small>(Società Per
+            Goatse)</small> Tutti i diritti stanno risserrvatti</strong>
+        </div>
+        <div class="col-sm-3">
+          <small style="float: right;margin-right: 20px;margin-top: -10px;color:white;cursor: pointer"><img
+                  alt="" id="realoadPage" src="./assets/img/reload-svgrepo-com.svg" width="40px"></small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modals"></div>
+<div id="wayPointModalDiv"></div>

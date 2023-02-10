@@ -3,7 +3,7 @@
     static planeLatitude = 0;
     static planeLongitude = 0;
     static planeAltitude = 0;
-    static planeDeltaAltitude = 0;
+    static planeDeltaAltitude = 50;
     static planePitch =0;
     static planeRoll = 0;
     static planeHeading = 0;

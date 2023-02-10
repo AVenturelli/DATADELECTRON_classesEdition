@@ -42,7 +42,7 @@ class FlightStateFirstPerson extends FlightStateInterface{
                 alt+FlightData.planeDeltaAltitude
             ),
             orientation : {
-                heading : this.getRadianAngle(heading),
+                heading : this.getRadianAngle(FlightData.planeHeading),
                 pitch : this.getRadianAngle(FlightData.planePitch),
                 roll : this.getRadianAngle(FlightData.planeRoll)
             },

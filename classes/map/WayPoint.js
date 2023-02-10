@@ -7,58 +7,60 @@ class WayPoint {
     #marker;
     #currentDragLatLng;
     #markerColor = 'red';
-    constructor(latLng,map) {
+
+    constructor(latLng, map) {
         this.#map = map;
         this.#latLng = latLng;
         this.#alt = $('#travelAltitude').val()
     }
 
-    getLatLngPosition(){
+    getLatLngPosition() {
         return this.#latLng
     }
 
-    setWayPointAltitude(altInMeters){
+    setWayPointAltitude(altInMeters) {
         this.#alt = altInMeters;
     }
 
-    getWayPointAltitude(){
+    getWayPointAltitude() {
         return this.#alt;
     }
-    updatePosition(latLng){
+
+    updatePosition(latLng) {
         this.#latLng = latLng;
     }
 
-    updatePositionAndAlt(latLng,alt){
+    updatePositionAndAlt(latLng, alt) {
         this.#latLng = latLng;
         this.#alt = alt;
     }
 
-    updateMarker(){
+    updateMarker() {
 
         let redMarker = L.AwesomeMarkers.icon({
             icon: 'house',
             markerColor: this.#markerColor
         });
 
-        this.#marker = L.marker(this.#latLng, {icon: redMarker,draggable: true}).addTo(this.#map);
+        this.#marker = L.marker(this.#latLng, {icon: redMarker, draggable: true}).addTo(this.#map);
 
     }
 
-    getMarker(){
+    getMarker() {
         return this.#marker
     }
 
-    deleteMarker(){
-        if(this.#map !== undefined && this.#marker !== undefined){
+    deleteMarker() {
+        if (this.#map !== undefined && this.#marker !== undefined) {
             this.#map.removeLayer(this.#marker)
         }
     }
 
-    setMarkerGreen(){
+    setMarkerGreen() {
         this.#markerColor = 'green'
     }
 
-    setMarkerRed(){
+    setMarkerRed() {
         this.#markerColor = 'red'
     }
 

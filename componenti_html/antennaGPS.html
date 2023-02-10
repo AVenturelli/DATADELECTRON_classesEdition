@@ -1,51 +1,55 @@
-<div class="row" >
+<div class="row">
     <div class="col sm 12" style="padding: 0;">
-      <div class="infobox">
-        <div class="boxTitle">
-          <h6>GPS ANTENNA</h6>
-        </div>
-        <div class="boxContent">
-          <div class="row">
-            <div class="num num_current_speed col-sm-6" style="text-align:center">
+        <div class="infobox">
+            <div class="boxTitle">
+                <h6>GPS ANTENNA</h6>
+            </div>
+            <div class="boxContent">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <strong>X ANTENNA</strong>
-                    </div>
-                    <div class="col-sm-12">
-                        <label for="antennaX"></label><input type="text" id="antennaX" maxlength="10" value="00.0000000">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <strong>Y ANTENNA</strong>
-                    </div>
-                    <div class="col-sm-12">
-                        <label for="antennaY"></label><input type="text" id="antennaY" maxlength="10" value="00.0000000">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <strong>> ANTENNA</strong>
-                    </div>
-                    <div class="col-sm-12">
-                        <label for="antennaZ"></label><input type="text" id="antennaZ" maxlength="" value="0.000">
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 20px">
-                    <div class="col-sm-12">
-                        <div class="btn btn-danger" id="sendAntennaCoords" style="cursor:pointer">SET COORDINATES</div>
+                    <div class="num num_current_speed col-sm-6" style="text-align:center">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <strong>X ANTENNA</strong>
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="antennaX"></label><input type="text" id="antennaX" maxlength="10"
+                                                                     value="00.0000000">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <strong>Y ANTENNA</strong>
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="antennaY"></label><input type="text" id="antennaY" maxlength="10"
+                                                                     value="00.0000000">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <strong>> ANTENNA</strong>
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="antennaZ"></label><input type="text" id="antennaZ" maxlength=""
+                                                                     value="0.000">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px">
+                            <div class="col-sm-12">
+                                <div class="btn btn-danger" id="sendAntennaCoords" style="cursor:pointer">SET
+                                    COORDINATES
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
 </div>
 
 <script>
-    $('#sendAntennaCoords').on('click',function()
-    {
+    $('#sendAntennaCoords').on('click', function () {
         globalThis.antennaX = $('#antennaX').val()
         globalThis.antennaY = $('#antennaY').val()
         globalThis.antennaZ = $('#antennaZ').val()

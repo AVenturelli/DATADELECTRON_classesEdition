@@ -1,3 +1,4 @@
+const Cesium = require("cesium");
 const JQueryAdsbListManager = require("../renderData/JQueryAdsbListManager").JQueryAdsbListManager;
 
 class AdsbPlane {
@@ -19,7 +20,7 @@ class AdsbPlane {
 
     #createText(){
 
-        let text = ""
+        let text
         if(this.#adsbData.adsbPlaneCallsign() === "" || this.#adsbData.adsbPlaneCallsign() === undefined)
         {
             text = "ICAO: "+ this.#adsbData.adsbPlaneICAO()
@@ -46,7 +47,7 @@ class AdsbPlane {
 
         let adsbResource = await Cesium.IonResource.fromAssetId(966921);
 
-        this.#adsbPlaneEntity = viewer.entities.add
+        this.#adsbPlaneEntity = this.#viewer.entities.add
             ({
                 path: {
                     leadTime: 0,
@@ -65,7 +66,7 @@ class AdsbPlane {
                 label: {
                     text: this.#adsbData.callsign + "\n" + this.#adsbData.altitude + " mt",
                     font: '20px sans-serif',
-                    color: Cesium.Color.DARKORANGE,
+                    //color: Cesium.Color.DARKORANGE,
                     showBackground: true,
                     horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
                     pixelOffset: new Cesium.Cartesian2(0.0, -20),
@@ -107,7 +108,7 @@ class AdsbPlane {
         this.#status = true;
     }
 
-    removeAdsbPlaneEntity(){
+    removeAdsbPlaneEntity(plane_entity){
         this.#viewer.entities.remove(plane_entity);
         JQueryAdsbListManager.removeFromList(this.#adsbData.adsbPlaneICAO)
     }

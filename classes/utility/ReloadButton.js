@@ -3,14 +3,15 @@ class ReloadButton {
 
     }
 
-    static setUp(){
-        $('#realoadPage').on('click', () =>{
+    static setUp() {
+        $('#realoadPage').on('click', () => {
             this.reload();
         })
     }
 
-    static reload(){
+    static reload() {
         location.reload();
     }
 }
+
 exports.ReloadButton = ReloadButton
