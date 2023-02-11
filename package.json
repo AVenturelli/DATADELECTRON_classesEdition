@@ -17,6 +17,7 @@
     "boostrap": "^2.0.0",
     "bootstrap-icons": "^1.8.1",
     "cesium": "^1.83.0",
+    "chart.js": "^4.2.1",
     "css-doodle": "^0.19.1",
     "electron-wix-msi": "^5.0.0",
     "exe-icon-extractor": "^1.0.8",

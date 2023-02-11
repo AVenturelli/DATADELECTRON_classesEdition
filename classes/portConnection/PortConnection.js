@@ -1,6 +1,7 @@
 const Connection = require('./Connection.js').Connection;
 const MavlinkReader = require('../dataReader/MavlinkReader').MavlinkReader;
 const Writer = require('../dataReader/MavlinkWriter.js')
+const PacketInterpreter = require("../dataReader/PacketInterpreter").PacketInterpreter;
 const DatadSerialPorts = require("./DatadSerialPorts").DatadSerialPorts;
 const ConnectionJQueryRenderer = require("../renderData/JQueryRendererConnection").ConnectionJQueryRenderer;
 const DatadSerialPort = require('./DatadSerialPorts.js').DatadSerialPorts
@@ -54,7 +55,6 @@ class PortConnection {
 		})
 		
 		$("#connect").click(() => {
-			
 			if (Connection.getSerialPort() === undefined &&
 				this.#currentBaudRate !== undefined &&
 				this.#currentBaudRate !== null &&
@@ -80,12 +80,14 @@ class PortConnection {
 			Connection.closeConnection()
 			ConnectionJQueryRenderer.setUiToNotConnected()
 		})
+		
+		$('#checkMsgsIncoming').on('click', () => {
+			PacketInterpreter.startFrequencyReading();
+		})
 	}
 	
 	#setIntervals() {
-		
 		setInterval(() => {
-			
 			if (Connection.getSerialPort() === undefined || (Connection.getSerialPort() !== undefined && !Connection.checkIfConnected())) {
 				ConnectionJQueryRenderer.setUiToNotConnected()
 			} else {

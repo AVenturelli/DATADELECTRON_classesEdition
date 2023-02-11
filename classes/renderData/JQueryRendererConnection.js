@@ -21,6 +21,7 @@ class JQueryRendererConnection {
         $("#siummatoio").hide('fast')
         $("#param_button").hide('fast')
         $('#button_parameters').hide('fast')
+       // $('#checkMsgsIncoming').hide();
     }
 
     static setUiToConnected(){
@@ -34,7 +35,8 @@ class JQueryRendererConnection {
         $("#param_button").show('fast')
         $('#button_parameters').show('fast')
         $('#infobox_impostazioni_generali').show('fast')
-        $('#adsb_container').show('fast')
+        //$('#adsb_container').show('fast')
+        $('#checkMsgsIncoming').show();
 
     }
 

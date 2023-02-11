@@ -89,19 +89,19 @@
         <div class="col-sm-8" id="cesiumBox"
              style="text-align: center;position: relative;min-height: 1030px;padding: 0 10px">
 
-            <canvas height="400px" id="altitudeCanvas" style="pointer-events:none;border-radius:10px;display: none;right: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"
+            <canvas height="400px" id="altitudeCanvas" style="pointer-events:none;border-radius:10px;display: none;right: 15px;top: 25%;z-index:2;position:absolute;background-color: rgba(0, 0, 0, 0.5)"
                     width="100px"></canvas>
-            <canvas height="400px" id="speedCanvas" style="pointer-events:none;border-radius:10px;display: none;left: 15px;top: 25%;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5)"
+            <canvas height="400px" id="speedCanvas" style="pointer-events:none;border-radius:10px;display: none;left: 15px;top: 25%;z-index:2;position:absolute;background-color: rgba(0, 0, 0, 0.5)"
                     width="100px"></canvas>
-            <canvas height="100px" id="myCanvas" style="pointer-events:none;border-radius:10px;display: none;left:20px;z-index:999999999;position:absolute;background-color: rgba(0, 0, 0, 0.5);border-bottom-left-radius: 12px;border-bottom-right-radius: 12px;bottom: 30px"
+            <canvas height="100px" id="myCanvas" style="pointer-events:none;border-radius:10px;display: none;left:20px;z-index:2;position:absolute;background-color: rgba(0, 0, 0, 0.5);border-bottom-left-radius: 12px;border-bottom-right-radius: 12px;bottom: 30px"
                     width="1230px"></canvas>
-            <canvas height="680px" id="pitchCanvas" style="pointer-events:none;border-radius:10px;display: none;top:160px;left:290px;position: absolute;;z-index: 99999;"
+            <canvas height="680px" id="pitchCanvas" style="pointer-events:none;border-radius:10px;display: none;top:160px;left:290px;position: absolute;;z-index:2;"
                     width="680px"></canvas>
-            <canvas height="800px" id="horizonCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:100px;z-index:9999;position: absolute;"
+            <canvas height="800px" id="horizonCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:100px;z-index:1;position: absolute;"
                     width="1000px"></canvas>
-            <canvas height="800px" id="horizonBarCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:100px;z-index:99999;position: absolute;"
+            <canvas height="800px" id="horizonBarCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:100px;z-index:2;position: absolute;"
                     width="1000px"></canvas>
-            <canvas height="1000px" id="rollCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:0;z-index:999999;position: absolute;"
+            <canvas height="1000px" id="rollCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:0;z-index:2;position: absolute;"
                     width="1000px"></canvas>
 
             <div class="row" id="overlayCommands" style="position: relative;z-index: 999999"></div>
@@ -138,9 +138,11 @@
 
 <div id="modals"></div>
 <div id="wayPointModalDiv"></div>
+<div id="frequencyDiv"></div>
 </body>
 
 <script>
+    const FrequencyGraph = require("./classes/dataReader/FrequencyGraph").FrequencyGraph;
     const ReloadButton = require("./classes/utility/ReloadButton").ReloadButton;
     const JQueryGaugesListeners = require("./classes/renderData/JQueryGaugesListeners").JQueryGaugesListeners;
     const JQueryParameterRenderer = require("./classes/renderData/JQueryParameterRenderer").JQueryParameterRenderer;
@@ -165,6 +167,9 @@
             //Creo la mappa
             MapPosition.setUp();
             WayPointManager.setupListeners();
+
+			//Creo il grafico
+	        FrequencyGraph.setUp()
 
             //Salvo i parametri del file nella classe statica
             MavlinkParams.populateParams();

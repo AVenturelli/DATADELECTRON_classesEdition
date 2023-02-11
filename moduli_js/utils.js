@@ -14,3 +14,4 @@ $("#modalLink").load("componenti_html/cameraAddress.html");
 $('#layoutManager').load("componenti_html/layoutSettings.html")
 $('#map_container').load("componenti_html/positionMap.html")
 $('#wayPointModalDiv').load("componenti_html/wayPointsConfigurator.html")
+$('#frequencyDiv').load("componenti_html/modalMessagesFrequency.html")
