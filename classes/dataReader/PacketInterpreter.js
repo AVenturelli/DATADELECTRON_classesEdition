@@ -1,9 +1,9 @@
 const {AdsbPlaneData} = require("../adsb/AdsbPlaneData");
-const FrequencyGraph = require("./FrequencyGraph").FrequencyGraph;
 const FlightData = require("./FlightData").FlightData;
 const AdsbPlaneList = require("../adsb/AdsbPlaneList").AdsbPlaneList;
 
 class PacketInterpreter {
+
 	static msgArray = {
 		"messages":
         [
@@ -168,41 +168,14 @@ class PacketInterpreter {
 	static getDegreeAngleFromRad(radValue) {
 		return radValue / Math.PI * 180;
 	}
-    
-    static startFrequencyReading(){
-		
-		$('#frequencyModal').show()
-        
-        //Quanti dati arrivano al secondo?
-        setInterval(() =>{
-            //Azzero
-            let total = 0;
-            let data = this.msgArray.messages;
-            
-            for(let i in data){
-                let name = data[i].name
-                let counter = data[i].count;
-                total += data[i].count;
-                data[i].count = 0;
-				
-				if(name === "Attitude"){
-					FrequencyGraph.updateAttitude(counter);
-				}
-				
-				if(name === 'GlobalPositionInt'){
-					FrequencyGraph.updateGps(counter);
-				}
-				
-            }
-			
-			let date = new Date();
-			FrequencyGraph.updateTotal("",total);
 	
-	       
-			
-            
-        },1000)
-    }
+	static getMessagesList(){
+		let returnArray = [];
+		for(let i in this.msgArray.messages){
+			returnArray.push(this.msgArray.messages[i].name)
+		}
+		return returnArray;
+	}
 }
 
 exports.PacketInterpreter = PacketInterpreter;

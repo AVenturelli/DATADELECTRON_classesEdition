@@ -82,7 +82,7 @@ class PortConnection {
 		})
 		
 		$('#checkMsgsIncoming').on('click', () => {
-			PacketInterpreter.startFrequencyReading();
+			FrequencyGraph.startFrequencyReading();
 		})
 	}
 	
