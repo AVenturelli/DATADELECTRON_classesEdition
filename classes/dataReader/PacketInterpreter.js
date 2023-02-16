@@ -176,6 +176,12 @@ class PacketInterpreter {
 		}
 		return returnArray;
 	}
+	
+	static setCountToZero() {
+		for(let i in this.msgArray.messages){
+			this.msgArray.messages[i].count = 0;
+		}
+	}
 }
 
 exports.PacketInterpreter = PacketInterpreter;

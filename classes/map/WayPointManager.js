@@ -127,7 +127,7 @@ class WayPointManager {
                 "<div class='col-sm-3'><label for='lat_" + i + "'>Latitude: </label><br><input type='text' id='lat_" + i + "' value='" + latLng.lat + "'></div> " +
                 "<div class='col-sm-3'><label for='lng_" + i + "'>Longitude: </label><br><input type='text' id='lng_" + i + "' value='" + latLng.lng + "'></div> " +
                 "<div class='col-sm-2'><label for='alt_" + i + "'>Altitude: </label><br><input type='text' id='alt_" + i + "' value='" + alt + "'></div> " +
-                "<div class='col-sm-2'><button type='button' id='sendValues_" + i + "' class='buttonSendHomeValues btn btn-success'>SEND HOME</button></div> " +
+                "<div class='col-sm-2'><button style='float: right;margin-top: 10px' type='button' id='sendValues_" + i + "' class='buttonSendHomeValues btn btn-success'>SEND</button></div> " +
                 "<div class='col-sm-1' style='float: right;margin-top: 10px'><button type='button' id='updateValues_" + i + "' class='buttonUpdateWayPoint btn btn-success'>Update</button> </div> " +
                 "</div></li>"
         }

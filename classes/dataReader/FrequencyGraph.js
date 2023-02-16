@@ -1,17 +1,20 @@
 const {Chart,Utils} = require("chart.js/auto");
 const {PacketInterpreter} = require("./PacketInterpreter");
 
+// noinspection JSCheckFunctionSignatures
 class FrequencyGraph {
 	
 	static chart;
-	static paramName = "";
-	
+	static paramName = "total";
+	static currentParam = "total";
 	static paramList = undefined;
+	static interval;
+	
 	
 	constructor() {}
 	
 	static setUp(){
-		
+		let color = this.getRandomColor();
 		this.chart = new Chart(
 			document.getElementById('frequencyGraph'),
 			{
@@ -21,7 +24,9 @@ class FrequencyGraph {
 					datasets: [
 						{
 							label: 'Total messages per Second',
-							data: 0
+							data: 0,
+							borderColor: color,
+							backgroundColor:  color
 						}
 					]
 				}
@@ -41,12 +46,25 @@ class FrequencyGraph {
 			html+="<option value='"+this.paramList[item]+"'>"+this.paramList[item]+" "+additionalText+"</option>"
 			additionalText = "";
 		}
-		$('#paramFrequencySelector').html(html)
 		
+		$('#paramFrequencySelector').html(html)
 		
 		//Preparo l'onchange
 		$('#paramFrequencySelector').on('change', () =>{
 			this.paramName = $('#paramFrequencySelector').val()
+		})
+		
+		//Setto un listener
+		$('#closeFrequencyModal').on('click', () =>{
+			clearInterval(this.interval)
+			$('#frequencyModal').hide();
+			if(this.chart !== undefined){
+				this.chart.destroy();
+				this.chart = undefined;
+			}
+			this.paramName = "total";
+			this.currentParam = "total";
+			this.interval = undefined;
 		})
 	}
 	
@@ -54,33 +72,56 @@ class FrequencyGraph {
 		
 		$('#frequencyModal').show()
 		
+		if(this.chart === undefined) {
+			this.setUp();
+		}
+		
 		//Quanti dati arrivano al secondo?
-		setInterval(() =>{
+		this.interval = setInterval(() => {
 			//Azzero
 			let total = 0;
 			let data = PacketInterpreter.getMessagesList().messages;
 			
-			for(let i in data){
+			PacketInterpreter.setCountToZero();
+			
+			if(this.paramName !== this.currentParam){
+				this.chart.data.datasets.forEach((dataset) => {
+					dataset.data = [];
+					dataset.label = this.paramName
+					dataset.borderColor = this.getRandomColor();
+					dataset.backgroundColor = dataset.borderColor;
+				});
+				
+				this.chart.data.labels = []
+				this.currentParam = this.paramName
+				this.chart.clear();
+			}
+			
+			for(let i in data) {
 				let name = data[i].name
 				let counter = data[i].count;
 				total += data[i].count;
-				data[i].count = 0;
-				
-				if(name === 'GlobalPositionInt'){
-					FrequencyGraph.updateGps(counter);
+				if(name === this.paramName) {
+					total = counter;
+					break;
 				}
-				
 			}
 			
-			let date = new Date();
-			FrequencyGraph.updateGraph("",total,);
+			FrequencyGraph.updateGraph(total);
+			
+			this.chart.update();
+			
 		},1000)
 	}
 	
-	static updateGraph(paramName,total){
+	static getRandomColor(){
+		return "#"+Math.floor(Math.random()*16777215).toString(16);
+	}
+	
+	static updateGraph(total){
 		
-		total = Math.random()*50000;
-		let data = undefined;
+		//total = Math.random()*50000;
+		let data;
 		
 		//Totale
 		this.chart.data.datasets.forEach((dataset) => {
@@ -92,16 +133,12 @@ class FrequencyGraph {
 		
 		this.chart.update();
 		
-		if(data.length > 15){
+		if(data.length > 20){
 			data.shift();
 			this.chart.data.labels.shift();
 		}
 		
 		this.chart.update();
-	}
-	
-	static updateGps(counter) {
-	
 	}
 }
 

@@ -1,16 +1,16 @@
-<div id="frequencyModal" class="modal" style="z-index: 5;width: 100%;overflow-y: hidden">
+<div id="frequencyModal" class="modal" style="z-index: 5;width: 100%;overflow-y: hidden;top:-15%">
   <!-- Modal content -->
   <div class="modal-content" style="width: 65% !important;
-    height: 650px;
+    height: 750px;
     overflow-y: hidden;">
-    <span id="closeWayPoint" class="close">&times;</span>
-    <h3>MANAGE ALL THE WAYPOINTS</h3>
+    <span id="closeFrequencyModal" class="close">&times;</span>
+    <h3>SELECT A PARAMETER TO GET HIS FREQUENCY</h3>
     <div class="row">
       <div class="col-sm-12">
-        <select class="custom-select" style="width: 100%" id="paramFrequencySelector"></select>
+        <label for="paramFrequencySelector"></label><select class="custom-select" style="width: 100%" id="paramFrequencySelector"></select>
       </div>
       <div class="col-sm-12">
-        <canvas id="frequencyGraph"></canvas>
+        <canvas id="frequencyGraph" ></canvas>
       </div>
     </div>
   </div>

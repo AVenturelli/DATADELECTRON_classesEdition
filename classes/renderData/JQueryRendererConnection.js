@@ -21,7 +21,7 @@ class JQueryRendererConnection {
         $("#siummatoio").hide('fast')
         $("#param_button").hide('fast')
         $('#button_parameters').hide('fast')
-       // $('#checkMsgsIncoming').hide();
+        $('#checkMsgsIncoming').hide();
     }
 
     static setUiToConnected(){
