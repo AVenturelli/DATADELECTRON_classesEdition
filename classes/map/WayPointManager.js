@@ -1,4 +1,5 @@
-const SendMessage = require("../mavlinkMessages/SendMessage").SendMessage;
+const {Connection} = require("../portConnection/Connection");
+const SendMessage = require("../OLD/OLD_SendMessage").SendMessage;
 const FlightPathWithWayPoints = require("./FlightPathWithWayPoints").FlightPathWithWayPoints;
 
 class WayPointManager {
@@ -58,10 +59,7 @@ class WayPointManager {
             strippedIndex = strippedIndex.split("_")[1];
             let lat = $('#lat_' + strippedIndex).val();
             let lng = $('#lng_' + strippedIndex).val();
-            //let altitude = $('#alt_' + strippedIndex).val();
-            SendMessage.setPlaneHome(lat,lng)
-
-            //FlightPathWithWayPoints.updatePoint(strippedIndex, lat, lng, altitude)
+            Connection.sendDoSetHomeMessage(lat,lng).then((e) => {console.log("Messaggio inviato!")})
         })
 
 
@@ -72,10 +70,7 @@ class WayPointManager {
                 $('.wayPointLiItem').each(function (i, obj) {
                     let strippedIndex = $(this).attr('id');
                     strippedIndex = strippedIndex.split("_")[1];
-
-                    // noinspection EqualityComparisonWithCoercionJS
                     if (index != strippedIndex) {
-                        //Cambio!
                         FlightPathWithWayPoints.changeWayPoint(strippedIndex, index);
                         $('#refreshList').trigger('click')
                         return false;

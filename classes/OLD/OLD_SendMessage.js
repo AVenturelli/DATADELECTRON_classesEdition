@@ -2,7 +2,7 @@ const {minimal, send, MavLinkProtocolV1, common} = require("node-mavlink");
 const Cesium = require("cesium");
 const Connection = require("../portConnection/Connection").Connection;
 
-class SendMessage {
+class OLD_SendMessage {
 	constructor() {
 	}
 	static async setPlaneHome(lat, lon) {
@@ -42,4 +42,4 @@ class SendMessage {
 	}
 }
 
-exports.SendMessage = SendMessage
+exports.SendMessage = OLD_SendMessage

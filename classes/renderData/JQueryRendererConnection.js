@@ -15,6 +15,8 @@ class JQueryRendererConnection {
         currentConnectionStatus.attr("blocked",false)
         currentConnectionStatus.removeClass("alert-success")
         currentConnectionStatus.addClass("alert-danger")
+        currentConnectionStatus.html("NON CONNESSO")
+    
         $("#disconnect").hide("fast")
         $("#connect").show("fast")
         $("#zoommatoio").hide('fast')
