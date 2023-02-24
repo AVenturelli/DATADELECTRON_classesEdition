@@ -1,4 +1,5 @@
 const Cesium = require("cesium");
+const {FlightData} = require("../dataReader/FlightData");
 
 class FlightStateInterface {
 
@@ -30,6 +31,21 @@ class FlightStateInterface {
         } catch (error) {
             console.log(error)
         }
+    }
+    
+    async updatePlaneHeight(viewer) {
+        let lat = FlightData.planeLatitude
+        let lon = FlightData.planeLongitude
+        
+        let positions = [
+            Cesium.Cartographic.fromDegrees(
+                parseFloat(lon),
+                parseFloat(lat)
+            )
+        ];
+        
+        let [updatedHeight] = await Promise.all([Cesium.sampleTerrain(this.viewer.terrainProvider, 12, positions)]);
+        FlightData.planeDeltaAltitude = updatedHeight[0].height - FlightData.planeAltitude;
     }
 }
 

@@ -84,6 +84,32 @@ class PortConnection {
 		$('#checkMsgsIncoming').on('click', () => {
 			FrequencyGraph.startFrequencyReading();
 		})
+		
+		$('#setArmed').on('click',() =>{
+			Connection.setArmed();
+		})
+		
+		$('#setDisarmed').on('click',() =>{
+			Connection.setDisarmed();
+		})
+		
+		$('#setMode').on('click', () => {
+			let mode = $('#flightModes').val();
+			Connection.setMode(mode);
+		})
+		
+		$('#PANIC').on('click', () => {
+			let height = $('#panicHeight').val();
+			
+			Connection.setRTLHeight(height).then(() =>{
+				Connection.setMode(11).then(() =>{
+					let a = new CustomAlert('panicAlert','PANIC BUTTON PRESSED','You pressed the panic button cuz u scared. Don\'t worry, the drone will be back soon :)');
+					a.printCode();
+					a.showAlert();
+				});
+			})
+		})
+		
 	}
 	
 	#setIntervals() {

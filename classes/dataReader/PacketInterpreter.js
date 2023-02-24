@@ -42,8 +42,10 @@ class PacketInterpreter {
             {name: 'VfrHud', count: 0},
             {name: 'ScaledPressure', count: 0},
             {name: 'Attitude', count: 0},
+	        {name: 'GpsGlobalOrigin', count: 0},
             {name: 'AdsbVehicle', count: 0},
-            
+	        {name: 'StatusText', count: 0},
+	        {name: 'AoaSsa', count: 0}
         ]
 	}
 	
@@ -57,14 +59,38 @@ class PacketInterpreter {
 			
 			case 'ParamValue':
 				break;
+			case 'AoaSsa':
+				break;
+			case 'GpsGlobalOrigin':
+				break;
+			case 'StatusText':
+				break;
 			case 'NavControllerOutput':
 				break;
 			case 'PositionTargetGlobalInt':
 				break;
 			case 'HomePosition':
-				console.log(data);
+				this.drawHome(data);
 				break;
 			case 'Heartbeat':
+				
+				//TODO: interpretare la bitmap data.baseMode
+				let mode = data.baseMode;
+				let type = data.type;
+				
+				if(type === 1 && mode >= 128) {
+					$('#disarmedPng').hide();
+					$('#setArmedDiv').hide();
+					$('#setDisarmedDiv').show();
+				}
+				if (type === 1 && mode < 128){
+					$('#disarmedPng').show();
+					$('#setArmedDiv').show();
+					$('#setDisarmedDiv').hide();
+				}
+				if (data.type === 1){
+					$('#currentFlightMode').html(data.customMode)
+				}
 				break;
 			case 'ScaledPressure2':
 				break;
@@ -163,6 +189,12 @@ class PacketInterpreter {
 			default:
 				console.log(data);
 		}
+		
+		for(let i in this.msgArray.messages){
+			if(this.msgArray.messages[i].name === data.constructor.name){
+				this.msgArray.messages[i].count++;
+			}
+		}
 	}
 	
 	static getDegreeAngleFromRad(radValue) {
@@ -176,11 +208,22 @@ class PacketInterpreter {
 		}
 		return returnArray;
 	}
+	static getMessagesArray(){
+		let returnArray = [];
+		for(let i in this.msgArray.messages){
+			returnArray.push(this.msgArray.messages[i].name)
+		}
+		return this.msgArray;
+	}
 	
 	static setCountToZero() {
 		for(let i in this.msgArray.messages){
 			this.msgArray.messages[i].count = 0;
 		}
+	}
+	
+	static drawHome(data){
+		console.log(data)
 	}
 }
 

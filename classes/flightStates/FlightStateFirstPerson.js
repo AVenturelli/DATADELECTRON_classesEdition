@@ -5,6 +5,7 @@ const FlightStateInterface = require('./FlightStateInterface').FlightStateInterf
 class FlightStateFirstPerson extends FlightStateInterface{
 
     camera = null;
+    zeroTerrainLoop = 0;
 
     constructor(camera){
         super();
@@ -12,15 +13,19 @@ class FlightStateFirstPerson extends FlightStateInterface{
         this.camera = camera;
         new FlightData();
     }
-    doFlight(){
-
-        if(FlightData.navigationalValuesValid()){
+    
+    async doFlight() {
+    
+        if (FlightData.navigationalValuesValid()) {
+            if (this.zeroTerrainLoop >= 100) {
+                //await super.updatePlaneHeight(this.viewer);
+                this.zeroTerrainLoop = 0;
+            }
             this.updateCamera();
-        }
-        else{
-            //TODO ci metterò un avviso!
+            this.zeroTerrainLoop++;
         }
     }
+    
     updateCamera(){
 
         let longitude = FlightData.planeLongitude
@@ -34,7 +39,7 @@ class FlightStateFirstPerson extends FlightStateInterface{
             alt = Settings.getData('startingAltitude')
             heading = Settings.getData('startingHeading')
         }
-
+        
         this.camera.setView({
             destination : Cesium.Cartesian3.fromDegrees(
                 longitude,
@@ -42,12 +47,13 @@ class FlightStateFirstPerson extends FlightStateInterface{
                 alt+FlightData.planeDeltaAltitude
             ),
             orientation : {
-                heading : this.getRadianAngle(FlightData.planeHeading),
+                heading : this.getRadianAngle(heading),
                 pitch : this.getRadianAngle(FlightData.planePitch),
                 roll : this.getRadianAngle(FlightData.planeRoll)
             },
         });
     }
+    
     returnToBaseView() {
         super.returnToBaseView(this.camera);
     }

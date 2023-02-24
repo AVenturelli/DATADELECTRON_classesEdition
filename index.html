@@ -43,14 +43,19 @@
                      style="margin-top:10px;margin-left:10px;max-width:616px;background-color: white;border-radius: 10px">
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button aria-controls="nav-home" aria-selected="true" class="nav-link active"
+                            <button aria-controls="nav-vehicle" aria-selected="true" class="nav-link active"
+                                    data-bs-target="#nav-vehicle" data-bs-toggle="tab" id="nav-vehicle-tab" role="tab"
+                                    type="button">Vehicle
+                            </button>
+                            <button aria-controls="nav-home" aria-selected="false" class="nav-link"
                                     data-bs-target="#nav-home" data-bs-toggle="tab" id="nav-home-tab" role="tab"
-                                    type="button">Settings Layout
+                                    type="button">Layout
                             </button>
                             <button aria-controls="nav-profile" aria-selected="false" class="nav-link"
                                     data-bs-target="#nav-profile" data-bs-toggle="tab" id="nav-profile-tab" role="tab"
                                     type="button">Adsb
                             </button>
+
                             <button aria-controls="nav-path-settings" aria-selected="false" class="nav-link"
                                     data-bs-target="#nav-path-settings" data-bs-toggle="tab" id="nav-path-settings-tab"
                                     role="tab" type="button">Path Settings
@@ -62,7 +67,11 @@
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
-                        <div aria-labelledby="nav-home-tab" class="tab-pane fade show active" id="nav-home"
+                        <div aria-labelledby="nav-vehicle-tab" class="tab-pane fade show active" id="nav-vehicle"
+                             role="tabpanel">
+                            <div id="vehicleTab"></div>
+                        </div>
+                        <div aria-labelledby="nav-home-tab" class="tab-pane fade" id="nav-home"
                              role="tabpanel">
                             <div id="layoutManager"></div>
                         </div>
@@ -103,6 +112,8 @@
                     width="1000px"></canvas>
             <canvas height="1000px" id="rollCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:0;z-index:2;position: absolute;"
                     width="1000px"></canvas>
+
+            <img src="assets/img/DISARMED.png" id="disarmedPng"  style="position: absolute;z-index: 2;top:30%;left:39%;display: none">
 
             <div class="row" id="overlayCommands" style="position: relative;z-index: 999999"></div>
             <div id="cesiumContainer"

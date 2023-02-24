@@ -1,12 +1,15 @@
 const Cesium = require("cesium");
-const {FlightData} = require("../dataReader/FlightData");
+const FlightData = require("../dataReader/FlightData").FlightData;
 const FlightStateInterface = require('./FlightStateInterface').FlightStateInterface;
-// noinspection JSUnusedGlobalSymbols
+
+// noinspection JSUnusedGlobalSymbols,JSCheckFunctionSignatures
 class FlightStateThirdPerson extends FlightStateInterface{
 
     camera = null;
     viewer = null
     planeEntity=undefined;
+    
+    zeroTerrainLoop = 0;
 
     constructor(viewer){
         super();
@@ -18,7 +21,12 @@ class FlightStateThirdPerson extends FlightStateInterface{
 
     async doFlight() {
         if (FlightData.navigationalValuesValid()) {
+            if(this.zeroTerrainLoop >= 100){
+                //await super.updatePlaneHeight(this.viewer);
+                this.zeroTerrainLoop = 0;
+            }
             this.updateCamera();
+            this.zeroTerrainLoop++;
         }
     }
 
@@ -27,10 +35,6 @@ class FlightStateThirdPerson extends FlightStateInterface{
     }
 
     updateCamera(){
-
-        //super.zeroTerrain(this.viewer)
-
-
 
         let longitude = FlightData.planeLongitude
         let latidude = FlightData.planeLatitude
@@ -102,6 +106,8 @@ class FlightStateThirdPerson extends FlightStateInterface{
             this.planeEntity = undefined;
         }
     }
+    
+ 
 }
 
 exports.FlightStateThirdPerson = FlightStateThirdPerson;

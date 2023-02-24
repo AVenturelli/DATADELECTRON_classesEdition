@@ -80,9 +80,7 @@ class FrequencyGraph {
 		this.interval = setInterval(() => {
 			//Azzero
 			let total = 0;
-			let data = PacketInterpreter.getMessagesList().messages;
-			
-			PacketInterpreter.setCountToZero();
+			let data = PacketInterpreter.getMessagesArray().messages;   
 			
 			if(this.paramName !== this.currentParam){
 				this.chart.data.datasets.forEach((dataset) => {
@@ -107,9 +105,11 @@ class FrequencyGraph {
 				}
 			}
 			
-			FrequencyGraph.updateGraph(total);
+			this.updateGraph(total );
 			
 			this.chart.update();
+			
+			PacketInterpreter.setCountToZero();
 			
 		},1000)
 	}
