@@ -76,6 +76,8 @@ class FrequencyGraph {
 			this.setUp();
 		}
 		
+		PacketInterpreter.setCountToZero();
+		
 		//Quanti dati arrivano al secondo?
 		this.interval = setInterval(() => {
 			//Azzero

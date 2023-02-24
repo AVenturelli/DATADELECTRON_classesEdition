@@ -73,6 +73,17 @@ class Connection {
         }
     }
     
+    static async setAttitudeFast(){
+        const arm = new common.CommandLong();
+        arm.targetComponent = 1;
+        arm.targetSystem = 1;
+        arm.command = 511;
+        arm._param1 = 30;
+        arm._param2 = 20;
+    
+        await send(this.#serialPort, arm, new MavLinkProtocolV1());
+    }
+    
     static async setArmed() {
         const arm = new common.CommandLong();
         arm.targetComponent = 1;
