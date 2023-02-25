@@ -5,6 +5,9 @@ const path = require("path");
 class Settings {
 
     static #settingsData = undefined
+    static #messageData = undefined;
+    
+    static #allData = undefined;
     static fs = require('fs').promises;
 
     constructor(props) {
@@ -28,6 +31,8 @@ class Settings {
         let text = await this.fs.readFile(path.resolve(__dirname, "../../settings.json"));
         let data = JSON.parse(text.toString());
         this.#settingsData = data.allSettings
+        this.#messageData = data.savedMavlinkMessages
+        this.#allData = data;
         $('#streamLink').val(this.getData('cameraAddress'));
     }
 
@@ -47,6 +52,42 @@ class Settings {
         } else {
             console.log("Errore: la variabile dati è vuota!")
         }
+    }
+    
+    static addMessage(name,component,system,command,p1,p2,p3,p4,p5,p6,p7){
+        
+        let newMsg = {
+            name: name,
+            component: component,
+            system: system,
+            command: command,
+            p1: p1,
+            p2: p2,
+            p3: p3,
+            p4: p4,
+            p5: p5,
+            p6: p6,
+            p7: p7
+        }
+        
+        for(let i in this.#messageData){
+            if(this.#messageData[i].name === newMsg.name){
+                //Stesso nome, non salvo!
+                return false;
+            }
+        }
+        this.#messageData.push(newMsg)
+        
+        let data = {
+            "allSettings" : this.#settingsData,
+            "savedMavlinkMessages" : this.#messageData
+        }
+    
+        this.fs.writeFile(path.resolve(__dirname, "../../settings.json"), JSON.stringify(data,null,'\t'), 'utf8');
+    
+    
+    
+        return true;
     }
 }
 

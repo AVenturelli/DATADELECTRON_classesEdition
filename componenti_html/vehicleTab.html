@@ -1,14 +1,14 @@
 <div class="row" id="armedBox" style="height: 207px;">
   <div class="col sm 12" style="padding: 0;">
       <div class="row">
-        <div class=" col-sm-2 mytooltip" id="setArmedDiv">
+        <div class=" col-sm-2 mytooltip" id="setArmedDiv" style="padding-top: 5px;padding-left: 18px">
           <span class="tooltiptext mytooltip-bottom">Set ARMED</span>
           <img id="setArmed" src="assets/img/sword-islamic-zulfiqar-svgrepo-com.svg"
                style="cursor: pointer;left:65px;background-color:rgba(255, 255, 255, 0.5); width: 60px;border: lightgray 3px solid; border-radius: 3px;padding: 2px;margin: 5px;"
                alt=""
           >
         </div>
-        <div class=" col-sm-2 mytooltip" style="display: none;padding-bottom: 10px" id="setDisarmedDiv">
+        <div class=" col-sm-2 mytooltip" style="display: none;padding-top: 5px;padding-left: 18px" id="setDisarmedDiv">
           <span class="tooltiptext mytooltip-bottom">Set DISARMED</span>
           <img id="setDisarmed" src="assets/img/shield-svgrepo-com.svg"
                style="cursor: pointer;left:65px;background-color:rgba(255, 255, 255, 0.5); width: 60px;border: lightgray 3px solid; border-radius: 3px;padding: 2px;margin: 5px;"
@@ -20,22 +20,28 @@
           <input id="panicHeight" value="100">
           <button style="margin-left: 30px;width: 240px !Important" class="btn btn-danger btn-lg" id="PANIC">PANIC!</button>
         </div>
+      </div>
 
-          <div class="col-sm-12" style="padding-top: 10px;padding-left: 10px;border-top: solid 1px gray;">
-            <label for="flightModes">Flight Modes (current: <small id="currentFlightMode">x</small>)</label><br>
-            <select id="flightModes" style="height: 25px;width: 80%">
-              <option value="0">Manual</option>
-              <option value="1">Circle</option>
-              <option value="2">Stabilze</option>
-              <option value="3">Training</option>
-              <option value="5">FBWA</option>
-              <option value="6">FBWB</option>
-              <option value="8">AUTOTUNE</option>
-              <option value="10">AUTO</option>
-              <option value="11">RTL</option>
-            </select>
-            <div class="btn btn-info btn-small" id="setMode" style="margin-left: 5px">Set Mode</div>
-          </div>
+      <div class="row" style="border-top: solid 1px gray;">
+        <div class="col-sm-3" style="padding-top: 10px;">
+          <button id="sendCustomMessageModal" class="btn btn-dark btn-lg">Send Custom Message</button>
+        </div>
+
+        <div class="col-sm-9" style="padding-top: 10px;padding-left: 10px;border-left: solid 1px gray;">
+          <label for="flightModes">Flight Modes (current: <small id="currentFlightMode">x</small>)</label><br>
+          <select id="flightModes" style="height: 25px;width: 80%">
+            <option value="0">Manual</option>
+            <option value="1">Circle</option>
+            <option value="2">Stabilze</option>
+            <option value="3">Training</option>
+            <option value="5">FBWA</option>
+            <option value="6">FBWB</option>
+            <option value="8">AUTOTUNE</option>
+            <option value="10">AUTO</option>
+            <option value="11">RTL</option>
+          </select>
+          <div class="btn btn-info btn-small" id="setMode" style="margin-left: 5px">Set Mode</div>
+        </div>
       </div>
   </div>
 </div>

@@ -113,7 +113,7 @@
             <canvas height="1000px" id="rollCanvas" style="pointer-events:none;border-radius:10px;display:none;left:130px;top:0;z-index:2;position: absolute;"
                     width="1000px"></canvas>
 
-            <img src="assets/img/DISARMED.png" id="disarmedPng"  style="position: absolute;z-index: 2;top:30%;left:39%;display: none">
+            <img src="assets/img/DISARMED.png" id="disarmedPng"  style="position: absolute;z-index: 2;top:30%;left:39%;display: none" alt="">
 
             <div class="row" id="overlayCommands" style="position: relative;z-index: 999999"></div>
             <div id="cesiumContainer"
@@ -150,9 +150,11 @@
 <div id="modals"></div>
 <div id="wayPointModalDiv"></div>
 <div id="frequencyDiv"></div>
+<div id="customMessagesModalDiv"></div>
 </body>
 
 <script>
+    const CustomMessages = require("./classes/MavlinkMessages/CustomMessages").CustomMessages;
     const FrequencyGraph = require("./classes/dataReader/FrequencyGraph").FrequencyGraph;
     const ReloadButton = require("./classes/utility/ReloadButton").ReloadButton;
     const JQueryGaugesListeners = require("./classes/renderData/JQueryGaugesListeners").JQueryGaugesListeners;
@@ -196,6 +198,7 @@
             //Creo il listener per i vari bottoni
             JQueryParameterRenderer.createParamsButtonListener();
             JQueryGaugesListeners.createListeners();
+			CustomMessages.createListeners();
 
             //Preparo la camera
             PlaneCamera.createListener();

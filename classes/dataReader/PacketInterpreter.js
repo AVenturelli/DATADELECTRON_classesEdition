@@ -1,4 +1,5 @@
 const {AdsbPlaneData} = require("../adsb/AdsbPlaneData");
+const {PacketInterpreterRender} = require("../renderData/PacketInterpreterRender");
 const FlightData = require("./FlightData").FlightData;
 const AdsbPlaneList = require("../adsb/AdsbPlaneList").AdsbPlaneList;
 
@@ -79,17 +80,14 @@ class PacketInterpreter {
 				let type = data.type;
 				
 				if(type === 1 && mode >= 128) {
-					$('#disarmedPng').hide();
-					$('#setArmedDiv').hide();
-					$('#setDisarmedDiv').show();
+					PacketInterpreterRender.setArmed();
 				}
 				if (type === 1 && mode < 128){
-					$('#disarmedPng').show();
-					$('#setArmedDiv').show();
-					$('#setDisarmedDiv').hide();
+					PacketInterpreterRender.setDisarmed();
 				}
+				
 				if (data.type === 1){
-					$('#currentFlightMode').html(data.customMode)
+					PacketInterpreterRender.updateFlightMode(data.customMode);
 				}
 				break;
 			case 'ScaledPressure2':
@@ -209,10 +207,6 @@ class PacketInterpreter {
 		return returnArray;
 	}
 	static getMessagesArray(){
-		let returnArray = [];
-		for(let i in this.msgArray.messages){
-			returnArray.push(this.msgArray.messages[i].name)
-		}
 		return this.msgArray;
 	}
 	

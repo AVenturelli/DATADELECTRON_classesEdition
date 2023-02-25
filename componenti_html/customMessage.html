@@ -1,0 +1,76 @@
+<!-- The Modal -->
+<!--suppress ALL -->
+<div id="customMessageModal" class="modal" style="z-index: 3">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span id="closeMessageCustom" class="close">&times;</span>
+        <h3>Create custom command</h3>
+        <div class="alert alert-success" id="saveMessageSuccess" role="alert" style="display: none">
+            Custom message Saved!
+        </div>
+        <div class="alert alert-danger" id="saveMessageFailure" role="alert" style="display: none">
+            Duplicate message found!
+        </div>
+        <div class="alert alert-success" id="sentMessageSuccess" role="alert" style="display: none">
+            Message Sent!
+        </div>
+        <div class="alert alert-danger" id="sentMessageFailure" role="alert" style="display: none">
+            Connection not found!
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <label for="commandCustomName"><h5>Insert a custom name to save the command</h5></label>
+                <br>
+                <input id="commandCustomName" style="width: 100%">
+            </div>
+            <hr style="margin-top: 10px">
+            <h5>Command Data</h5>
+            <div class="col-sm-4">
+                <label for="targetSystem">Target System</label>
+                <input id="targetSystem" name="targetSystem" value="1">
+            </div>
+            <div class="col-sm-4">
+                <label for="targetComponent">Target Component</label>
+                <input id="targetComponent" name="targetComponent" value="1">
+            </div>
+            <div class="col-sm-4">
+                <label for="commandNumber">Command Number</label>
+                <input id="commandNumber" name="commandNumber">
+            </div>
+            <h5 style="margin-top: 10px">Params</h5>
+            <div class="col-sm-3">
+                <label for="param1">Param 1</label>
+                <input id="param1" name="param1">
+            </div>
+            <div class="col-sm-3">
+                <label for="param2">Param 2</label>
+                <input id="param2" name="param2">
+            </div>
+            <div class="col-sm-3">
+                <label for="param3">Param 3</label>
+                <input id="param3" name="param3">
+            </div>
+            <div class="col-sm-3">
+                <label for="param4">Param 4</label>
+                <input id="param4" name="param4">
+            </div>
+            <div class="col-sm-3">
+                <label for="param5">Param 5</label>
+                <input id="param5" name="param5">
+            </div>
+            <div class="col-sm-3">
+                <label for="param6">Param 6</label>
+                <input id="param6" name="param6" >
+            </div>
+            <div class="col-sm-3">
+                <label for="param7">Param 7</label>
+                <input id="param7" name="param7">
+            </div>
+            <div class="col-sm-12" style="margin-top: 20px">
+                <button class="btn btn-success btn" id="saveCommand">SAVE</button>
+                <button class="btn btn-success btn" id="sendCommand">SEND</button>
+            </div>
+        </div>
+    </div>
+</div>
