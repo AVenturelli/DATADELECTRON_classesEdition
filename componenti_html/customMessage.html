@@ -3,73 +3,104 @@
 <div id="customMessageModal" class="modal" style="z-index: 3">
 
     <!-- Modal content -->
-    <div class="modal-content">
-        <span id="closeMessageCustom" class="close">&times;</span>
-        <h3>Create custom command</h3>
-        <div class="alert alert-success" id="saveMessageSuccess" role="alert" style="display: none">
-            Custom message Saved!
-        </div>
-        <div class="alert alert-danger" id="saveMessageFailure" role="alert" style="display: none">
-            Duplicate message found!
-        </div>
-        <div class="alert alert-success" id="sentMessageSuccess" role="alert" style="display: none">
-            Message Sent!
-        </div>
-        <div class="alert alert-danger" id="sentMessageFailure" role="alert" style="display: none">
-            Connection not found!
-        </div>
+    <div class="modal-content" style="width: 70% !important;">
+
         <div class="row">
-            <div class="col-sm-12">
-                <label for="commandCustomName"><h5>Insert a custom name to save the command</h5></label>
-                <br>
-                <input id="commandCustomName" style="width: 100%">
+            <div class="col-sm-8">
+                <span id="closeMessageCustom" class="close" style="width: 2%">&times;</span>
+                <h3>Create custom command</h3>
+                <div class="alert alert-success" id="saveMessageSuccess" role="alert" style="display: none">
+                    Custom message Saved!
+                </div>
+                <div class="alert alert-danger" id="saveMessageFailure" role="alert" style="display: none">
+                    Duplicate message found!
+                </div>
+                <div class="alert alert-success" id="sentMessageSuccess" role="alert" style="display: none">
+                    Message Sent!
+                </div>
+                <div class="alert alert-danger" id="sentMessageFailure" role="alert" style="display: none">
+                    Connection not found!
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="commandCustomName"><h5>Custom command name</h5></label>
+                        <br>
+                        <input id="commandCustomName" style="width: 100%">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="selectOldMsg"><h5>Select from saved messages</h5></label>
+                        <br>
+                        <input class="form-control" list="datalistOptions" id="selectOldMsg" placeholder="Type to search..." style="height: 30px;border-color: gray;">
+                        <datalist id="datalistOptions">
+                            <option value="San Francisco">
+                            <option value="New York">
+                            <option value="Seattle">
+                            <option value="Los Angeles">
+                            <option value="Chicago">
+                        </datalist>
+                    </div>
+                    <hr style="margin-top: 10px">
+                    <h5>Command Data</h5>
+                    <div class="col-sm-4">
+                        <label for="targetSystem">Target System</label>
+                        <input id="targetSystem" name="targetSystem" value="1">
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="targetComponent">Target Component</label>
+                        <input id="targetComponent" name="targetComponent" value="1">
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="commandNumber">Command Number</label>
+                        <input id="commandNumber" name="commandNumber">
+                    </div>
+                    <h5 style="margin-top: 10px">Params</h5>
+                    <div class="col-sm-3">
+                        <label for="param1">Param 1</label>
+                        <input id="param1" name="param1">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="param2">Param 2</label>
+                        <input id="param2" name="param2">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="param3">Param 3</label>
+                        <input id="param3" name="param3">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="param4">Param 4</label>
+                        <input id="param4" name="param4">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="param5">Param 5</label>
+                        <input id="param5" name="param5">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="param6">Param 6</label>
+                        <input id="param6" name="param6" >
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="param7">Param 7</label>
+                        <input id="param7" name="param7">
+                    </div>
+                </div>
+                <div class="col-sm-12" style="margin-top: 20px">
+                    <button class="btn btn-success btn" id="sendCommand" style="float: right;margin-left: 10px;">SEND MESSAGE</button>
+                    <button class="btn btn-info btn" id="saveCommand" style="float: right">SAVE</button>
+                </div>
             </div>
-            <hr style="margin-top: 10px">
-            <h5>Command Data</h5>
-            <div class="col-sm-4">
-                <label for="targetSystem">Target System</label>
-                <input id="targetSystem" name="targetSystem" value="1">
-            </div>
-            <div class="col-sm-4">
-                <label for="targetComponent">Target Component</label>
-                <input id="targetComponent" name="targetComponent" value="1">
-            </div>
-            <div class="col-sm-4">
-                <label for="commandNumber">Command Number</label>
-                <input id="commandNumber" name="commandNumber">
-            </div>
-            <h5 style="margin-top: 10px">Params</h5>
-            <div class="col-sm-3">
-                <label for="param1">Param 1</label>
-                <input id="param1" name="param1">
-            </div>
-            <div class="col-sm-3">
-                <label for="param2">Param 2</label>
-                <input id="param2" name="param2">
-            </div>
-            <div class="col-sm-3">
-                <label for="param3">Param 3</label>
-                <input id="param3" name="param3">
-            </div>
-            <div class="col-sm-3">
-                <label for="param4">Param 4</label>
-                <input id="param4" name="param4">
-            </div>
-            <div class="col-sm-3">
-                <label for="param5">Param 5</label>
-                <input id="param5" name="param5">
-            </div>
-            <div class="col-sm-3">
-                <label for="param6">Param 6</label>
-                <input id="param6" name="param6" >
-            </div>
-            <div class="col-sm-3">
-                <label for="param7">Param 7</label>
-                <input id="param7" name="param7">
-            </div>
-            <div class="col-sm-12" style="margin-top: 20px">
-                <button class="btn btn-success btn" id="saveCommand">SAVE</button>
-                <button class="btn btn-success btn" id="sendCommand">SEND</button>
+            <div class="col-sm-4" style="border-left: solid gray 1px">
+                <div class="col-sm-12">
+                    <label for="searchMessage"><h5>Search Message</h5></label>
+                    <br>
+                    <input class="form-control" list="searchMessageList" id="searchMessage" placeholder="Type to search..." style="height: 30px;border-color: gray;">
+                    <datalist id="searchMessageList">
+                        <option value="San Francisco">
+                        <option value="New York">
+                        <option value="Seattle">
+                        <option value="Los Angeles">
+                        <option value="Chicago">
+                    </datalist>
+                </div>
             </div>
         </div>
     </div>

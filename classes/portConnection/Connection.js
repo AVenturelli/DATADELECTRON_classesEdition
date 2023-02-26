@@ -102,6 +102,8 @@ class Connection {
         arm.command = 400;
         arm._param1 = 0;
         arm._param2 = 2989;
+        
+        common.MavCmd
     
         await send(this.#serialPort, arm, new MavLinkProtocolV1());
     }
