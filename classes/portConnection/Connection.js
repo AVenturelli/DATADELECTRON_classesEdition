@@ -30,6 +30,7 @@ class Connection {
     }
     static closeConnection() {
         this.#serialPort.close()
+        this.#serialPort = undefined;
     }
     static get portName() {
         return this.#port
@@ -37,14 +38,18 @@ class Connection {
     
     static connectToPort() {
         try {
-            
             this.#serialPort = new SerialPort({path: this.#port, baudRate: this.#baud})
             this.setHeartBeatInterval();
-            
-            
         } catch (error) {
-            //Rimuovo il timer se presente
-            this.#serialPort = undefined
+            let errorString = error.toString();
+            if(!errorString.includes("path")){
+                //Rimuovo il timer se presente
+                this.#serialPort = undefined
+                let a = new CustomAlert('customErrorConnectionAlert',"Could not connect to serial port","An error occurred while connecting to serial port "+ this.#port+" at baud: "+this.#baud+"\n\n Error: "+error)
+                a.printCode();
+                a.showAlert();
+            }
+            
         }
     }
     static async sendDoSetHomeMessage(lat, lng) {
@@ -73,17 +78,6 @@ class Connection {
         }
     }
     
-    static async setAttitudeFast(){
-        const arm = new common.CommandLong();
-        arm.targetComponent = 1;
-        arm.targetSystem = 1;
-        arm.command = 511;
-        arm._param1 = 30;
-        arm._param2 = 20;
-    
-        await send(this.#serialPort, arm, new MavLinkProtocolV1());
-    }
-    
     static async setArmed() {
         const arm = new common.CommandLong();
         arm.targetComponent = 1;
@@ -103,8 +97,6 @@ class Connection {
         arm._param1 = 0;
         arm._param2 = 2989;
         
-        common.MavCmd
-    
         await send(this.#serialPort, arm, new MavLinkProtocolV1());
     }
     
@@ -131,11 +123,16 @@ class Connection {
         message.autopilot = 8
         
         this.heartbeatInterval = setInterval(()=>{
-            if(this.#serialPort !== undefined){
+            if(this.#serialPort !== undefined && this.checkIfConnected()){
                 send(this.#serialPort, message, new MavLinkProtocolV1()).then();
             }
         },100);
         
+    }
+    
+    static deleteConnection() {
+        this.#serialPort = undefined;
+        console.log(this.#serialPort)
     }
 }
 exports.Connection = Connection;

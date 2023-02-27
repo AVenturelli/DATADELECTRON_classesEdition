@@ -39,13 +39,13 @@ class DatadCesium {
                 if (this.#currentConnection === undefined && this.#currentConnectionUndefined !== true) {
                     this.#currentFlightState.returnToBaseView()
                     this.stopDataInterval()
-                } else if (this.#currentView === 'first') {
+                } /*else if (this.#currentView === 'first') {
                     this.#currentFlightState = this.#firstPersonView;
                 } else {
                     this.#currentFlightState = this.#thirdPersonView;
-                }
+                }*/
             }
-
+            
             let result = this.#currentFlightState.doFlight()
 
 
@@ -102,7 +102,7 @@ class DatadCesium {
             terrainProvider: Cesium.createWorldTerrain()
         });
         // Add Cesium OSM Buildings, a global 3D buildings layer.
-        //this.#viewer.scene.primitives.add(Cesium.createOsmBuildings());
+        this.#viewer.scene.primitives.add(Cesium.createOsmBuildings());
 
         // Fly the camera to Modena at the given longitude, latitude, and height.
         this.#viewer.camera.flyTo({
@@ -136,6 +136,7 @@ class DatadCesium {
         })
         //Creo listener per terza persona
         $('#thirdPerson').on('click', () => {
+            
             this.#currentFlightState = this.#thirdPersonView
             this.#currentFlightState.createPlane();
             $('#thirdPerson').css('border-color', 'lightcoral');

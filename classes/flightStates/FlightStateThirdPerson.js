@@ -21,12 +21,7 @@ class FlightStateThirdPerson extends FlightStateInterface{
 
     async doFlight() {
         if (FlightData.navigationalValuesValid()) {
-            if(this.zeroTerrainLoop >= 100){
-                //await super.updatePlaneHeight(this.viewer);
-                this.zeroTerrainLoop = 0;
-            }
             this.updateCamera();
-            this.zeroTerrainLoop++;
         }
     }
 
@@ -45,7 +40,9 @@ class FlightStateThirdPerson extends FlightStateInterface{
             longitude = Settings.getData('startingLongitude')
             latidude = Settings.getData('statingLatitude')
             alt = Settings.getData('startingAltitude')
-            heading = Settings.getData('startingHeading')
+            if(heading === 0){
+                heading = Settings.getData('startingHeading')
+            }
         }
 
         let currentHeadingPitchRoll = new Cesium.HeadingPitchRoll(

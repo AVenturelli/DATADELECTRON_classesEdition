@@ -40,9 +40,9 @@ class PortConnection {
 		$('#save_conn_param').click(() => {
 			this.#currentBaudRate = parseInt($("#baud_rate").val())
 			this.#currentPortName = $("#com_port").val()
-			this.#currentPortNameWrite = $("#com_port_out").val()
-			this.#currentBaudRateWrite = parseInt($("#baud_rate_out").val())
+			
 			ConnectionJQueryRenderer.closeConnectionDataModal()
+			
 			if (this.#currentPortName === null) {
 				let modal = new CustomAlert(
 					'connectionPortNotChosen',
@@ -55,6 +55,9 @@ class PortConnection {
 		})
 		
 		$("#connect").click(() => {
+			
+			console.log(Connection.getSerialPort())
+			
 			if (Connection.getSerialPort() === undefined &&
 				this.#currentBaudRate !== undefined &&
 				this.#currentBaudRate !== null &&
@@ -76,7 +79,6 @@ class PortConnection {
 		
 		$("#disconnect").click(() => {
 			this.#currentMavlinkReader = undefined
-			this.#currentPortName = undefined
 			Connection.closeConnection()
 			ConnectionJQueryRenderer.setUiToNotConnected()
 		})
@@ -115,6 +117,9 @@ class PortConnection {
 		setInterval(() => {
 			if (Connection.getSerialPort() === undefined || (Connection.getSerialPort() !== undefined && !Connection.checkIfConnected())) {
 				ConnectionJQueryRenderer.setUiToNotConnected()
+				if(Connection.getSerialPort() !== undefined){
+					Connection.deleteConnection();
+				}
 			} else {
 				ConnectionJQueryRenderer.setUiToConnected()
 			}

@@ -17,6 +17,8 @@
     static airSpeed = undefined;
     static atmosphericPressure = undefined
     static paramList = new Map();
+    
+    static currentBattery = undefined;
 
     static constructor() {
         if (this instanceof FlightData) {

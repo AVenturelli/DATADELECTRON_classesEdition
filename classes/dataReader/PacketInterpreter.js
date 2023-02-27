@@ -119,6 +119,8 @@ class PacketInterpreter {
 			case 'MemInfo':
 				break;
 			case 'PowerStatus':
+				FlightData.currentBattery = ((data.Vservo/1000-4)/1.2)*100
+				PacketInterpreterRender.setBatteryLevel()
 				break;
 			case 'Gps2Raw':
 				break;

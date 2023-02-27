@@ -30,6 +30,23 @@ class PacketInterpreterRender {
 		
 		$('#currentFlightMode').html(text)
 	}
+	
+	static setBatteryLevel(){
+		let battery = FlightData.currentBattery;
+		let color = "";
+
+		if(battery < 15) color = "red";
+		if(battery > 15) color = "orange";
+		if(battery > 30) color = "yellow";
+		if(battery > 50) color = "lightgreen";
+		if(battery > 80) color = "green";
+		
+		
+		$('#battBar').val(battery/10);
+		$('#battBar').css('accent-color',color);
+		
+		$('#battPercentage').html(Math.round(battery)+"%")
+	}
 }
 
 exports.PacketInterpreterRender = PacketInterpreterRender

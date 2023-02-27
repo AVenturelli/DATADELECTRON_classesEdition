@@ -130,15 +130,25 @@
     </div>
     <div class="row" style="padding:0">
         <div class="col-sm-12" style="background-color:#34568b;padding: 0;width: 100%;height: 100px">
-            <div class="row" style="width: 100%;text-align: center;margin-top: 20px;">
+            <div class="row" style="width: 100%;text-align: center;">
                 <div class="col-sm-3">
-                    <small style="float: left;margin-left: 20px;margin-top: 0;color:white">Cose a sinistra</small>
+                    <div class="row">
+                        <div class="col-sm-4" style="text-align: left;margin-top: 20px">
+                            <strong style="color: white">Battery level</strong>
+                        </div>
+                        <div class="col-sm-6" style="margin-top: 15px">
+                            <progress id="battBar" value="10" max="10" style="accent-color:forestgreen; width: 100%;height: 35px; "></progress>
+                        </div>
+                        <div class="col-sm-2" style="margin-top: 20px">
+                            <strong style="color: white" id="battPercentage">100%</strong>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6" style="margin-top: 20px;">
                     <strong style="color:white">Produzione Venturello e Giorgianardo S.p.G. <small>(Società Per
                         Goatse)</small> Tutti i diritti stanno risserrvatti</strong>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3" style="margin-top: 20px;">
                     <small style="float: right;margin-right: 20px;margin-top: -10px;color:white;cursor: pointer"><img
                             alt="" id="realoadPage" src="./assets/img/reload-svgrepo-com.svg" width="40px"></small>
                 </div>
