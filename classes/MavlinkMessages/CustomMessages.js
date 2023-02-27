@@ -1,6 +1,7 @@
 const {PortConnection} = require("../portConnection/PortConnection");
 const {Connection} = require("../portConnection/Connection");
 const {common, MavLinkProtocolV1, send} = require("node-mavlink");
+const {Settings} = require("../utility/Settings");
 
 class CustomMessages {
 	constructor() {}
@@ -21,6 +22,63 @@ class CustomMessages {
 		$('#saveCommand').on('click', () => {
 			this.saveCommand();
 		})
+		
+		$('#searchMessage').bind('change', 'input', (data) => {
+			let name = $('#searchMessage').val()
+			let messgs = Settings.getMavMessages();
+			
+			messgs.sort(function(a, b){
+				return a.name - b.name;
+			});
+			
+			for(let k in messgs){
+				if(name === messgs[k].name){
+					this.setParams(messgs[k]);
+				}
+			}
+			
+			$('#searchMessage').val("")
+		});
+		
+		$('#selectOldMsg').bind('change', 'input', (data) => {
+			let name = $('#selectOldMsg').val()
+			let messgs = Settings.getSavedMavMessages();
+			
+			for(let k in messgs){
+				if(name === messgs[k].name){
+					this.setSavedParams(messgs[k]);
+				}
+			}
+			$('#selectOldMsg').val("")
+		});
+	}
+	
+	static setSavedParams(mess) {
+		$('#commandCustomName').val(mess.name)
+		$('#targetSystem').val(mess.system)
+		$('#targetComponent').val(mess.component)
+		$('#commandNumber').val(mess.command)
+		$('#param1').val(mess.p1)
+		$('#param2').val(mess.p2)
+		$('#param3').val(mess.p3)
+		$('#param4').val(mess.p4)
+		$('#param5').val(mess.p5)
+		$('#param6').val(mess.p6)
+		$('#param7').val(mess.p7)
+	}
+	
+	static setParams(mess){
+		$('#mavCommandDiv').show()
+		$('#mavCommandName').html(mess.name);
+		$('#mavCommandDesc').html(mess.desc);
+		$('#mavCommandNumber').html(mess.value)
+		$('#mavCommandParam1').html(mess.param1)
+		$('#mavCommandParam2').html(mess.param2)
+		$('#mavCommandParam3').html(mess.param3)
+		$('#mavCommandParam4').html(mess.param4)
+		$('#mavCommandParam5').html(mess.param5)
+		$('#mavCommandParam6').html(mess.param6)
+		$('#mavCommandParam7').html(mess.param7)
 	}
 	
 	static saveCommand(){
@@ -53,6 +111,27 @@ class CustomMessages {
 				$('#saveMessageFailure').hide('fast');
 			},3000);
 		}
+		
+		this.populateCommandList();
+	}
+	
+	static populateCommandList() {
+		
+		//Populate all commands
+		let messages = Settings.getMavMessages();
+		let html = "";
+		for(let i in messages){
+			html +="<option value='"+messages[i].name+"'></option>";
+		}
+		$('#searchMessageList').html(html);
+		
+		//Populate saved command
+		messages = Settings.getSavedMavMessages();
+		html = "";
+		for(let i in messages){
+			html +="<option value='"+messages[i].name+"'></option>";
+		}
+		$('#datalistOptions').html(html);
 	}
 	
 	static sendCommand()
@@ -105,6 +184,7 @@ class CustomMessages {
 	}
 	
 	
+
 }
 
 exports.CustomMessages = CustomMessages

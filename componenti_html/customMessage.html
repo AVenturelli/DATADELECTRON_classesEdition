@@ -32,11 +32,6 @@
                         <br>
                         <input class="form-control" list="datalistOptions" id="selectOldMsg" placeholder="Type to search..." style="height: 30px;border-color: gray;">
                         <datalist id="datalistOptions">
-                            <option value="San Francisco">
-                            <option value="New York">
-                            <option value="Seattle">
-                            <option value="Los Angeles">
-                            <option value="Chicago">
                         </datalist>
                     </div>
                     <hr style="margin-top: 10px">
@@ -88,18 +83,47 @@
                     <button class="btn btn-info btn" id="saveCommand" style="float: right">SAVE</button>
                 </div>
             </div>
-            <div class="col-sm-4" style="border-left: solid gray 1px">
+            <div class="col-sm-4" style="border-left: solid gray 1px;max-height: 425px;overflow-y: auto">
                 <div class="col-sm-12">
                     <label for="searchMessage"><h5>Search Message</h5></label>
                     <br>
-                    <input class="form-control" list="searchMessageList" id="searchMessage" placeholder="Type to search..." style="height: 30px;border-color: gray;">
-                    <datalist id="searchMessageList">
-                        <option value="San Francisco">
-                        <option value="New York">
-                        <option value="Seattle">
-                        <option value="Los Angeles">
-                        <option value="Chicago">
+                    <input class="form-control" list="searchMessageList" id="searchMessage" placeholder="Type to search..." style="height: 30px;border-color: gray;max-height: 500px; overflow-y: auto;">
+                    <datalist id="searchMessageList"  >
+
                     </datalist>
+                    <hr>
+                    <div class="row" id="mavCommandDiv" style="display:none;">
+                        <div class="col-sm-12">
+                            <label style="font-weight: 800">Name: </label><div id="mavCommandName"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label style="font-weight: 800">Command Number: </label><div id="mavCommandNumber"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label style="font-weight: 800">Desc: </label><div id="mavCommandDesc"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label style="font-weight: 800">Param 1: </label><div id="mavCommandParam1"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label style="font-weight: 800">Param 2: </label><div id="mavCommandParam2"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label style="font-weight: 800">Param 3: </label><div id="mavCommandParam3"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label style="font-weight: 800">Param 4: </label><div id="mavCommandParam4"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label style="font-weight: 800">Param 5: </label><div id="mavCommandParam5"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label style="font-weight: 800">Param 6: </label><div id="mavCommandParam6"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label style="font-weight: 800">Param 7: </label><div id="mavCommandParam7"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

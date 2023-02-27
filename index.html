@@ -177,6 +177,9 @@
         //Prendi i dati dal file settings.json, dopodichè faccio partire tutto
         Settings.fetchData().then(r => {
 
+			//Prendo i dati dei messaggi Mavlink
+            CustomMessages.populateCommandList();
+
             //Creo la mappa
             MapPosition.setUp();
             WayPointManager.setupListeners();

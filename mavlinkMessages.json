@@ -62,18 +62,6 @@
       "param7": "@param7 Empty"
     },
     {
-      "name": "NAV_RETURN_TO_LAUNCH",
-      "value": 20,
-      "desc": "Land at location.",
-      "param1": "@param1 Abort Alt[m] Minimum target altitude if landing is aborted (0 = undefined/use system default).",
-      "param2": "@param2 Land Mode Precision land mode.",
-      "param3": "@param3 Empty",
-      "param4": "@param4 Yaw Angle[deg] Desired yaw angle. NaN to use the current system yaw heading mode (e.g. yaw towards next waypoint, yaw to home, etc.).",
-      "param5": "@param5 Latitude Latitude.",
-      "param6": "@param6 Longitude Longitude.",
-      "param7": "@param7 Altitude[m] Landing altitude (ground level in current frame)."
-    },
-    {
       "name": "NAV_LAND",
       "value": 21,
       "desc": "Land at location.",
@@ -156,18 +144,6 @@
       "param5": "@param5 Latitude Latitude.",
       "param6": "@param6 Longitude Longitude.",
       "param7": "@param7 Altitude[m] Altitude."
-    },
-    {
-      "name": "NAV_LOITER_TO_ALT",
-      "value": 31,
-      "desc": "Begin following a target.",
-      "param1": "@param1 System ID (min: 0, max: 255, increment: 1) System ID (of the FOLLOW_TARGET beacon). Send 0 to disable follow-me and return to the default position hold mode.",
-      "param2": "@param2 Reserved",
-      "param3": "@param3 Reserved",
-      "param4": "@param4 Altitude Mode (min: 0, max: 2, increment: 1) Altitude mode: 0: Keep current altitude, 1: keep altitude difference to target, 2: go to a fixed altitude above home.",
-      "param5": "@param5 Altitude[m] Altitude above home. (used if mode=2).",
-      "param6": "@param6 Reserved.",
-      "param7": "@param7 Time to Land[s] (min: 0) Time to land in which the MAV should go to the default position hold mode after a message RX timeout."
     },
     {
       "name": "DO_FOLLOW",
@@ -1334,605 +1310,616 @@
       "param7": "@param7 Gimbal device ID Component ID of gimbal device to address (or 1-6 for non-MAVLink gimbal), 0 for all gimbal device components. Send command multiple times for more than one gimbal (but not all gimbals)."
     },
     {
-
+      "name": "IMAGE_START_CAPTURE",
+      "value": 2000,
+      "desc": "Start image capture sequence. Sends CAMERA_IMAGE_CAPTURED after each capture. Use NaN for reserved values.",
+      "param1": "@param1 Reserved (Set to 0)",
+      "param2": "@param2 Interval[s] (min: 0) Desired elapsed time between two consecutive pictures (in seconds). Minimum values depend on hardware (typically greater than 2 seconds).",
+      "param3": "@param3 Total Images (min: 0, increment: 1) Total number of images to capture. 0 to capture forever/until MAV_CMD_IMAGE_STOP_CAPTURE.",
+      "param4": "@param4 Sequence Number (min: 1, increment: 1) Capture sequence number starting from 1. This is only valid for single-capture (param3 == 1), otherwise set to 0. Increment the capture ID for each capture command to prevent double captures when a command is re-transmitted.",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "IMAGE_STOP_CAPTURE",
+      "value": 2001,
+      "desc": "Stop image capture sequence Use NaN for reserved values.",
+      "param1": "@param1 Reserved (Set to 0)",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "REQUEST_CAMERA_IMAGE_CAPTURE",
+      "value": 2002,
+      "desc": "Stop image capture sequence Use NaN for reserved values.",
+      "param1": "@param1 Number (min: 0, increment: 1) Sequence number for missing CAMERA_IMAGE_CAPTURED message",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "DO_TRIGGER_CONTROL",
+      "value": 2003,
+      "desc": "Enable or disable on-board camera triggering system.",
+      "param1": "@param1 Enable (min: -1, max: 1, increment: 1) Trigger enable/disable (0 for disable, 1 for start), -1 to ignore",
+      "param2": "@param2 Reset (min: -1, max: 1, increment: 1) 1 to reset the trigger sequence, -1 or 0 to ignore",
+      "param3": "@param3 Pause (min: -1, max: 1, increment: 2) 1 to pause triggering, but without switching the camera off or retracting it. -1 to ignore",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "CAMERA_TRACK_POINT",
+      "value": 2004,
+      "desc": "If the camera supports point visual tracking (CAMERA_CAP_FLAGS_HAS_TRACKING_POINT is set), this command allows to initiate the tracking.",
+      "param1": "@param1 Point x (min: 0, max: 1) Point to track x value (normalized 0..1, 0 is left, 1 is right).",
+      "param2": "@param2 Point y (min: 0, max: 1) Point to track y value (normalized 0..1, 0 is top, 1 is bottom).",
+      "param3": "@param3 Radius (min: 0, max: 1) Point radius (normalized 0..1, 0 is image left, 1 is image right).",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "CAMERA_TRACK_RECTANGLE",
+      "value": 2005,
+      "desc": "If the camera supports rectangle visual tracking (CAMERA_CAP_FLAGS_HAS_TRACKING_RECTANGLE is set), this command allows to initiate the tracking.",
+      "param1": "@param1 Top left corner x (min: 0, max: 1) Top left corner of rectangle x value (normalized 0..1, 0 is left, 1 is right).",
+      "param2": "@param2 Top left corner y (min: 0, max: 1) Top left corner of rectangle y value (normalized 0..1, 0 is top, 1 is bottom).",
+      "param3": "@param3 Bottom right corner x (min: 0, max: 1) Bottom right corner of rectangle x value (normalized 0..1, 0 is left, 1 is right).",
+      "param4": "@param4 Bottom right corner y (min: 0, max: 1) Bottom right corner of rectangle y value (normalized 0..1, 0 is top, 1 is bottom).",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "CAMERA_STOP_TRACKING",
+      "value": 2010,
+      "desc": "Stops ongoing tracking.",
+      "param1": "@param1 Empty",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "VIDEO_START_CAPTURE",
+      "value": 2500,
+      "desc": "Starts video capture (recording).",
+      "param1": "@param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams)",
+      "param2": "@param2 Status Frequency[Hz] (min: 0) Frequency CAMERA_CAPTURE_STATUS messages should be sent while recording (0 for no messages, otherwise frequency)",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "VIDEO_STOP_CAPTURE",
+      "value": 2501,
+      "desc": "Stop the current video capture (recording).",
+      "param1": "@param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams)",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "VIDEO_START_STREAMING",
+      "value": 2502,
+      "desc": "Start video streaming.",
+      "param1": "@param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams, 1 for first, 2 for second, etc.)",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "VIDEO_STOP_STREAMING",
+      "value": 2503,
+      "desc": "Stop the given video stream.",
+      "param1": "@param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams, 1 for first, 2 for second, etc.)",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "REQUEST_VIDEO_STREAM_INFORMATION",
+      "value": 2504,
+      "desc": "Request video stream information (VIDEO_STREAM_INFORMATION)",
+      "param1": "@param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams, 1 for first, 2 for second, etc.)",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "REQUEST_VIDEO_STREAM_STATUS",
+      "value": 2505,
+      "desc": "Request video stream status (VIDEO_STREAM_STATUS)",
+      "param1": "@param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams, 1 for first, 2 for second, etc.)",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "LOGGING_START",
+      "value": 2510,
+      "desc": "Request to start streaming logging data over MAVLink (see also LOGGING_DATA message)",
+      "param1": "@param1 Format (min: 0, increment: 1) Format: 0: ULog)",
+      "param2": "@param2 Reserved (set to 0)",
+      "param3": "@param3 Reserved (set to 0)",
+      "param4": "@param4 Reserved (set to 0)",
+      "param5": "@param5 Reserved (set to 0)",
+      "param6": "@param6 Reserved (set to 0)",
+      "param7": "@param7 Reserved (set to 0)"
+    },
+    {
+      "name": "LOGGING_STOP",
+      "value": 2511,
+      "desc": "Request to stop streaming log data over MAVLink",
+      "param1": "@param1 Reserved (set to 0)",
+      "param2": "@param2 Reserved (set to 0)",
+      "param3": "@param3 Reserved (set to 0)",
+      "param4": "@param4 Reserved (set to 0)",
+      "param5": "@param5 Reserved (set to 0)",
+      "param6": "@param6 Reserved (set to 0)",
+      "param7": "@param7 Reserved (set to 0)"
+    },
+    {
+      "name": "AIRFRAME_CONFIGURATION",
+      "value": 2520,
+      "desc": "No desc available",
+      "param1": "@param1 Landing Gear ID (min: -1, increment: 1) Landing gear ID (default: 0, -1 for all)",
+      "param2": "@param2 Landing Gear Position Landing gear position (Down: 0, Up: 1, NaN for no change)",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "CONTROL_HIGH_LATENCY",
+      "value": 2600,
+      "desc": "Request to start/stop transmitting over the high latency telemetry",
+      "param1": "@param1 Enable (min: 0, max: 1, increment: 1) Control transmission over high latency telemetry (0: stop, 1: start)",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "PANORAMA_CREATE",
+      "value": 2800,
+      "desc": "Create a panorama at the current position",
+      "param1": "@param1 Horizontal Angle[deg] Viewing angle horizontal of the panorama (+- 0.5 the total angle)",
+      "param2": "@param2 Vertical Angle[deg] Viewing angle vertical of panorama.",
+      "param3": "@param3 Horizontal Speed[deg/s] Speed of the horizontal rotation.",
+      "param4": "@param4 Vertical Speed[deg/s] Speed of the vertical rotation.",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "DO_VTOL_TRANSITION",
+      "value": 3000,
+      "desc": "Request VTOL transition",
+      "param1": "@param1 State The target VTOL state. For normal transitions, only MAV_VTOL_STATE_MC and MAV_VTOL_STATE_FW can be used.",
+      "param2": "@param2 Immediate Force immediate transition to the specified MAV_VTOL_STATE. 1: Force immediate, 0: normal transition. Can be used, for example, to trigger an emergency \"Quadchute\". Caution: Can be dangerous/damage vehicle, depending on autopilot implementation of this command.",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "ARM_AUTHORIZATION_REQUEST",
+      "value": 3001,
+      "desc": "Request authorization to arm the vehicle to a external entity, the arm authorizer is responsible to request all data that is needs from the vehicle before authorize or deny the request. If approved the progress of command_ack message should be set with period of time that this authorization is valid in seconds or in case it was denied it should be set with one of the reasons in ARM_AUTH_DENIED_REASON.",
+      "param1": "@param1 System ID (min: 0, max: 255, increment: 1) Vehicle system id, this way ground station can request arm authorization on behalf of any vehicle",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "SET_GUIDED_SUBMODE_STANDARD",
+      "value": 4000,
+      "desc": "This command sets the submode to standard guided when vehicle is in guided mode. The vehicle holds position and altitude and the user can input the desired velocities along all three axes.",
+      "param1": "@param1 Empty",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "SET_GUIDED_SUBMODE_CIRCLE",
+      "value": 4001,
+      "desc": "This command sets submode circle when vehicle is in guided mode. Vehicle flies along a circle facing the center of the circle. The user can input the velocity along the circle and change the radius. If no input is given the vehicle will hold position.",
+      "param1": "@param1 Radius[m] Radius of desired circle in CIRCLE_MODE",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param5 Latitude[degE7] Target latitude of center of circle in CIRCLE_MODE",
+      "param6": "@param6 Longitude[degE7] Target longitude of center of circle in CIRCLE_MODE",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "CONDITION_GATE",
+      "value": 4501,
+      "desc": "Delay mission state machine until gate has been reached.",
+      "param1": "@param1 Geometry (min: 0, increment: 1) Geometry: 0: orthogonal to path between previous and next waypoint.",
+      "param2": "@param2 UseAltitude (min: 0, max: 1, increment: 1) Altitude: 0: ignore altitude",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param5 Latitude Latitude",
+      "param6": "@param6 Longitude Longitude",
+      "param7": "@param7 Altitude[m] Altitude"
+    },
+    {
+      "name": "NAV_FENCE_RETURN_POINT",
+      "value": 5000,
+      "desc": "Fence return point (there can only be one such point in a geofence definition). If rally points are supported they should be used instead.",
+      "param1": "@param1 Reserved",
+      "param2": "@param2 Reserved",
+      "param3": "@param3 Reserved",
+      "param4": "@param4 Reserved",
+      "param5": "@param5 Latitude Latitude",
+      "param6": "@param6 Longitude Longitude",
+      "param7": "@param7 Altitude[m] Altitude"
+    },
+    {
+      "name": "NAV_FENCE_POLYGON_VERTEX_INCLUSION",
+      "value": 5001,
+      "desc": "Fence vertex for an inclusion polygon (the polygon must not be self-intersecting). The vehicle must stay within this area. Minimum of 3 vertices required.",
+      "param1": "@param1 Vertex Count (min: 3, increment: 1) Polygon vertex count",
+      "param2": "@param2 Inclusion Group (min: 0, increment: 1) Vehicle must be inside ALL inclusion zones in a single group, vehicle must be inside at least one group, must be the same for all points in each polygon",
+      "param3": "@param3 Reserved",
+      "param4": "@param4 Reserved",
+      "param5": "@param5 Latitude Latitude",
+      "param6": "@param6 Longitude Longitude",
+      "param7": "@param7 Reserved"
+    },
+    {
+      "name": "NAV_FENCE_POLYGON_VERTEX_EXCLUSION",
+      "value": 5002,
+      "desc": "Fence vertex for an exclusion polygon (the polygon must not be self-intersecting). The vehicle must stay outside this area. Minimum of 3 vertices required.",
+      "param1": "@param1 Vertex Count (min: 3, increment: 1) Polygon vertex count",
+      "param2": "@param2 Reserved",
+      "param3": "@param3 Reserved",
+      "param4": "@param4 Reserved",
+      "param5": "@param5 Latitude Latitude",
+      "param6": "@param6 Longitude Longitude",
+      "param7": "@param7 Reserved"
+    },
+    {
+      "name": "NAV_FENCE_CIRCLE_INCLUSION",
+      "value": 5003,
+      "desc": "Circular fence area. The vehicle must stay inside this area.",
+      "param1": "@param1 Radius[m] Radius.",
+      "param2": "@param2 Inclusion Group (min: 0, increment: 1) Vehicle must be inside ALL inclusion zones in a single group, vehicle must be inside at least one group",
+      "param3": "@param3 Reserved",
+      "param4": "@param4 Reserved",
+      "param5": "@param5 Latitude Latitude",
+      "param6": "@param6 Longitude Longitude",
+      "param7": "@param7 Reserved"
+    },
+    {
+      "name": "NAV_FENCE_CIRCLE_EXCLUSION",
+      "value": 5004,
+      "desc": "Circular fence area. The vehicle must stay outside this area.",
+      "param1": "@param1 Radius[m] Radius.",
+      "param2": "@param2 Reserved",
+      "param3": "@param3 Reserved",
+      "param4": "@param4 Reserved",
+      "param5": "@param5 Latitude Latitude",
+      "param6": "@param6 Longitude Longitude",
+      "param7": "@param7 Reserved"
+    },
+    {
+      "name": "NAV_RALLY_POINT",
+      "value": 5100,
+      "desc": "Rally point. You can have multiple rally points defined.",
+      "param1": "@param1 Reserved",
+      "param2": "@param2 Reserved",
+      "param3": "@param3 Reserved",
+      "param4": "@param4 Reserved",
+      "param5": "@param5 Latitude Latitude",
+      "param6": "@param6 Longitude Longitude",
+      "param7": "@param7 Altitude[m] Altitude"
+    },
+    {
+      "name": "UAVCAN_GET_NODE_INFO",
+      "value": 5200,
+      "desc": "Commands the vehicle to respond with a sequence of messages UAVCAN_NODE_INFO, one message per every UAVCAN node that is online. Note that some of the response messages can be lost, which the receiver can detect easily by checking whether every received UAVCAN_NODE_STATUS has a matching message UAVCAN_NODE_INFO received earlier; if not, this command should be sent again in order to request re-transmission of the node information messages.",
+      "param1": "@param1 Reserved (set to 0)",
+      "param2": "@param2 Reserved (set to 0)",
+      "param3": "@param3 Reserved (set to 0)",
+      "param4": "@param4 Reserved (set to 0)",
+      "param5": "@param5 Reserved (set to 0)",
+      "param6": "@param6 Reserved (set to 0)",
+      "param7": "@param7 Reserved (set to 0)"
+    },
+    {
+      "name": "DO_ADSB_OUT_IDENT",
+      "value": 10001,
+      "desc": "Trigger the start of an ADSB-out IDENT. This should only be used when requested to do so by an Air Traffic Controller in controlled airspace. This starts the IDENT which is then typically held for 18 seconds by the hardware per the Mode A, C, and S transponder spec.",
+      "param1": "@param1 Reserved (set to 0)",
+      "param2": "@param2 Reserved (set to 0)",
+      "param3": "@param3 Reserved (set to 0)",
+      "param4": "@param4 Reserved (set to 0)",
+      "param5": "@param5 Reserved (set to 0)",
+      "param6": "@param6 Reserved (set to 0)",
+      "param7": "@param7 Reserved (set to 0)"
+    },
+    {
+      "name": "PAYLOAD_PREPARE_DEPLOY",
+      "value": 30001,
+      "desc": "Deploy payload on a Lat / Lon / Alt position. This includes the navigation to reach the required release position and velocity.",
+      "param1": "@param1 Operation Mode (min: 0, max: 2, increment: 1) Operation mode. 0: prepare single payload deploy (overwriting previous requests), but do not execute it. 1: execute payload deploy immediately (rejecting further deploy commands during execution, but allowing abort). 2: add payload deploy to existing deployment list.",
+      "param2": "@param2 Approach Vector[deg] (min: -1, max: 360) Desired approach vector in compass heading. A negative value indicates the system can define the approach vector at will.",
+      "param3": "@param3 Ground Speed (min: -1) Desired ground speed at release time. This can be overridden by the airframe in case it needs to meet minimum airspeed. A negative value indicates the system can define the ground speed at will.",
+      "param4": "@param4 Altitude Clearance[m] (min: -1) Minimum altitude clearance to the release position. A negative value indicates the system can define the clearance at will.",
+      "param5": "@param5 Latitude[degE7] Latitude. Note, if used in MISSION_ITEM (deprecated) the units are degrees (unscaled)",
+      "param6": "@param6 Longitude[degE7] Longitude. Note, if used in MISSION_ITEM (deprecated) the units are degrees (unscaled)",
+      "param7": "@param7 Altitude[m] Altitude (MSL)"
+    },
+    {
+      "name": "PAYLOAD_CONTROL_DEPLOY",
+      "value": 30002,
+      "desc": "Control the payload deployment.",
+      "param1": "@param1 Operation Mode (min: 0, max: 101, increment: 1) Operation mode. 0: Abort deployment, continue normal mission. 1: switch to payload deployment mode. 100: delete first payload deployment request. 101: delete all payload deployment requests.",
+      "param2": "@param2 Reserved",
+      "param3": "@param3 Reserved",
+      "param4": "@param4 Reserved",
+      "param5": "@param5 Reserved",
+      "param6": "@param6 Reserved",
+      "param7": "@param7 Reserved"
+    },
+    {
+      "name": "FIXED_MAG_CAL_YAW",
+      "value": 42006,
+      "desc": "Magnetometer calibration based on provided known yaw. This allows for fast calibration using WMM field tables in the vehicle, given only the known yaw of the vehicle. If Latitude and longitude are both zero then use the current vehicle location.",
+      "param1": "@param1 Yaw[deg] Yaw of vehicle in earth frame.",
+      "param2": "@param2 CompassMask CompassMask, 0 for all.",
+      "param3": "@param3 Latitude[deg] Latitude.",
+      "param4": "@param4 Longitude[deg] Longitude.",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "DO_WINCH",
+      "value": 42600,
+      "desc": "Command to operate winch.",
+      "param1": "@param1 Instance (min: 1, increment: 1) Winch instance number.",
+      "param2": "@param2 Action Action to perform.",
+      "param3": "@param3 Length[m] Length of line to release (negative to wind).",
+      "param4": "@param4 Rate[m/s] Release rate (negative to wind).",
+      "param5": "@param5 Empty",
+      "param6": "@param6 Empty",
+      "param7": "@param7 Empty"
+    },
+    {
+      "name": "WAYPOINT_USER_1",
+      "value": 31000,
+      "desc": "User defined waypoint item. Ground Station will show the Vehicle as flying through this item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param5 Latitude Latitude unscaled",
+      "param6": "@param6 Longitude Longitude unscaled",
+      "param7": "@param7 Altitude[m] Altitude (MSL)"
+    },
+    {
+      "name": "WAYPOINT_USER_2",
+      "value": 31001,
+      "desc": "User defined waypoint item. Ground Station will show the Vehicle as flying through this item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param5 Latitude Latitude unscaled",
+      "param6": "@param6 Longitude Longitude unscaled",
+      "param7": "@param7 Altitude[m] Altitude (MSL)"
+    },
+    {
+      "name": "WAYPOINT_USER_3",
+      "value": 31002,
+      "desc": "User defined waypoint item. Ground Station will show the Vehicle as flying through this item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param5 Latitude Latitude unscaled",
+      "param6": "@param6 Longitude Longitude unscaled",
+      "param7": "@param7 Altitude[m] Altitude (MSL)"
+    },
+    {
+      "name": "WAYPOINT_USER_4",
+      "value": 31003,
+      "desc": "User defined waypoint item. Ground Station will show the Vehicle as flying through this item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param5 Latitude Latitude unscaled",
+      "param6": "@param6 Longitude Longitude unscaled",
+      "param7": "@param7 Altitude[m] Altitude (MSL)"
+    },
+    {
+      "name": "WAYPOINT_USER_5",
+      "value": 31004,
+      "desc": "User defined waypoint item. Ground Station will show the Vehicle as flying through this item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param5 Latitude Latitude unscaled",
+      "param6": "@param6 Longitude Longitude unscaled",
+      "param7": "@param7 Altitude[m] Altitude (MSL)"
+    },
+    {
+      "name": "SPATIAL_USER_1",
+      "value": 31005,
+      "desc": "User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example: ROI item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param5 Latitude Latitude unscaled",
+      "param6": "@param6 Longitude Longitude unscaled",
+      "param7": "@param7 Altitude[m] Altitude (MSL)"
+    },
+    {
+      "name": "SPATIAL_USER_2",
+      "value": 31006,
+      "desc": "User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example: ROI item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param5 Latitude Latitude unscaled",
+      "param6": "@param6 Longitude Longitude unscaled",
+      "param7": "@param7 Altitude[m] Altitude (MSL)"
+    },
+    {
+      "name": "SPATIAL_USER_3",
+      "value": 31007,
+      "desc": "User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example: ROI item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param5 Latitude Latitude unscaled",
+      "param6": "@param6 Longitude Longitude unscaled",
+      "param7": "@param7 Altitude[m] Altitude (MSL)"
+    },
+    {
+      "name": "SPATIAL_USER_4",
+      "value": 31008,
+      "desc": "User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example: ROI item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param5 Latitude Latitude unscaled",
+      "param6": "@param6 Longitude Longitude unscaled",
+      "param7": "@param7 Altitude[m] Altitude (MSL)"
+    },
+    {
+      "name": "SPATIAL_USER_5",
+      "value": 31009,
+      "desc": "User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example: ROI item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param5 Latitude Latitude unscaled",
+      "param6": "@param6 Longitude Longitude unscaled",
+      "param7": "@param7 Altitude[m] Altitude (MSL)"
+    },
+    {
+      "name": "USER_1",
+      "value": 31010,
+      "desc": "User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param1 User defined",
+      "param6": "@param1 User defined",
+      "param7": "@param1 User defined"
+    },
+    {
+      "name": "USER_2",
+      "value": 31011,
+      "desc": "User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param1 User defined",
+      "param6": "@param1 User defined",
+      "param7": "@param1 User defined"
+    },
+    {
+      "name": "USER_3",
+      "value": 31012,
+      "desc": "User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param1 User defined",
+      "param6": "@param1 User defined",
+      "param7": "@param1 User defined"
+    },
+    {
+      "name": "USER_4",
+      "value": 31013,
+      "desc": "User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param1 User defined",
+      "param6": "@param1 User defined",
+      "param7": "@param1 User defined"
+    },
+    {
+      "name": "USER_5",
+      "value": 31014,
+      "desc": "User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER item.",
+      "param1": "@param1 User defined",
+      "param2": "@param2 User defined",
+      "param3": "@param3 User defined",
+      "param4": "@param4 User defined",
+      "param5": "@param1 User defined",
+      "param6": "@param1 User defined",
+      "param7": "@param1 User defined"
+    },
+    {
+      "name": "USER_5",
+      "value": 31014,
+      "desc": "Request forwarding of CAN packets from the given CAN bus to this component. CAN Frames are sent using CAN_FRAME and CANFD_FRAME messages",
+      "param1": "@param1 bus Bus number (0 to disable forwarding, 1 for first bus, 2 for 2nd bus, 3 for 3rd bus)",
+      "param2": "@param2 Empty",
+      "param3": "@param3 Empty",
+      "param4": "@param4 Empty",
+      "param5": "@param1 Empty",
+      "param6": "@param1 Empty",
+      "param7": "@param1 Empty"
     }
-
-  /**
-   * Gimbal configuration to set which sysid/compid is in primary and secondary control.
-   *
-   *
-   *
-   *
-   *
-   *
-   */
-  'DO_GIMBAL_MANAGER_CONFIGURE' = 1001,
-  /**
-   * Start image capture sequence. Sends CAMERA_IMAGE_CAPTURED after each capture. Use NaN for reserved
-   * values.
-   *
-   * @param1 Reserved (Set to 0)
-   * @param2 Interval[s] (min: 0) Desired elapsed time between two consecutive pictures (in seconds). Minimum values depend on hardware (typically greater than 2 seconds).
-   * @param3 Total Images (min: 0, increment: 1) Total number of images to capture. 0 to capture forever/until MAV_CMD_IMAGE_STOP_CAPTURE.
-   * @param4 Sequence Number (min: 1, increment: 1) Capture sequence number starting from 1. This is only valid for single-capture (param3 == 1), otherwise set to 0. Increment the capture ID for each capture command to prevent double captures when a command is re-transmitted.
-   */
-  'IMAGE_START_CAPTURE' = 2000,
-  /**
-   * Stop image capture sequence Use NaN for reserved values.
-   *
-   * @param1 Reserved (Set to 0)
-   */
-  'IMAGE_STOP_CAPTURE' = 2001,
-  /**
-   * Re-request a CAMERA_IMAGE_CAPTURED message.
-   *
-   * @param1 Number (min: 0, increment: 1) Sequence number for missing CAMERA_IMAGE_CAPTURED message
-   */
-  'REQUEST_CAMERA_IMAGE_CAPTURE' = 2002,
-  /**
-   * Enable or disable on-board camera triggering system.
-   *
-   * @param1 Enable (min: -1, max: 1, increment: 1) Trigger enable/disable (0 for disable, 1 for start), -1 to ignore
-   * @param2 Reset (min: -1, max: 1, increment: 1) 1 to reset the trigger sequence, -1 or 0 to ignore
-   * @param3 Pause (min: -1, max: 1, increment: 2) 1 to pause triggering, but without switching the camera off or retracting it. -1 to ignore
-   */
-  'DO_TRIGGER_CONTROL' = 2003,
-  /**
-   * If the camera supports point visual tracking (CAMERA_CAP_FLAGS_HAS_TRACKING_POINT is set), this
-   * command allows to initiate the tracking.
-   *
-   * @param1 Point x (min: 0, max: 1) Point to track x value (normalized 0..1, 0 is left, 1 is right).
-   * @param2 Point y (min: 0, max: 1) Point to track y value (normalized 0..1, 0 is top, 1 is bottom).
-   * @param3 Radius (min: 0, max: 1) Point radius (normalized 0..1, 0 is image left, 1 is image right).
-   */
-  'CAMERA_TRACK_POINT' = 2004,
-  /**
-   * If the camera supports rectangle visual tracking (CAMERA_CAP_FLAGS_HAS_TRACKING_RECTANGLE is set),
-   * this command allows to initiate the tracking.
-   *
-   * @param1 Top left corner x (min: 0, max: 1) Top left corner of rectangle x value (normalized 0..1, 0 is left, 1 is right).
-   * @param2 Top left corner y (min: 0, max: 1) Top left corner of rectangle y value (normalized 0..1, 0 is top, 1 is bottom).
-   * @param3 Bottom right corner x (min: 0, max: 1) Bottom right corner of rectangle x value (normalized 0..1, 0 is left, 1 is right).
-   * @param4 Bottom right corner y (min: 0, max: 1) Bottom right corner of rectangle y value (normalized 0..1, 0 is top, 1 is bottom).
-   */
-  'CAMERA_TRACK_RECTANGLE' = 2005,
-  /**
-   * Stops ongoing tracking.
-   *
-   */
-  'CAMERA_STOP_TRACKING' = 2010,
-  /**
-   * Starts video capture (recording).
-   *
-   * @param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams)
-   * @param2 Status Frequency[Hz] (min: 0) Frequency CAMERA_CAPTURE_STATUS messages should be sent while recording (0 for no messages, otherwise frequency)
-   */
-  'VIDEO_START_CAPTURE' = 2500,
-  /**
-   * Stop the current video capture (recording).
-   *
-   * @param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams)
-   */
-  'VIDEO_STOP_CAPTURE' = 2501,
-  /**
-   * Start video streaming
-   *
-   * @param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams, 1 for first, 2 for second, etc.)
-   */
-  'VIDEO_START_STREAMING' = 2502,
-  /**
-   * Stop the given video stream
-   *
-   * @param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams, 1 for first, 2 for second, etc.)
-   */
-  'VIDEO_STOP_STREAMING' = 2503,
-  /**
-   * Request video stream information (VIDEO_STREAM_INFORMATION)
-   *
-   * @param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams, 1 for first, 2 for second, etc.)
-   */
-  'REQUEST_VIDEO_STREAM_INFORMATION' = 2504,
-  /**
-   * Request video stream status (VIDEO_STREAM_STATUS)
-   *
-   * @param1 Stream ID (min: 0, increment: 1) Video Stream ID (0 for all streams, 1 for first, 2 for second, etc.)
-   */
-  'REQUEST_VIDEO_STREAM_STATUS' = 2505,
-  /**
-   * Request to start streaming logging data over MAVLink (see also LOGGING_DATA message)
-   *
-   * @param1 Format (min: 0, increment: 1) Format: 0: ULog
-   * @param2 Reserved (set to 0)
-   * @param3 Reserved (set to 0)
-   * @param4 Reserved (set to 0)
-   * @param5 Reserved (set to 0)
-   * @param6 Reserved (set to 0)
-   * @param7 Reserved (set to 0)
-   */
-  'LOGGING_START' = 2510,
-  /**
-   * Request to stop streaming log data over MAVLink
-   *
-   * @param1 Reserved (set to 0)
-   * @param2 Reserved (set to 0)
-   * @param3 Reserved (set to 0)
-   * @param4 Reserved (set to 0)
-   * @param5 Reserved (set to 0)
-   * @param6 Reserved (set to 0)
-   * @param7 Reserved (set to 0)
-   */
-  'LOGGING_STOP' = 2511,
-  /**
-   * @param1 Landing Gear ID (min: -1, increment: 1) Landing gear ID (default: 0, -1 for all)
-   * @param2 Landing Gear Position Landing gear position (Down: 0, Up: 1, NaN for no change)
-   */
-  'AIRFRAME_CONFIGURATION' = 2520,
-  /**
-   * Request to start/stop transmitting over the high latency telemetry
-   *
-   * @param1 Enable (min: 0, max: 1, increment: 1) Control transmission over high latency telemetry (0: stop, 1: start)
-   * @param2 Empty
-   * @param3 Empty
-   * @param4 Empty
-   * @param5 Empty
-   * @param6 Empty
-   * @param7 Empty
-   */
-  'CONTROL_HIGH_LATENCY' = 2600,
-  /**
-   * Create a panorama at the current position
-   *
-   * @param1 Horizontal Angle[deg] Viewing angle horizontal of the panorama (+- 0.5 the total angle)
-   * @param2 Vertical Angle[deg] Viewing angle vertical of panorama.
-   * @param3 Horizontal Speed[deg/s] Speed of the horizontal rotation.
-   * @param4 Vertical Speed[deg/s] Speed of the vertical rotation.
-   */
-  'PANORAMA_CREATE' = 2800,
-  /**
-   * Request VTOL transition
-   *
-   * @param1 State The target VTOL state. For normal transitions, only MAV_VTOL_STATE_MC and MAV_VTOL_STATE_FW can be used.
-   * @param2 Immediate Force immediate transition to the specified MAV_VTOL_STATE. 1: Force immediate, 0: normal transition. Can be used, for example, to trigger an emergency "Quadchute". Caution: Can be dangerous/damage vehicle, depending on autopilot implementation of this command.
-   */
-  'DO_VTOL_TRANSITION' = 3000,
-  /**
-   * Request authorization to arm the vehicle to a external entity, the arm authorizer is responsible to
-   * request all data that is needs from the vehicle before authorize or deny the request. If approved
-   * the progress of command_ack message should be set with period of time that this authorization is
-   * valid in seconds or in case it was denied it should be set with one of the reasons in
-   * ARM_AUTH_DENIED_REASON.
-   *
-   * @param1 System ID (min: 0, max: 255, increment: 1) Vehicle system id, this way ground station can request arm authorization on behalf of any vehicle
-   */
-  'ARM_AUTHORIZATION_REQUEST' = 3001,
-  /**
-   * This command sets the submode to standard guided when vehicle is in guided mode. The vehicle holds
-   * position and altitude and the user can input the desired velocities along all three axes.
-   *
-   */
-  'SET_GUIDED_SUBMODE_STANDARD' = 4000,
-  /**
-   * This command sets submode circle when vehicle is in guided mode. Vehicle flies along a circle facing
-   * the center of the circle. The user can input the velocity along the circle and change the radius. If
-   * no input is given the vehicle will hold position.
-   *
-   * @note has location
-   *
-   * @param1 Radius[m] Radius of desired circle in CIRCLE_MODE
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 Latitude[degE7] Target latitude of center of circle in CIRCLE_MODE
-   * @param6 Longitude[degE7] Target longitude of center of circle in CIRCLE_MODE
-   */
-  'SET_GUIDED_SUBMODE_CIRCLE' = 4001,
-  /**
-   * Delay mission state machine until gate has been reached.
-   *
-   * @note has location and is destination
-   *
-   * @param1 Geometry (min: 0, increment: 1) Geometry: 0: orthogonal to path between previous and next waypoint.
-   * @param2 UseAltitude (min: 0, max: 1, increment: 1) Altitude: 0: ignore altitude
-   * @param3 Empty
-   * @param4 Empty
-   * @param5 Latitude Latitude
-   * @param6 Longitude Longitude
-   * @param7 Altitude[m] Altitude
-   */
-  'CONDITION_GATE' = 4501,
-  /**
-   * Fence return point (there can only be one such point in a geofence definition). If rally points are
-   * supported they should be used instead.
-   *
-   * @note has location and is destination
-   *
-   * @param1 Reserved
-   * @param2 Reserved
-   * @param3 Reserved
-   * @param4 Reserved
-   * @param5 Latitude Latitude
-   * @param6 Longitude Longitude
-   * @param7 Altitude[m] Altitude
-   */
-  'NAV_FENCE_RETURN_POINT' = 5000,
-  /**
-   * Fence vertex for an inclusion polygon (the polygon must not be self-intersecting). The vehicle must
-   * stay within this area. Minimum of 3 vertices required.
-   *
-   * @note has location
-   *
-   * @param1 Vertex Count (min: 3, increment: 1) Polygon vertex count
-   * @param2 Inclusion Group (min: 0, increment: 1) Vehicle must be inside ALL inclusion zones in a single group, vehicle must be inside at least one group, must be the same for all points in each polygon
-   * @param3 Reserved
-   * @param4 Reserved
-   * @param5 Latitude Latitude
-   * @param6 Longitude Longitude
-   * @param7 Reserved
-   */
-  'NAV_FENCE_POLYGON_VERTEX_INCLUSION' = 5001,
-  /**
-   * Fence vertex for an exclusion polygon (the polygon must not be self-intersecting). The vehicle must
-   * stay outside this area. Minimum of 3 vertices required.
-   *
-   * @note has location
-   *
-   * @param1 Vertex Count (min: 3, increment: 1) Polygon vertex count
-   * @param2 Reserved
-   * @param3 Reserved
-   * @param4 Reserved
-   * @param5 Latitude Latitude
-   * @param6 Longitude Longitude
-   * @param7 Reserved
-   */
-  'NAV_FENCE_POLYGON_VERTEX_EXCLUSION' = 5002,
-  /**
-   * Circular fence area. The vehicle must stay inside this area.
-   *
-   * @note has location
-   *
-   * @param1 Radius[m] Radius.
-   * @param2 Inclusion Group (min: 0, increment: 1) Vehicle must be inside ALL inclusion zones in a single group, vehicle must be inside at least one group
-   * @param3 Reserved
-   * @param4 Reserved
-   * @param5 Latitude Latitude
-   * @param6 Longitude Longitude
-   * @param7 Reserved
-   */
-  'NAV_FENCE_CIRCLE_INCLUSION' = 5003,
-  /**
-   * Circular fence area. The vehicle must stay outside this area.
-   *
-   * @note has location
-   *
-   * @param1 Radius[m] Radius.
-   * @param2 Reserved
-   * @param3 Reserved
-   * @param4 Reserved
-   * @param5 Latitude Latitude
-   * @param6 Longitude Longitude
-   * @param7 Reserved
-   */
-  'NAV_FENCE_CIRCLE_EXCLUSION' = 5004,
-  /**
-   * Rally point. You can have multiple rally points defined.
-   *
-   * @note has location
-   *
-   * @param1 Reserved
-   * @param2 Reserved
-   * @param3 Reserved
-   * @param4 Reserved
-   * @param5 Latitude Latitude
-   * @param6 Longitude Longitude
-   * @param7 Altitude[m] Altitude
-   */
-  'NAV_RALLY_POINT' = 5100,
-  /**
-   * Commands the vehicle to respond with a sequence of messages UAVCAN_NODE_INFO, one message per every
-   * UAVCAN node that is online. Note that some of the response messages can be lost, which the receiver
-   * can detect easily by checking whether every received UAVCAN_NODE_STATUS has a matching message
-   * UAVCAN_NODE_INFO received earlier; if not, this command should be sent again in order to request
-   * re-transmission of the node information messages.
-   *
-   * @param1 Reserved (set to 0)
-   * @param2 Reserved (set to 0)
-   * @param3 Reserved (set to 0)
-   * @param4 Reserved (set to 0)
-   * @param5 Reserved (set to 0)
-   * @param6 Reserved (set to 0)
-   * @param7 Reserved (set to 0)
-   */
-  'UAVCAN_GET_NODE_INFO' = 5200,
-  /**
-   * Trigger the start of an ADSB-out IDENT. This should only be used when requested to do so by an Air
-   * Traffic Controller in controlled airspace. This starts the IDENT which is then typically held for 18
-   * seconds by the hardware per the Mode A, C, and S transponder spec.
-   *
-   * @param1 Reserved (set to 0)
-   * @param2 Reserved (set to 0)
-   * @param3 Reserved (set to 0)
-   * @param4 Reserved (set to 0)
-   * @param5 Reserved (set to 0)
-   * @param6 Reserved (set to 0)
-   * @param7 Reserved (set to 0)
-   */
-  'DO_ADSB_OUT_IDENT' = 10001,
-  /**
-   * Deploy payload on a Lat / Lon / Alt position. This includes the navigation to reach the required
-   * release position and velocity.
-   *
-   * @note has location and is destination
-   *
-   * @param1 Operation Mode (min: 0, max: 2, increment: 1) Operation mode. 0: prepare single payload deploy (overwriting previous requests), but do not execute it. 1: execute payload deploy immediately (rejecting further deploy commands during execution, but allowing abort). 2: add payload deploy to existing deployment list.
-   * @param2 Approach Vector[deg] (min: -1, max: 360) Desired approach vector in compass heading. A negative value indicates the system can define the approach vector at will.
-   * @param3 Ground Speed (min: -1) Desired ground speed at release time. This can be overridden by the airframe in case it needs to meet minimum airspeed. A negative value indicates the system can define the ground speed at will.
-   * @param4 Altitude Clearance[m] (min: -1) Minimum altitude clearance to the release position. A negative value indicates the system can define the clearance at will.
-   * @param5 Latitude[degE7] Latitude. Note, if used in MISSION_ITEM (deprecated) the units are degrees (unscaled)
-   * @param6 Longitude[degE7] Longitude. Note, if used in MISSION_ITEM (deprecated) the units are degrees (unscaled)
-   * @param7 Altitude[m] Altitude (MSL)
-   */
-  'PAYLOAD_PREPARE_DEPLOY' = 30001,
-  /**
-   * Control the payload deployment.
-   *
-   * @param1 Operation Mode (min: 0, max: 101, increment: 1) Operation mode. 0: Abort deployment, continue normal mission. 1: switch to payload deployment mode. 100: delete first payload deployment request. 101: delete all payload deployment requests.
-   * @param2 Reserved
-   * @param3 Reserved
-   * @param4 Reserved
-   * @param5 Reserved
-   * @param6 Reserved
-   * @param7 Reserved
-   */
-  'PAYLOAD_CONTROL_DEPLOY' = 30002,
-  /**
-   * Magnetometer calibration based on provided known yaw. This allows for fast calibration using WMM
-   * field tables in the vehicle, given only the known yaw of the vehicle. If Latitude and longitude are
-   * both zero then use the current vehicle location.
-   *
-   * @note has location
-   *
-   * @param1 Yaw[deg] Yaw of vehicle in earth frame.
-   * @param2 CompassMask CompassMask, 0 for all.
-   * @param3 Latitude[deg] Latitude.
-   * @param4 Longitude[deg] Longitude.
-   * @param5 Empty.
-   * @param6 Empty.
-   * @param7 Empty.
-   */
-  'FIXED_MAG_CAL_YAW' = 42006,
-  /**
-   * Command to operate winch.
-   *
-   * @param1 Instance (min: 1, increment: 1) Winch instance number.
-   * @param2 Action Action to perform.
-   * @param3 Length[m] Length of line to release (negative to wind).
-   * @param4 Rate[m/s] Release rate (negative to wind).
-   * @param5 Empty.
-   * @param6 Empty.
-   * @param7 Empty.
-   */
-  'DO_WINCH' = 42600,
-  /**
-   * User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
-   *
-   * @note has location and is destination
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 Latitude Latitude unscaled
-   * @param6 Longitude Longitude unscaled
-   * @param7 Altitude[m] Altitude (MSL)
-   */
-  'WAYPOINT_USER_1' = 31000,
-  /**
-   * User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
-   *
-   * @note has location and is destination
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 Latitude Latitude unscaled
-   * @param6 Longitude Longitude unscaled
-   * @param7 Altitude[m] Altitude (MSL)
-   */
-  'WAYPOINT_USER_2' = 31001,
-  /**
-   * User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
-   *
-   * @note has location and is destination
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 Latitude Latitude unscaled
-   * @param6 Longitude Longitude unscaled
-   * @param7 Altitude[m] Altitude (MSL)
-   */
-  'WAYPOINT_USER_3' = 31002,
-  /**
-   * User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
-   *
-   * @note has location and is destination
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 Latitude Latitude unscaled
-   * @param6 Longitude Longitude unscaled
-   * @param7 Altitude[m] Altitude (MSL)
-   */
-  'WAYPOINT_USER_4' = 31003,
-  /**
-   * User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
-   *
-   * @note has location and is destination
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 Latitude Latitude unscaled
-   * @param6 Longitude Longitude unscaled
-   * @param7 Altitude[m] Altitude (MSL)
-   */
-  'WAYPOINT_USER_5' = 31004,
-  /**
-   * User defined spatial item. Ground Station will not show the Vehicle as flying through this item.
-   * Example: ROI item.
-   *
-   * @note has location
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 Latitude Latitude unscaled
-   * @param6 Longitude Longitude unscaled
-   * @param7 Altitude[m] Altitude (MSL)
-   */
-  'SPATIAL_USER_1' = 31005,
-  /**
-   * User defined spatial item. Ground Station will not show the Vehicle as flying through this item.
-   * Example: ROI item.
-   *
-   * @note has location
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 Latitude Latitude unscaled
-   * @param6 Longitude Longitude unscaled
-   * @param7 Altitude[m] Altitude (MSL)
-   */
-  'SPATIAL_USER_2' = 31006,
-  /**
-   * User defined spatial item. Ground Station will not show the Vehicle as flying through this item.
-   * Example: ROI item.
-   *
-   * @note has location
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 Latitude Latitude unscaled
-   * @param6 Longitude Longitude unscaled
-   * @param7 Altitude[m] Altitude (MSL)
-   */
-  'SPATIAL_USER_3' = 31007,
-  /**
-   * User defined spatial item. Ground Station will not show the Vehicle as flying through this item.
-   * Example: ROI item.
-   *
-   * @note has location
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 Latitude Latitude unscaled
-   * @param6 Longitude Longitude unscaled
-   * @param7 Altitude[m] Altitude (MSL)
-   */
-  'SPATIAL_USER_4' = 31008,
-  /**
-   * User defined spatial item. Ground Station will not show the Vehicle as flying through this item.
-   * Example: ROI item.
-   *
-   * @note has location
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 Latitude Latitude unscaled
-   * @param6 Longitude Longitude unscaled
-   * @param7 Altitude[m] Altitude (MSL)
-   */
-  'SPATIAL_USER_5' = 31009,
-  /**
-   * User defined command. Ground Station will not show the Vehicle as flying through this item. Example:
-   * MAV_CMD_DO_SET_PARAMETER item.
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 User defined
-   * @param6 User defined
-   * @param7 User defined
-   */
-  'USER_1' = 31010,
-  /**
-   * User defined command. Ground Station will not show the Vehicle as flying through this item. Example:
-   * MAV_CMD_DO_SET_PARAMETER item.
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 User defined
-   * @param6 User defined
-   * @param7 User defined
-   */
-  'USER_2' = 31011,
-  /**
-   * User defined command. Ground Station will not show the Vehicle as flying through this item. Example:
-   * MAV_CMD_DO_SET_PARAMETER item.
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 User defined
-   * @param6 User defined
-   * @param7 User defined
-   */
-  'USER_3' = 31012,
-  /**
-   * User defined command. Ground Station will not show the Vehicle as flying through this item. Example:
-   * MAV_CMD_DO_SET_PARAMETER item.
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 User defined
-   * @param6 User defined
-   * @param7 User defined
-   */
-  'USER_4' = 31013,
-  /**
-   * User defined command. Ground Station will not show the Vehicle as flying through this item. Example:
-   * MAV_CMD_DO_SET_PARAMETER item.
-   *
-   * @param1 User defined
-   * @param2 User defined
-   * @param3 User defined
-   * @param4 User defined
-   * @param5 User defined
-   * @param6 User defined
-   * @param7 User defined
-   */
-  'USER_5' = 31014,
-  /**
-   * Request forwarding of CAN packets from the given CAN bus to this component. CAN Frames are sent
-   * using CAN_FRAME and CANFD_FRAME messages
-   *
-   * @param1 bus Bus number (0 to disable forwarding, 1 for first bus, 2 for 2nd bus, 3 for 3rd bus).
-   * @param2 Empty.
-   * @param3 Empty.
-   * @param4 Empty.
-   * @param5 Empty.
-   * @param6 Empty.
-   * @param7 Empty.
-   */
-  'CAN_FORWARD' = 32000
+  ]
 }
