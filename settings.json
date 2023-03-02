@@ -23,6 +23,22 @@
 		{
 			"name": "cameraAddress",
 			"value": "rtsp://192.168.144.25:8554/main.264"
+		},
+		{
+			"name": "planeAssetId",
+			"value": 449252
+		},
+		{
+			"name": "batteryCellNumber",
+			"value": 6
+		},
+		{
+			"name": "batteryCellMaxVoltage",
+			"value": 4.2
+		},
+		{
+			"name": "batteryCellMinVoltage",
+			"value": 3
 		}
 	],
 	"savedMavlinkMessages": [

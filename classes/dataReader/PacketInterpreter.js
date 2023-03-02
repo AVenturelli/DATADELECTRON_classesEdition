@@ -5,6 +5,8 @@ const AdsbPlaneList = require("../adsb/AdsbPlaneList").AdsbPlaneList;
 
 class PacketInterpreter {
 
+	static battArray = [];
+	
 	static msgArray = {
 		"messages":
         [
@@ -46,7 +48,8 @@ class PacketInterpreter {
 	        {name: 'GpsGlobalOrigin', count: 0},
             {name: 'AdsbVehicle', count: 0},
 	        {name: 'StatusText', count: 0},
-	        {name: 'AoaSsa', count: 0}
+	        {name: 'AoaSsa', count: 0},
+	        {name: 'RadioStatus', count: 0}
         ]
 	}
 	
@@ -62,6 +65,10 @@ class PacketInterpreter {
 				break;
 			case 'AoaSsa':
 				break;
+			case 'RadioStatus':
+				FlightData.rssi = data.rssi;
+				PacketInterpreterRender.updateRssi();
+				break;
 			case 'GpsGlobalOrigin':
 				break;
 			case 'StatusText':
@@ -74,7 +81,6 @@ class PacketInterpreter {
 				this.drawHome(data);
 				break;
 			case 'Heartbeat':
-				
 				//TODO: interpretare la bitmap data.baseMode
 				let mode = data.baseMode;
 				let type = data.type;
@@ -82,13 +88,14 @@ class PacketInterpreter {
 				if(type === 1 && mode >= 128) {
 					PacketInterpreterRender.setArmed();
 				}
-				if (type === 1 && mode < 128){
+				if (type === 1 && mode < 128) {
 					PacketInterpreterRender.setDisarmed();
 				}
 				
-				if (data.type === 1){
+				if (data.type === 1) {
 					PacketInterpreterRender.updateFlightMode(data.customMode);
 				}
+				
 				break;
 			case 'ScaledPressure2':
 				break;
@@ -103,6 +110,25 @@ class PacketInterpreter {
 			case 'EkfStatusReport':
 				break;
 			case 'BatteryStatus':
+				
+				if(this.battArray.length > 20){
+					let batteryVoltage = 0;
+					for(let i = 0; i < this.battArray.length; i++){
+						batteryVoltage += this.battArray[i];
+					}
+					batteryVoltage = batteryVoltage / this.battArray.length;
+					let cellNumber = Settings.getData('batteryCellNumber');
+					let maxVoltageSingleCell = Settings.getData('batteryCellMaxVoltage');
+					let minVoltageSingleCell = Settings.getData('batteryCellMinVoltage');
+					let batterySingleCellVoltage = (batteryVoltage/1000) / cellNumber;
+					FlightData.currentBattery = (batterySingleCellVoltage - minVoltageSingleCell) / (maxVoltageSingleCell - minVoltageSingleCell) * 100;
+					FlightData.currentBatteryVoltage = batteryVoltage/1000;
+					PacketInterpreterRender.setBatteryLevel()
+					this.battArray = []
+				} else {
+					this.battArray.push(data.voltages[0]);
+				}
+				
 				break;
 			case 'ScaledImu3':
 				break;
@@ -119,14 +145,13 @@ class PacketInterpreter {
 			case 'MemInfo':
 				break;
 			case 'PowerStatus':
-				FlightData.currentBattery = ((data.Vservo/1000-4)/1.2)*100
-				PacketInterpreterRender.setBatteryLevel()
 				break;
 			case 'Gps2Raw':
 				break;
 			case 'GpsRawInt':
 				break;
 			case 'SysStatus':
+				
 				break;
 			case 'RcChannelsRaw':
 				break;
@@ -219,7 +244,7 @@ class PacketInterpreter {
 	}
 	
 	static drawHome(data){
-		console.log(data)
+		//console.log(data)
 	}
 }
 

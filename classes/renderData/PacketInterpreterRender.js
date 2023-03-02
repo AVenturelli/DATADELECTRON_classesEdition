@@ -33,6 +33,7 @@ class PacketInterpreterRender {
 	
 	static setBatteryLevel(){
 		let battery = FlightData.currentBattery;
+		let batteryVoltage = FlightData.currentBatteryVoltage;
 		let color = "";
 
 		if(battery < 15) color = "red";
@@ -45,7 +46,18 @@ class PacketInterpreterRender {
 		$('#battBar').val(battery/10);
 		$('#battBar').css('accent-color',color);
 		
-		$('#battPercentage').html(Math.round(battery)+"%")
+		$('#battPercentage').html(Math.round(batteryVoltage*100)/100+"V")
+	}
+	
+	static updateRssi() {
+		let percentage = Math.round(FlightData.rssi / 255 * 100);
+		let image
+		if(percentage < 25) image = "assets/img/wifi25.svg";
+		if(percentage > 25) image = "assets/img/wifi50.svg";
+		if(percentage > 50) image = "assets/img/wifi75.svg";
+		if(percentage > 75) image = "assets/img/wifi100.svg";
+		$('#sigAntennaIcon').attr('src',image);
+		$('#sigPercentage').html(percentage+"%")
 	}
 }
 

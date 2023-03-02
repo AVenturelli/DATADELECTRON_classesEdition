@@ -129,12 +129,6 @@ class MapPosition {
         $(document).on('click', '#removeMarker', () => {
             let lat = $('#removeMarker').data('lat')
             let lon = $('#removeMarker').data('lon')
-            /*let alert = new CustomAlert(
-                'planeHomeSetAndReceived',
-                'Point Removed from FlightPath',
-                'Il punto di coordinate Lat: '+Math.round(lat*100000)/100000+" e Lon: "+Math.round(lon*100000)/100000+" è stato rimosso dal piano di volo.");
-            alert.printCode()
-            alert.showAlert();*/
 
             FlightPath.removePoint(L.latLng(lat, lon))
 
@@ -147,13 +141,7 @@ class MapPosition {
         $(document).on('click', '#addToPath', () => {
             let lat = $('#addToPath').data('lat')
             let lon = $('#addToPath').data('lon')
-            /*let alert = new CustomAlert(
-                'planeHomeSetAndReceived',
-                'Point Added to FlightPath',
-                'Il punto di coordinate Lat: '+Math.round(lat*100000)/100000+" e Lon: "+Math.round(lon*100000)/100000+" è stato aggiunto al piano di volo.");
-            alert.printCode()
-            alert.showAlert();*/
-
+            
             FlightPath.addPoint(L.latLng(lat, lon))
 
             WayPointManager.showTabWaypoints();
@@ -165,12 +153,6 @@ class MapPosition {
 
             let lat = $('#setHomeFromMap').data('lat')
             let lon = $('#setHomeFromMap').data('lon')
-            /*let alert = new CustomAlert(
-                'planeHomeSetAndReceived',
-                'Plane Home set correctly (Ti piacerebbe)',
-                'La home è stata impostata correttamente alle coordinate Lat: '+Math.round(lat*100000)/100000+" e Lon: "+Math.round(lon*100000)/100000);
-            alert.printCode()
-            alert.showAlert();*/
 
             this.homeCoords = [lat, lon];
 
@@ -186,13 +168,6 @@ class MapPosition {
         })
 
         $(document).on('click', '#removeHome', () => {
-
-            /*let alert = new CustomAlert(
-                'planeHomeSetAndReceived',
-                'Plane Home removed correctly (Ti piacerebbe)',
-                'La home è stata rimossa correttamente dalle coordinate Lat: ' + Math.round(this.homeCoords[1] * 100000) / 100000 + " e Lon: " + Math.round(this.homeCoords[0] * 100000) / 100000 + " e il path è stato cancellato.");
-            alert.printCode()
-            alert.showAlert();*/
 
             $('.leaflet-popup-close-button').children('span').trigger('click')
 

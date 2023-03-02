@@ -17,6 +17,9 @@
     static airSpeed = undefined;
     static atmosphericPressure = undefined
     static paramList = new Map();
+    static currentBatteryVoltage;
+    
+    static rssi;
     
     static currentBattery = undefined;
 
